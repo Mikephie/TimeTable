@@ -1,3 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的每日时间安排</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="main-container">
+        <h1>我的每日时间安排</h1>
+        
+        <div class="button-group">
+            <button class="day-button" data-day="mon">周一</button>
+            <button class="day-button" data-day="tue">周二</button>
+            <button class="day-button" data-day="wed">周三</button>
+            <button class="day-button" data-day="thu">周四</button>
+            <button class="day-button" data-day="fri">周五</button>
+        </div>
+
+        <div class="schedule-display">
+            <div id="default-msg" class="info-msg">
+                请点击上方按钮查看当日时间表。
+            </div>
+
+            <div id="mon-schedule" class="schedule-card hidden">
+                <h2>周一安排</h2>
+                <ul>
+                    <li class="after-school">放学吃水果</li>
+                    <li>06:30 - 07:00：洗澡 (Shower)</li>
+                    <li>07:00 - 07:25：吃饭 (Eat)</li>
+                    <li>07:25 - 07:30：收拾书包 (Pack Bag)</li>
+                    <li>07:30 - 08:20：开始写作和学习</li>
+                    <li>08:20 - 08:30：刷牙/准备睡觉</li>
+                    <li>08:30 - 08:50：电子产品时间</li>
+                    <li>08:50 - 09:00：自由时间</li>
+                    <li class="bedtime">09:00：睡觉 (Bedtime)</li>
+                </ul>
+            </div>
+            
+            <div id="tue-schedule" class="schedule-card hidden">
+                 <h2>周二安排</h2>
+                 <p class="same-as">安排与周一通用。</p>
+            </div>
+            <div id="fri-schedule" class="schedule-card hidden">
+                 <h2>周五安排</h2>
+                 <p class="same-as">安排与周一通用。</p>
+            </div>
+
+
             <div id="wed-schedule" class="schedule-card hidden highlight">
                 <h2>周三安排 (补习日)</h2>
                 <ul>
@@ -24,12 +75,17 @@
                     <li>06:30 - 07:00：洗澡 (Shower)</li>
                     <li>07:00 - 07:25：吃饭 (Eat)</li>
                     <li>07:25 - 07:30：收拾书包 (Pack Bag)</li>
-                    <li>07:30 - 08:00：通用写作和学习</li>
+                    <li>07:30 - 08:30：通用学习 / 准备睡觉</li>
                     
-                    <li class="detail-time">08:00 - 08:30：通用学习 / 准备睡觉</li>
                     <li class="detail-time">08:30 - 08:40：**写作 (Write)**</li>
                     <li class="detail-time">08:40 - 08:45：**收拾书包 (Pack Bag)**</li>
                     <li class="detail-time">08:45 - 08:55：**刷牙 (Brush)**</li>
                     <li class="bedtime">08:55 - 09:00：**睡觉 (Bedtime)**</li>
                 </ul>
             </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
