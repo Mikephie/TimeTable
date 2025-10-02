@@ -3,95 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的每日时间表 (移动端适配)</title>
+    <title>我的超棒时间表！</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="timetable-container">
-    <h1>我的每日时间表</h1>
+    <h1 class="title-ribbon">
+        <span role="img" aria-label="星星">🌟</span>
+        我的超棒一周计划
+        <span role="img" aria-label="星星">🌟</span>
+    </h1>
+    
     <table>
         <thead>
             <tr>
-                <th>时间</th>
-                <th>周一</th>
-                <th>周二</th>
-                <th class="highlight">周三</th>
-                <th class="highlight">周四</th>
-                <th>周五</th>
-                <th>周六</th>
-                <th>周日</th>
+                <th>时间段 <span class="emoji">⏰</span></th>
+                <th colspan="3" class="shared-day">周一/二/五 <span class="emoji">✏️</span></th>
+                <th class="highlight-day">周三 <span class="emoji">🍎</span></th>
+                <th class="highlight-day">周四 <span class="emoji">📚</span></th>
+                <th class="weekend-day">周六 <span class="emoji">🎈</span></th>
+                <th class="weekend-day">周日 <span class="emoji">🌈</span></th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>06:30 - 07:00</td>
-                <td colspan="7" data-label="安排" class="general">洗澡 (Shower)</td>
+                <td colspan="5" data-label="周一到周五" class="activity general">洗澡 <span class="emoji">🚿</span></td>
+                <td data-label="周六" class="activity relax-weekend">自由安排</td>
+                <td data-label="周日" class="activity relax-weekend">自由安排</td>
             </tr>
             <tr>
                 <td>07:00 - 07:25</td>
-                <td colspan="7" data-label="安排" class="general">吃饭 (Eat)</td>
+                <td colspan="5" data-label="周一到周五" class="activity general">吃早餐 <span class="emoji">🥐</span></td>
+                <td data-label="周六" class="activity relax-weekend">自由安排</td>
+                <td data-label="周日" class="activity relax-weekend">自由安排</td>
             </tr>
             <tr>
                 <td>07:25 - 07:30</td>
-                <td colspan="7" data-label="安排" class="general">收拾书包 (Pack Bag)</td>
+                <td colspan="5" data-label="周一到周五" class="activity general">收拾书包 <span class="emoji">🎒</span></td>
+                <td data-label="周六" class="activity relax-weekend">自由安排</td>
+                <td data-label="周日" class="activity relax-weekend">自由安排</td>
             </tr>
+            
             <tr>
                 <td>07:30 - 08:20</td>
-                <td colspan="7" data-label="安排" class="general">开始写作和学习 (Start Write & Study)</td>
+                <td colspan="5" data-label="周一到周五" class="activity study-core">开始写作和学习</td>
+                <td data-label="周六" class="activity relax-weekend">户外活动</td>
+                <td data-label="周日" class="activity relax-weekend">户外活动</td>
             </tr>
             
             <tr>
                 <td>08:10 - 08:30</td>
-                <td data-label="周一" class="general">通用安排</td>
-                <td data-label="周二" class="general">通用安排</td>
-                <td data-label="周三" class="highlight">写作 & 学习</td>
-                <td data-label="周四" class="general">通用安排</td>
-                <td data-label="周五" class="general">通用安排</td>
-                <td data-label="周六" class="general">通用安排</td>
-                <td data-label="周日" class="general">通用安排</td>
+                <td colspan="3" data-label="周一/二/五" class="activity study-core">继续学习/写作业</td>
+                <td data-label="周三" class="activity highlight-w">写作 (10min) & 学习 (10min)</td>
+                <td data-label="周四" class="activity study-core">继续学习/写作业</td>
+                <td data-label="周六" class="activity relax-weekend">自由活动</td>
+                <td data-label="周日" class="activity relax-weekend">自由活动</td>
             </tr>
-
+            
             <tr>
                 <td>08:30 - 08:50</td>
-                <td data-label="周一" class="general">电子产品时间</td>
-                <td data-label="周二" class="general">电子产品时间</td>
-                <td data-label="周三" class="highlight">8:30-8:45 刷牙/收拾</td>
-                <td data-label="周四" class="highlight">8:30-8:55 写作/收拾/刷牙</td>
-                <td data-label="周五" class="general">电子产品时间</td>
-                <td data-label="周六" class="general">电子产品时间</td>
-                <td data-label="周日" class="general">电子产品时间</td>
+                <td colspan="3" data-label="周一/二/五" class="activity general">电子产品时间 <span class="emoji">🎮</span></td>
+                <td data-label="周三" class="activity highlight-w">8:30-8:45 收拾书包/刷牙</td>
+                <td data-label="周四" class="activity highlight-w">8:30-8:55 写作/收拾/刷牙</td>
+                <td data-label="周六" class="activity relax-weekend">晚餐/家庭时间</td>
+                <td data-label="周日" class="activity relax-weekend">晚餐/家庭时间</td>
             </tr>
             
             <tr>
                 <td>08:50 - 09:00</td>
-                <td data-label="周一" class="general">自由时间</td>
-                <td data-label="周二" class="general">自由时间</td>
-                <td data-label="周三" class="highlight">自由时间</td>
-                <td data-label="周四" class="highlight">9:00 睡觉</td>
-                <td data-label="周五" class="general">自由时间</td>
-                <td data-label="周六" class="general">自由时间</td>
-                <td data-label="周日" class="general">自由时间</td>
+                <td colspan="3" data-label="周一/二/五" class="activity relax">自由时间</td>
+                <td data-label="周三" class="activity highlight-w">自由时间</td>
+                <td data-label="周四" class="activity highlight-w">准备睡觉</td>
+                <td data-label="周六" class="activity relax">自由时间</td>
+                <td data-label="周日" class="activity relax">自由时间</td>
             </tr>
 
             <tr>
                 <td>09:00</td>
-                <td colspan="7" data-label="安排" class="relax">睡觉 (Bedtime)</td>
+                <td colspan="7" data-label="每天" class="activity bedtime">睡觉时间 <span class="emoji">😴</span></td>
             </tr>
             
             <tr>
-                <td>放学后 (After School)</td>
-                <td data-label="周一" class="general">吃水果</td>
-                <td data-label="周二" class="general">吃水果</td>
-                <td data-label="周三" class="highlight">补习后吃水果</td>
-                <td data-label="周四" class="highlight">回家吃水果</td>
-                <td data-label="周五" class="general">吃水果</td>
-                <td data-label="周六" class="relax">无安排</td>
-                <td data-label="周日" class="relax">无安排</td>
+                <td>放学后 <span class="emoji">👇</span></td>
+                <td colspan="3" data-label="周一/二/五" class="activity snack">回家吃水果</td>
+                <td data-label="周三" class="activity highlight-w">补习后吃水果 <span class="emoji">🍉</span></td>
+                <td data-label="周四" class="activity highlight-w">回家吃水果</td>
+                <td colspan="2" data-label="周末" class="activity relax-weekend">自由零食时间</td>
             </tr>
 
         </tbody>
     </table>
+    <p class="footer-note">记得保持规律，享受每一天！😊</p>
 </div>
 
 </body>
