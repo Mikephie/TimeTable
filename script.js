@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. 页面加载时，确保所有时间表内容是隐藏的
     schedules.forEach(card => card.classList.add('hidden'));
-    defaultMsg.classList.remove('hidden');
+    defaultMsg.classList.remove('hidden'); // 默认信息应该显示
 
 
     buttons.forEach(button => {
