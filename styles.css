@@ -10,7 +10,7 @@
     display: none !important;
 }
 
-/* 动画定义：卡片淡入和滑动 */
+/* --- 动画定义 --- */
 @keyframes fadeInSlide {
     from {
         opacity: 0;
@@ -22,7 +22,6 @@
     }
 }
 
-/* 动画定义：呼吸阴影 (用于突出周三/周四) */
 @keyframes breathingShadow {
     0% {
         box-shadow: 0 4px 12px rgba(255, 133, 192, 0.2);
@@ -35,18 +34,39 @@
     }
 }
 
-/* 动画定义：列表项背景色微过渡 */
 @keyframes pulseBackground {
     0% { background-color: var(--light-blue); }
-    50% { background-color: #f0f8ff; } /* 稍亮一点的蓝色 */
+    50% { background-color: #f0f8ff; } 
     100% { background-color: var(--light-blue); }
 }
 
+/* 新增：主背景渐变动画 */
+@keyframes background-gradient {
+    0% { background-color: #f4f7f6; }
+    50% { background-color: #eaf1f8; } /* 稍深的蓝灰色 */
+    100% { background-color: #f4f7f6; }
+}
 
-/* 基础样式和移动端适配 */
+/* 新增：默认信息欢迎动画 */
+@keyframes welcomeScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* --- 基础样式和移动端适配 --- */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* 应用背景动画 */
     background-color: #f4f7f6;
+    animation: background-gradient 15s ease infinite alternate;
+    
     margin: 0;
     padding: 20px;
     color: #333;
@@ -118,6 +138,9 @@ h1 {
     padding: 50px 20px;
     color: #888;
     font-style: italic;
+    /* 默认提示信息应用欢迎动画 */
+    opacity: 0;
+    animation: welcomeScale 0.5s ease-out 0.5s forwards; /* 延迟 0.5s 播放 */
 }
 
 /* 时间表卡片样式 */
@@ -129,7 +152,6 @@ h1 {
     transition: opacity 0.3s ease;
     background-color: #fff;
     
-    /* 确保卡片出现时不会影响其他元素布局 */
     position: absolute; 
     width: calc(100% - 30px); 
 }
@@ -162,9 +184,9 @@ h1 {
     margin-bottom: 8px;
     border-radius: 5px;
     border-left: 5px solid var(--main-blue);
-    /* 列表项背景动画 */
+    
     animation: pulseBackground 8s ease-in-out infinite alternate;
-    transition: all 0.3s ease; /* 确保悬停效果平滑 */
+    transition: all 0.3s ease; 
 }
 
 /* 列表项鼠标悬停效果 */
@@ -198,18 +220,17 @@ h1 {
 
 /* 新增：主要活动样式 */
 .schedule-card .big-event {
-    background-color: #ffe7ba; /* 柔和的橙色系 */
+    background-color: #ffe7ba; 
     border-left-color: #fa8c16;
     font-weight: bold;
     font-size: 1.15em;
-    margin-top: 15px; /* 与上一个项目区分开 */
+    margin-top: 15px; 
 }
 
 /* 周三/周四的突出样式和呼吸动画 */
 .schedule-card.highlight {
     background-color: var(--highlight-pink);
     border-color: #ff85c0;
-    /* 应用呼吸阴影动画 */
     animation: breathingShadow 3s ease-in-out infinite alternate; 
 }
 
@@ -218,7 +239,7 @@ h1 {
 }
 
 .schedule-card.highlight li.detail-time {
-    background-color: #ffe0e9; /* 突出细节时间项的背景 */
+    background-color: #ffe0e9; 
     border-left-color: #ff4d94;
 }
 
