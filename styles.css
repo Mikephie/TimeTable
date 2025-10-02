@@ -1,227 +1,154 @@
-/* ================================================= */
-/* 整体设计：颜色与背景 */
-/* ================================================= */
 :root {
-    --primary-color: #ff69b4; /* 亮粉色 (主题色) */
-    --secondary-color: #ffc000; /* 亮黄色 (强调色) */
-    --accent-color: #00bcd4; /* 青蓝色 (通用色) */
-    --day-highlight: #ff85c0; /* 周三/四突出色 */
-    --text-color: #343a40;
-    --border-color: #f7e1f4;
-    --font-family: 'Comic Sans MS', 'Arial', sans-serif; /* 趣味字体 */
+    --main-blue: #1a73e8; /* 主题蓝 */
+    --light-blue: #e6f7ff; /* 浅蓝背景 */
+    --highlight-pink: #fff0f6; /* 周三周四突出色 */
+    --bedtime-red: #ff4d4f; /* 睡觉时间红色 */
 }
 
+/* 基础样式和移动端适配 */
 body {
-    font-family: var(--font-family);
-    background-color: #e6f0ff; /* 浅蓝底色 */
-    /* 背景图案：可爱的云朵或点点 */
-    background-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="p" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="3" fill="#ffffff" opacity="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#p)"/></svg>');
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
     margin: 0;
-    padding: 30px 20px;
-    color: var(--text-color);
+    padding: 20px;
+    color: #333;
     display: flex;
     justify-content: center;
+    align-items: flex-start; /* 顶部对齐 */
     min-height: 100vh;
 }
 
-.timetable-container {
-    width: 95%;
-    max-width: 1100px;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 20px; /* 超大圆角 */
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); /* 立体感强烈的阴影 */
-    border: 5px solid var(--secondary-color); /* 黄色边框 */
-}
-
-.title-ribbon {
-    text-align: center;
-    color: var(--primary-color);
-    background-color: #fffacd; /* 柠檬黄背景 */
-    padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-    font-size: 28px;
-    border: 3px dashed var(--secondary-color);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-
-.emoji {
-    font-size: 1.2em;
-    margin: 0 5px;
-}
-
-/* ================================================= */
-/* 桌面端表格样式 */
-/* ================================================= */
-table {
+.main-container {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    table-layout: fixed;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
-    border: none;
-    padding: 12px 6px;
+h1 {
     text-align: center;
-    vertical-align: middle;
-    font-weight: 500;
-    transition: transform 0.2s; /* 悬停动画 */
-}
-
-/* 表头设计 */
-thead th {
-    background-color: var(--primary-color);
-    color: white;
-    font-weight: 700;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    font-size: 18px;
-    border-bottom: 5px solid var(--secondary-color);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-thead tr th:first-child { border-top-left-radius: 15px; }
-thead tr th:last-child { border-top-right-radius: 15px; }
-
-/* 突出周三/周四/周末 */
-.highlight-day { background-color: var(--day-highlight) !important; }
-.weekend-day { background-color: #c8e6c9 !important; }
-
-/* 时间列（首列）设计 */
-tbody tr td:first-child {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-    font-weight: 800;
-    border-right: 3px solid var(--primary-color);
-    width: 120px;
-    box-shadow: 3px 0 8px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    left: 0;
-    z-index: 5;
-}
-
-/* 内容单元格颜色编码 */
-.activity {
-    border-left: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-    border-right: 1px solid var(--border-color);
-}
-.general { background-color: #e1f5fe; } /* 浅蓝色 */
-.study-core { background-color: #ffecb3; } /* 浅黄色 */
-.relax { background-color: #fce4ec; } /* 浅粉色 */
-.bedtime { background-color: #3f51b5; color: white; font-weight: 700; } /* 睡眠深蓝 */
-.snack { background-color: #ffe0b2; } /* 浅橙色 */
-
-/* 重点突出周三/周四的活动 */
-.highlight-w {
-    background-color: #fff0f6 !important;
-    border: 3px solid var(--accent-color) !important;
-    font-weight: 800;
-    color: var(--accent-color);
-    box-shadow: inset 0 0 8px rgba(0, 188, 212, 0.4);
-    transform: scale(1.05); /* 突出效果 */
-    z-index: 6;
-}
-
-/* 单元格悬停效果 */
-.activity:hover:not(.highlight-w) {
-    background-color: #c8e6c9;
-    transform: scale(1.02);
-}
-
-.footer-note {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 16px;
-    color: var(--primary-color);
+    color: var(--main-blue);
+    margin-bottom: 20px;
     font-weight: 600;
+    font-size: 1.8em;
 }
 
+/* 按钮组样式 */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    overflow-x: auto; /* 确保在小屏幕上可以横向滚动 */
+    padding-bottom: 10px;
+}
 
-/* ================================================= */
-/* 移动端适配 (小于 768px - 可爱卡片化设计) */
-/* ================================================= */
-@media screen and (max-width: 768px) {
-    
-    .timetable-container {
-        padding: 15px;
-        box-shadow: none;
-        border: none;
-    }
-    
-    /* 转换为卡片布局 */
-    table, thead, tbody, th, td, tr {
-        display: block; 
-    }
+.day-button {
+    flex-shrink: 0; /* 防止按钮被压缩 */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--light-blue);
+    color: var(--main-blue);
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-right: 5px; /* 按钮间距 */
+}
 
-    thead { display: none; }
+.day-button:last-child {
+    margin-right: 0;
+}
 
-    /* 表格行变为具有设计感的卡片 */
-    tr {
-        margin-bottom: 15px;
-        border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        overflow: hidden;
-        border: 2px solid var(--primary-color); /* 卡片边框 */
-    }
+.day-button:hover, .day-button.active {
+    background-color: var(--main-blue);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-    /* 单元格样式调整 */
-    td {
-        border: none;
-        padding: 8px 10px;
-        text-align: right;
-        font-size: 14px;
-        border-bottom: 1px solid #f0f0f0; 
-        background-color: white;
-    }
+/* 时间表显示区域 */
+.schedule-display {
+    min-height: 300px; /* 预留空间，防止内容跳动 */
+}
 
-    /* 标签 (左侧标题) 设计 */
-    td::before {
-        content: attr(data-label);
-        float: left;
-        font-weight: 700;
-        color: var(--secondary-color); /* 使用黄色强调标签 */
-        margin-right: 10px;
-        font-size: 1em;
-    }
-    
-    /* 时间列 (卡片头部设计) */
-    tbody tr td:first-child {
-        background-color: var(--primary-color);
-        color: white;
-        text-align: left;
-        font-size: 16px;
-        padding: 12px 10px;
-        width: auto;
-        box-shadow: none;
-        position: static;
-    }
-    
-    tbody tr td:first-child::before {
-        content: "时间：";
-        color: white;
-        font-weight: 800;
-        float: none;
-    }
-    
-    /* 突出单元格在移动端的视觉效果 */
-    .highlight-w {
-        background-color: #fff8f8 !important;
-        border-left: 5px solid var(--accent-color); /* 左侧青蓝色条 */
-        color: var(--accent-color);
-        transform: none;
-    }
-    
-    /* 确保 colspan 单元格适应移动端 */
-    td[colspan] {
-        text-align: center !important;
-        background-color: #e1f5fe !important;
-    }
-    
-    td[colspan]::before {
-        content: ""; /* 隐藏标签 */
-        display: none;
-    }
+.info-msg {
+    text-align: center;
+    padding: 50px 20px;
+    color: #888;
+    font-style: italic;
+}
+
+/* 时间表卡片样式 */
+.schedule-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    transition: opacity 0.3s ease;
+    background-color: #fff;
+}
+
+.schedule-card h2 {
+    color: var(--main-blue);
+    border-bottom: 2px solid var(--light-blue);
+    padding-bottom: 5px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.schedule-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.schedule-card li {
+    background-color: var(--light-blue);
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border-left: 5px solid var(--main-blue);
+}
+
+/* 特殊项目样式 */
+.schedule-card .after-school {
+    background-color: #d9f7be; /* 绿色系突出 */
+    font-weight: bold;
+    border-left-color: #52c41a;
+    font-size: 1.1em; /* 放学吃水果更显眼 */
+}
+
+.schedule-card .bedtime {
+    background-color: #fcebeb; /* 浅红警告色 */
+    border-left-color: var(--bedtime-red);
+    font-weight: bold;
+}
+
+.schedule-card .detail-time {
+    background-color: #fffae6; /* 细致安排用浅黄色区分 */
+    border-left-color: #faad14;
+}
+
+/* 周三/周四的突出样式 */
+.schedule-card.highlight {
+    background-color: var(--highlight-pink);
+    border-color: #ff85c0;
+}
+
+.schedule-card.highlight li {
+    background-color: #fffafc;
+}
+
+/* 隐藏类 */
+.hidden {
+    display: none !important;
+}
+
+.same-as {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    padding: 30px;
 }
