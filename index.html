@@ -2,41 +2,291 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>背景动画测试</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的每周时间表 - 最终稳定版</title>
+    
     <style>
-        /* 动画定义：柔和的蓝色渐变循环 */
-        @keyframes background-gradient-test {
-            0% { background-color: #e6f7ff; } /* 浅蓝 */
-            50% { background-color: #f0f8ff; } /* 更浅的蓝 */
-            100% { background-color: #e6f7ff; } /* 返回浅蓝 */
+        /* ======================================================= */
+        /* CSS 样式 (完全嵌入 - 移除动画，稳定色彩) */
+        /* ======================================================= */
+        :root {
+            --main-blue: #1a73e8; /* 主题蓝 */
+            --main-dark-blue: #004d99; /* 深蓝用于标题 */
+            --soft-white: #fcfcfc; /* 柔和白色 */
+            --light-gray: #f8f8f8; /* 柔和浅灰 */
+            --light-blue: #e6f7ff; /* 浅蓝背景 */
+            --highlight-pink: #fff0f6; 
+            --bedtime-red: #ff4d4f; 
         }
 
-        /* 强制 body 覆盖整个视口并应用动画 */
+        /* 关键样式：控制显示/隐藏 */
+        .hidden {
+            display: none !important;
+            opacity: 0 !important;
+            position: absolute !important; 
+            visibility: hidden !important; 
+        }
+
+        /* --- 基础样式和布局 --- */
         body {
-            /* 确保背景占据整个屏幕 */
-            height: 100vh;
-            width: 100vw;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            
+            /* 核心修复：使用固定线性渐变背景，解决动画不显示的问题 */
+            background: linear-gradient(135deg, #eaf1f8 0%, #f4f7f6 100%);
+            
             margin: 0;
-            padding: 0;
-            
-            /* 应用动画 */
-            background-color: #e6f7ff; /* 初始背景色 */
-            animation: background-gradient-test 10s ease-in-out infinite alternate;
-            
-            /* 居中文本，方便测试 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            color: #004d99;
+            padding: 10px; 
+            color: #333;
+            /* 移除 display: flex; 避免移动端渲染问题 */
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: block; 
+            text-align: center; /* 用于居中 main-container */
+        }
+        
+        /* 确保内容居中 */
+        .main-container {
+            display: inline-block; /* 确保能应用 text-align: center 的效果 */
+            width: 100%;
+            max-width: 650px; 
+            background-color: var(--soft-white); 
+            padding: 20px 15px; 
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); 
+            border-top: 5px solid var(--main-blue); 
+            margin-top: 10px;
+            text-align: left; /* 恢复内容左对齐 */
         }
 
         h1 {
-            font-size: 2em;
+            text-align: center;
+            color: var(--main-dark-blue);
+            margin-bottom: 20px; 
+            font-weight: 700;
+            font-size: 1.8em; 
         }
+
+        /* 按钮组样式 */
+        .button-group {
+            display: flex;
+            justify-content: center; 
+            gap: 5px; 
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .day-button {
+            flex-shrink: 0;
+            padding: 10px 12px; 
+            border-radius: 20px; 
+            background-color: var(--light-blue);
+            color: var(--main-blue);
+            font-size: 0.95em; 
+            transition: all 0.3s ease; 
+        }
+
+        .day-button:active { transform: scale(0.95); background-color: var(--main-dark-blue); }
+        .day-button:hover, .day-button.active {
+            background-color: var(--main-blue);
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 时间表显示区域 */
+        .schedule-display {
+            min-height: 250px; 
+            position: relative; 
+        }
+
+        .info-msg {
+            text-align: center;
+            padding: 30px 10px; 
+            color: var(--main-blue); 
+            font-style: italic;
+            font-size: 1em;
+            /* 恢复欢迎动画效果 */
+            opacity: 1;
+        }
+        .info-msg::before {
+            content: "📅 "; 
+            font-size: 1.4em; 
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* 卡片和列表项基础样式 */
+        .schedule-card {
+            border: 1px solid #ddd;
+            padding: 10px; 
+            border-radius: 8px;
+            background-color: var(--light-gray); 
+            width: calc(100% - 20px); 
+        }
+
+        .schedule-card.active-animation {
+            opacity: 1;
+            position: relative; 
+            visibility: visible; 
+        }
+
+        .schedule-card li {
+            padding: 8px 10px; 
+            margin-bottom: 5px; 
+            border-radius: 5px;
+            border-left: 5px solid var(--main-blue);
+            background-color: var(--soft-white); 
+        }
+
+        /* 特殊项目样式 */
+        .after-school { background-color: #d9f7be !important; border-left-color: #52c41a !important; font-weight: bold; }
+        .big-event { background-color: #ffe7ba !important; border-left-color: #fa8c16 !important; font-weight: bold; }
+        .bedtime { background-color: #fcebeb !important; border-left-color: #ff4d4f !important; font-weight: bold; }
+
     </style>
 </head>
 <body>
-    <h1>主页背景动画测试中...</h1>
+
+    <div class="main-container">
+        <h1>我的每日时间安排</h1>
+        
+        <div class="button-group">
+            <button class="day-button" data-day="mon">周一</button>
+            <button class="day-button" data-day="tue">周二</button>
+            <button class="day-button" data-day="wed">周三</button>
+            <button class="day-button" data-day="thu">周四</button>
+            <button class="day-button" data-day="fri">周五</button>
+        </div>
+
+        <div class="schedule-display">
+            <div id="default-msg" class="info-msg active">
+                请点击上方按钮查看当日时间表。
+            </div>
+
+            <div id="mon-schedule" class="schedule-card hidden">
+                <h2>周一安排</h2>
+                <ul>
+                    <li class="after-school">放学吃水果</li>
+                    <li>06:30 - 07:00：洗澡 (Shower)</li>
+                    <li>07:00 - 07:25：吃饭 (Eat)</li>
+                    <li>07:25 - 07:30：收拾书包 (Pack Bag)</li>
+                    <li>07:30 - 08:20：开始写作和学习</li>
+                    <li>08:20 - 08:30：刷牙/准备睡觉</li>
+                    <li>08:30 - 08:50：电子产品时间 (Gadget)</li>
+                    <li>08:50 - 09:00：自由时间</li>
+                    <li class="bedtime">09:00：睡觉 (Bedtime)</li>
+                </ul>
+            </div>
+            
+            <div id="tue-schedule" class="schedule-card hidden">
+                 <h2>周二安排</h2>
+                 <ul>
+                    <li class="after-school">放学吃水果</li>
+                    <li>06:30 - 07:00：洗澡 (Shower)</li>
+                    <li>07:00 - 07:25：吃饭 (Eat)</li>
+                    <li>07:25 - 07:30：收拾书包 (Pack Bag)</li>
+                    <li>07:30 - 08:20：开始写作和学习</li>
+                    <li>08:20 - 08:30：刷牙/准备睡觉</li>
+                    <li>08:30 - 08:50：电子产品时间 (Gadget)</li>
+                    <li>08:50 - 09:00：自由时间</li>
+                    <li class="bedtime">09:00：睡觉 (Bedtime)</li>
+                </ul>
+            </div>
+            
+            <div id="fri-schedule" class="schedule-card hidden">
+                 <h2>周五安排</h2>
+                 <ul>
+                    <li class="after-school">放学吃水果</li>
+                    <li>06:30 - 07:00：洗澡 (Shower)</li>
+                    <li>07:00 - 07:25：吃饭 (Eat)</li>
+                    <li>07:25 - 07:30：收拾书包 (Pack Bag)</li>
+                    <li>07:30 - 08:20：开始写作和学习</li>
+                    <li>08:20 - 08:30：刷牙/准备睡觉</li>
+                    <li>08:30 - 08:50：电子产品时间 (Gadget)</li>
+                    <li>08:50 - 09:00：自由时间</li>
+                    <li class="bedtime">09:00：睡觉 (Bedtime)</li>
+                </ul>
+            </div>
+
+
+            <div id="wed-schedule" class="schedule-card hidden highlight">
+                <h2>周三安排 (补习日)</h2>
+                <ul>
+                    <li class="big-event">04:15 - 07:30：**补习 (Tuition)**</li>
+                    <li class="after-school">补习后吃水果</li>
+                    
+                    <li>07:30 - 08:10：吃饭/收拾/准备</li>
+                    
+                    <li class="detail-time">08:10 - 08:20：写作 (Write)</li>
+                    <li class="detail-time">08:20 - 08:30：学习 (Study)</li>
+                    <li class="detail-time">08:30 - 08:35：收拾书包 (Pack Bag)</li>
+                    <li class="detail-time">08:35 - 08:45：刷牙 (Brush)</li>
+                    <li class="detail-time">08:45 - 09:00：自由时间</li>
+                    <li class="bedtime">09:00：睡觉 (Bedtime)</li>
+                </ul>
+            </div>
+
+            <div id="thu-schedule" class="schedule-card hidden highlight">
+                <h2>周四安排 (跆拳道日)</h2>
+                <ul>
+                    <li class="big-event">05:15 - 08:00：**跆拳道 (Taekwondo)**</li>
+                    <li class="after-school">回家吃水果</li>
+                    
+                    <li>08:00 - 08:30：吃饭/准备</li>
+
+                    <li class="detail-time">08:30 - 08:40：写作 (Write)</li>
+                    <li class="detail-time">08:40 - 08:45：收拾书包 (Pack Bag)</li>
+                    <li class="detail-time">08:45 - 08:55：刷牙 (Brush)</li>
+                    <li class="bedtime">08:55 - 09:00：睡觉 (Bedtime)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ======================================================= */
+        /* JavaScript 逻辑 (完全嵌入) */
+        /* ======================================================= */
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.day-button');
+            const schedules = document.querySelectorAll('.schedule-card');
+            const defaultMsg = document.getElementById('default-msg');
+            
+            // 1. 页面加载时，确保所有时间表内容是隐藏的
+            schedules.forEach(card => card.classList.add('hidden'));
+            defaultMsg.classList.remove('hidden');
+
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const day = button.getAttribute('data-day');
+                    
+                    // 2. 隐藏所有卡片
+                    schedules.forEach(card => {
+                        card.classList.add('hidden');
+                        card.classList.remove('active-animation');
+                    });
+                    defaultMsg.classList.add('hidden');
+                    
+                    // 3. 移除所有按钮的激活状态
+                    buttons.forEach(btn => btn.classList.remove('active'));
+
+                    let targetScheduleId = `${day}-schedule`;
+                    const targetSchedule = document.getElementById(targetScheduleId);
+                    
+                    // 4. 显示目标时间表
+                    if (targetSchedule) {
+                        targetSchedule.classList.remove('hidden');
+                        // 强制浏览器重新计算布局，确保动画生效
+                        void targetSchedule.offsetWidth; 
+                        targetSchedule.classList.add('active-animation');
+                    }
+                    
+                    // 5. 设置当前点击按钮为激活状态
+                    button.classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
