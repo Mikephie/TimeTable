@@ -1,0 +1,141 @@
+/* 基本样式 - 保持桌面端表格清晰 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.timetable-container {
+    width: 95%;
+    max-width: 1200px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #1a73e8;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* 桌面表格样式 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th, td {
+    border: 1px solid #e0e0e0;
+    padding: 12px 8px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+thead th {
+    background-color: #1a73e8;
+    color: white;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* 时间列特殊样式 */
+tbody tr td:first-child {
+    background-color: #f0f4ff;
+    font-weight: bold;
+    color: #333;
+    width: 120px;
+}
+
+/* 颜色编码 */
+.general { background-color: #e6f7ff; } 
+.highlight { background-color: #fff0f6 !important; border: 2px solid #ff85c0 !important; font-weight: bold; }
+.relax { background-color: #f0f0f0; color: #888; }
+
+
+/* ================================================= */
+/* 移动端适配 (小于 768px 时生效) */
+/* ================================================= */
+@media screen and (max-width: 768px) {
+    
+    .timetable-container {
+        padding: 15px;
+    }
+    
+    table, thead, tbody, th, td, tr {
+        display: block; /* 将所有表格元素转为块级元素 */
+    }
+
+    /* 隐藏表头，因为我们将用 data-label 来替代 */
+    thead {
+        display: none;
+    }
+
+    /* 表格行变为卡片 */
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+
+    /* 表格单元格样式调整 */
+    td {
+        border: none;
+        position: relative;
+        padding-left: 50%; /* 为标签留出空间 */
+        text-align: right;
+        white-space: normal;
+        font-size: 14px;
+    }
+    
+    /* 单元格内容标签 (使用 data-label 属性) */
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-left: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #555;
+    }
+    
+    /* 调整时间列，使其位于卡片顶部 */
+    tbody tr td:first-child {
+        background-color: #1a73e8;
+        color: white;
+        text-align: center;
+        width: auto;
+        padding: 10px;
+    }
+    
+    tbody tr td:first-child::before {
+        content: "时间段";
+        color: white;
+    }
+    
+    /* 移除通用行在移动端的多余分隔 */
+    td[colspan="7"] {
+        padding-left: 10px; /* 移除左侧标签空间 */
+        text-align: left;
+    }
+    td[colspan="7"]::before {
+        content: ""; /* 隐藏通用行的标签 */
+        display: none;
+    }
+}
