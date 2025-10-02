@@ -19,21 +19,16 @@
             --bedtime-red: #ff4d4f; 
         }
 
-        /* 关键样式：控制显示/隐藏 */
+        /* 关键样式：控制显示/隐藏（只保留 display:none，避免阻断过渡） */
         .hidden {
             display: none !important;
-            opacity: 0 !important;
-            position: absolute !important; 
-            visibility: hidden !important; 
         }
 
         /* --- 基础样式和布局 --- */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            
             /* 核心修复：使用固定线性渐变背景，解决动画不显示的问题 */
             background: linear-gradient(135deg, #eaf1f8 0%, #f4f7f6 100%);
-            
             margin: 0;
             padding: 10px; 
             color: #333;
@@ -84,9 +79,11 @@
             color: var(--main-blue);
             font-size: 0.95em; 
             transition: all 0.3s ease; 
+            border: none;
+            cursor: pointer;
         }
 
-        .day-button:active { transform: scale(0.95); background-color: var(--main-dark-blue); }
+        .day-button:active { transform: scale(0.95); background-color: var(--main-dark-blue); color: #fff; }
         .day-button:hover, .day-button.active {
             background-color: var(--main-blue);
             color: white;
@@ -99,14 +96,15 @@
             position: relative; 
         }
 
+        /* 默认提示：加入淡入过渡 */
         .info-msg {
             text-align: center;
             padding: 30px 10px; 
             color: var(--main-blue); 
             font-style: italic;
             font-size: 1em;
-            /* 恢复欢迎动画效果 */
-            opacity: 1;
+            opacity: 0;
+            transition: opacity .28s ease;
         }
         .info-msg::before {
             content: "📅 "; 
@@ -114,20 +112,28 @@
             display: block;
             margin-bottom: 5px;
         }
+        .info-msg.active { opacity: 1; }
 
-        /* 卡片和列表项基础样式 */
+        /* 卡片和列表项基础样式（添加进入动画的起点与过渡） */
         .schedule-card {
             border: 1px solid #ddd;
             padding: 10px; 
             border-radius: 8px;
             background-color: var(--light-gray); 
             width: calc(100% - 20px); 
+
+            /* 动画起点与过渡 */
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .28s ease, transform .28s ease;
         }
 
+        /* 进入态（由 JS 添加） */
         .schedule-card.active-animation {
             opacity: 1;
-            position: relative; 
-            visibility: visible; 
+            transform: translateY(0);
+            position: relative;
+            visibility: visible;
         }
 
         .schedule-card li {
@@ -208,15 +214,12 @@
                 </ul>
             </div>
 
-
             <div id="wed-schedule" class="schedule-card hidden highlight">
                 <h2>周三安排 (补习日)</h2>
                 <ul>
                     <li class="big-event">04:15 - 07:30：**补习 (Tuition)**</li>
                     <li class="after-school">补习后吃水果</li>
-                    
                     <li>07:30 - 08:10：吃饭/收拾/准备</li>
-                    
                     <li class="detail-time">08:10 - 08:20：写作 (Write)</li>
                     <li class="detail-time">08:20 - 08:30：学习 (Study)</li>
                     <li class="detail-time">08:30 - 08:35：收拾书包 (Pack Bag)</li>
@@ -231,9 +234,7 @@
                 <ul>
                     <li class="big-event">05:15 - 08:00：**跆拳道 (Taekwondo)**</li>
                     <li class="after-school">回家吃水果</li>
-                    
                     <li>08:00 - 08:30：吃饭/准备</li>
-
                     <li class="detail-time">08:30 - 08:40：写作 (Write)</li>
                     <li class="detail-time">08:40 - 08:45：收拾书包 (Pack Bag)</li>
                     <li class="detail-time">08:45 - 08:55：刷牙 (Brush)</li>
@@ -256,7 +257,6 @@
             schedules.forEach(card => card.classList.add('hidden'));
             defaultMsg.classList.remove('hidden');
 
-
             buttons.forEach(button => {
                 button.addEventListener('click', () => {
                     const day = button.getAttribute('data-day');
@@ -274,10 +274,9 @@
                     let targetScheduleId = `${day}-schedule`;
                     const targetSchedule = document.getElementById(targetScheduleId);
                     
-                    // 4. 显示目标时间表
+                    // 4. 显示目标时间表（先移除 hidden，再强制重排，再加进入类）
                     if (targetSchedule) {
                         targetSchedule.classList.remove('hidden');
-                        // 强制浏览器重新计算布局，确保动画生效
                         void targetSchedule.offsetWidth; 
                         targetSchedule.classList.add('active-animation');
                     }
