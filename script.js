@@ -3,11 +3,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const schedules = document.querySelectorAll('.schedule-card');
     const defaultMsg = document.getElementById('default-msg');
     
-    // 获取周一的通用安排列表内容
-    const monScheduleList = document.getElementById('mon-schedule').querySelector('ul').innerHTML;
+    // --- 修正后的周一通用安排列表 ---
+    const monScheduleList = `
+        <li class="after-school">放学吃水果</li>
+        <li>06:30 - 07:00：洗澡 (Shower)</li>
+        <li>07:00 - 07:25：吃饭 (Eat)</li>
+        <li>07:25 - 07:30：收拾书包 (Pack Bag)</li>
+        <li>07:30 - 08:20：开始写作和学习</li>
+        <li>08:20 - 08:30：刷牙/准备睡觉</li>
+        <li>08:30 - 08:50：电子产品时间</li>
+        <li>08:50 - 09:00：自由时间</li>
+        <li class="bedtime">09:00：睡觉 (Bedtime)</li>
+    `;
+
+    // 预先填充周一、周二、周五的通用列表（确保内容存在）
+    document.getElementById('mon-schedule').querySelector('ul').innerHTML = monScheduleList;
 
 
-    // 1. 页面加载时，确保所有时间表内容都是隐藏的（尽管CSS也做了，JS再确认一遍）
+    // 1. 页面加载时，确保所有时间表内容是隐藏的
     schedules.forEach(card => card.classList.add('hidden'));
     defaultMsg.classList.remove('hidden');
 
@@ -16,8 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const day = button.getAttribute('data-day');
             
-            // 2. 隐藏所有时间表和默认信息
-            schedules.forEach(card => card.classList.add('hidden'));
+            // 2. 隐藏所有卡片并移除动画类
+            schedules.forEach(card => {
+                card.classList.add('hidden');
+                card.classList.remove('active-animation');
+            });
             defaultMsg.classList.add('hidden');
             
             // 3. 移除所有按钮的激活状态
@@ -28,17 +44,20 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // 4. 处理周二和周五的通用内容
             if (day === 'tue' || day === 'fri') {
-                // 如果是周二或周五，我们复制周一的列表内容，并显示该卡片
+                // 如果是周二或周五，复制周一的列表内容
                 if (!targetSchedule.querySelector('ul')) {
                     targetSchedule.insertAdjacentHTML('beforeend', '<ul></ul>');
                 }
                 targetSchedule.querySelector('ul').innerHTML = monScheduleList;
-                targetSchedule.querySelector('.same-as')?.classList.add('hidden'); // 隐藏 "same as" 提示
+                targetSchedule.querySelector('.same-as')?.classList.add('hidden');
             }
 
-            // 5. 显示目标时间表
+            // 5. 显示目标时间表并添加动画类
             if (targetSchedule) {
                 targetSchedule.classList.remove('hidden');
+                // 强制浏览器重新计算布局，确保动画生效
+                void targetSchedule.offsetWidth; 
+                targetSchedule.classList.add('active-animation');
             }
             
             // 6. 设置当前点击按钮为激活状态
