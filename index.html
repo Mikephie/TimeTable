@@ -57,10 +57,10 @@
             100% { background-color: var(--light-blue); }
         }
 
-        /* 新增：主背景渐变动画 */
+        /* 核心修复：主背景渐变动画，确保色彩变化 */
         @keyframes background-gradient {
-            0% { background-color: #f4f7f6; }
-            50% { background-color: #eaf1f8; } 
+            0% { background-color: #f4f7f6; } /* 浅灰白 */
+            50% { background-color: #eaf1f8; } /* 浅蓝灰色 */
             100% { background-color: #f4f7f6; }
         }
 
@@ -83,6 +83,8 @@
             /* 应用背景动画 */
             background-color: #f4f7f6;
             animation: background-gradient 15s ease infinite alternate;
+            height: 100vh; /* 强制覆盖视口高度 */
+            width: 100vw;  /* 强制覆盖视口宽度 */
             
             margin: 0;
             padding: 10px; 
@@ -91,7 +93,8 @@
             justify-content: center;
             align-items: flex-start; 
             min-height: 100vh;
-            overflow: hidden; 
+            overflow-y: auto; 
+            overflow-x: hidden;
         }
 
         .main-container {
