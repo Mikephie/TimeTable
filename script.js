@@ -3,8 +3,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const schedules = document.querySelectorAll('.schedule-card');
     const defaultMsg = document.getElementById('default-msg');
     
-    // 获取周一的通用安排列表内容
-    const monScheduleList = document.getElementById('mon-schedule').querySelector('ul').innerHTML;
+    // --- 周一通用安排列表内容 ---
+    const monScheduleList = `
+        <li class="after-school">放学吃水果</li>
+        <li>06:30 - 07:00：洗澡 (Shower)</li>
+        <li>07:00 - 07:25：吃饭 (Eat)</li>
+        <li>07:25 - 07:30：收拾书包 (Pack Bag)</li>
+        <li>07:30 - 08:20：开始写作和学习</li>
+        <li>08:20 - 08:30：刷牙/准备睡觉</li>
+        <li>08:30 - 08:50：电子产品时间 (Gadget)</li>
+        <li>08:50 - 09:00：自由时间</li>
+        <li class="bedtime">09:00：睡觉 (Bedtime)</li>
+    `;
+
+    // 预先填充周一的通用列表内容
+    document.getElementById('mon-schedule').querySelector('ul').innerHTML = monScheduleList;
 
 
     // 1. 页面加载时，确保所有时间表内容是隐藏的
@@ -29,9 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let targetScheduleId = `${day}-schedule`;
             const targetSchedule = document.getElementById(targetScheduleId);
             
-            // 4. 处理周二和周五的通用内容
+            // 4. 处理周二和周五的通用内容（填充周一的列表）
             if (day === 'tue' || day === 'fri') {
-                // 如果是周二或周五，复制周一的列表内容
                 if (!targetSchedule.querySelector('ul')) {
                     targetSchedule.insertAdjacentHTML('beforeend', '<ul></ul>');
                 }
