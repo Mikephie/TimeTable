@@ -1,141 +1,194 @@
-/* 基本样式 - 保持桌面端表格清晰 */
+/* ================================================= */
+/* 整体布局与字体 */
+/* ================================================= */
+:root {
+    --primary-color: #5b75f5; /* 蓝色主题 */
+    --accent-color: #ff6b81; /* 强调粉色 (周三/四) */
+    --bg-color: #f8f9fa; /* 浅背景 */
+    --text-color: #343a40;
+    --border-color: #dee2e6;
+    --font-family: 'Arial', sans-serif;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
     margin: 0;
-    padding: 20px;
-    color: #333;
+    padding: 30px 20px;
+    color: var(--text-color);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
 }
 
 .timetable-container {
     width: 95%;
     max-width: 1200px;
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 16px; /* 更圆润的边角 */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* 柔和的阴影 */
 }
 
 h1 {
     text-align: center;
-    color: #1a73e8;
-    margin-bottom: 25px;
-    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 35px;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
-/* 桌面表格样式 */
+/* ================================================= */
+/* 桌面端表格样式 (Grid Style) */
+/* ================================================= */
 table {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate; /* 使用 separate 实现圆角单元格 */
+    border-spacing: 0;
     table-layout: fixed;
 }
 
 th, td {
-    border: 1px solid #e0e0e0;
-    padding: 12px 8px;
+    border: none;
+    padding: 14px 10px;
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
+/* 表格头部样式 */
 thead th {
-    background-color: #1a73e8;
+    background-color: var(--primary-color);
     color: white;
     font-weight: 600;
     position: sticky;
     top: 0;
     z-index: 10;
+    border-bottom: 3px solid #4a64e8;
 }
 
-/* 时间列特殊样式 */
+/* 表格头部圆角 */
+thead tr th:first-child { border-top-left-radius: 12px; }
+thead tr th:last-child { border-top-right-radius: 12px; }
+
+/* 时间列（首列）设计 */
 tbody tr td:first-child {
-    background-color: #f0f4ff;
-    font-weight: bold;
-    color: #333;
+    background-color: #e3f2fd; /* 浅蓝背景 */
+    font-weight: 700;
+    color: var(--text-color);
+    border-right: 2px solid var(--border-color);
     width: 120px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05); /* 阴影突出时间轴 */
 }
 
-/* 颜色编码 */
-.general { background-color: #e6f7ff; } 
-.highlight { background-color: #fff0f6 !important; border: 2px solid #ff85c0 !important; font-weight: bold; }
-.relax { background-color: #f0f0f0; color: #888; }
+/* 内容单元格边框与悬停 */
+tbody td {
+    border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    cursor: default;
+}
+tbody tr:hover td {
+    background-color: #f0f7ff;
+}
+
+/* 颜色编码 - 强调突出设计 */
+.general { background-color: #f7fcff; } 
+.highlight { 
+    background-color: #fff0f6 !important; /* 浅粉色背景 */
+    border: 2px solid var(--accent-color) !important; 
+    font-weight: bold; 
+    color: var(--accent-color);
+    box-shadow: inset 0 0 5px rgba(255, 107, 129, 0.2);
+}
+.relax { background-color: #f0f0f0; color: #868e96; }
 
 
 /* ================================================= */
-/* 移动端适配 (小于 768px 时生效) */
+/* 移动端适配 (小于 768px - 卡片化设计) */
 /* ================================================= */
 @media screen and (max-width: 768px) {
     
     .timetable-container {
-        padding: 15px;
+        padding: 20px 10px;
+        box-shadow: none; /* 移动端移除大阴影 */
     }
-    
+
+    /* 转换为卡片布局 */
     table, thead, tbody, th, td, tr {
-        display: block; /* 将所有表格元素转为块级元素 */
+        display: block; 
     }
 
-    /* 隐藏表头，因为我们将用 data-label 来替代 */
-    thead {
-        display: none;
-    }
+    thead { display: none; }
 
-    /* 表格行变为卡片 */
+    /* 表格行变为具有设计感的卡片 */
     tr {
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* 卡片阴影 */
         overflow: hidden;
     }
 
-    /* 表格单元格样式调整 */
+    /* 单元格样式调整 - 左右分栏 */
     td {
         border: none;
-        position: relative;
-        padding-left: 50%; /* 为标签留出空间 */
+        padding: 12px 10px;
         text-align: right;
-        white-space: normal;
-        font-size: 14px;
+        font-size: 15px;
+        border-bottom: 1px dashed #e0e0e0; /* 虚线分隔 */
+        background-color: white;
     }
-    
-    /* 单元格内容标签 (使用 data-label 属性) */
+
+    /* 标签 (左侧标题) 设计 */
     td::before {
         content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 45%;
-        padding-left: 10px;
-        white-space: nowrap;
-        text-align: left;
-        font-weight: bold;
-        color: #555;
+        float: left;
+        font-weight: 700;
+        color: var(--primary-color); /* 使用主题色强调标签 */
+        margin-right: 10px;
     }
     
-    /* 调整时间列，使其位于卡片顶部 */
+    /* 时间列 (卡片头部设计) */
     tbody tr td:first-child {
-        background-color: #1a73e8;
+        background-color: var(--primary-color);
         color: white;
-        text-align: center;
+        text-align: left;
+        font-size: 16px;
+        padding: 15px 10px;
         width: auto;
-        padding: 10px;
+        border-right: none;
+        box-shadow: none;
+        border-radius: 0;
     }
     
     tbody tr td:first-child::before {
-        content: "时间段";
+        content: "时间段：";
         color: white;
+        font-weight: 500;
     }
     
-    /* 移除通用行在移动端的多余分隔 */
+    /* 移除通用行在移动端的多余分隔线 */
+    td:last-child { border-bottom: none; }
+    
     td[colspan="7"] {
-        padding-left: 10px; /* 移除左侧标签空间 */
         text-align: left;
+        padding-left: 10px;
+        border-bottom: 1px dashed #e0e0e0;
     }
     td[colspan="7"]::before {
-        content: ""; /* 隐藏通用行的标签 */
-        display: none;
+        content: "内容："; /* 统一用“内容”标签 */
+        float: left;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    
+    /* 突出单元格在移动端的视觉效果 */
+    .highlight {
+        background-color: #fff8f8 !important;
+        border-left: 5px solid var(--accent-color); /* 左侧粉色条 */
+        color: var(--accent-color);
     }
 }
