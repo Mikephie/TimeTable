@@ -3,117 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的每日时间表 (修正重叠)</title>
+    <title>我的每周时间表 - 蓝色主题</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="timetable-container">
-    <h1>我的每日时间表 (修正重叠)</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>时间</th>
-                <th>周一 ~ 周二、周五 ~ 周日</th>
-                <th class="highlight">周三</th>
-                <th class="highlight">周四</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>06:30 - 07:00</td>
-                <td colspan="3" data-label="安排" class="general">洗澡 (Shower)</td>
-            </tr>
-            <tr>
-                <td>07:00 - 07:25</td>
-                <td colspan="3" data-label="安排" class="general">吃饭 (Eat)</td>
-            </tr>
-            <tr>
-                <td>07:25 - 07:30</td>
-                <td colspan="3" data-label="安排" class="general">收拾书包 (Pack Bag)</td>
-            </tr>
+    <div class="main-container">
+        <h1>我的每日时间安排</h1>
+        
+        <div class="button-group">
+            <button class="day-button" data-day="mon">周一</button>
+            <button class="day-button" data-day="tue">周二</button>
+            <button class="day-button" data-day="wed">周三</button>
+            <button class="day-button" data-day="thu">周四</button>
+            <button class="day-button" data-day="fri">周五</button>
+        </div>
+
+        <div class="schedule-display">
+            <div id="default-msg" class="info-msg active">
+                请点击上方按钮查看当日时间表。
+            </div>
+
+            <div id="mon-schedule" class="schedule-card hidden">
+                <h2>周一安排</h2>
+                <ul>
+                    <li class="after-school">放学吃水果</li>
+                    <li>06:30 - 07:00：洗澡 (Shower)</li>
+                    <li>07:00 - 07:25：吃饭 (Eat)</li>
+                    <li>07:25 - 07:30：收拾书包 (Pack Bag)</li>
+                    <li>07:30 - 08:20：开始写作和学习</li>
+                    <li>08:20 - 08:30：刷牙/准备睡觉</li>
+                    <li>08:30 - 08:50：电子产品时间</li>
+                    <li>08:50 - 09:00：自由时间</li>
+                    <li class="bedtime">09:00：睡觉 (Bedtime)</li>
+                </ul>
+            </div>
+
+            <div id="wed-schedule" class="schedule-card hidden highlight">
+                <h2>周三安排 (补习日)</h2>
+                <ul>
+                    <li class="after-school">补习后吃水果</li>
+                    <li>06:30 - 07:00：洗澡 (Shower)</li>
+                    <li>07:00 - 07:25：吃饭 (Eat)</li>
+                    <li>07:25 - 07:30：收拾书包 (Pack Bag)</li>
+                    <li>07:30 - 08:10：通用写作和学习</li>
+                    <li class="detail-time">08:10 - 08:20：写作 (Write)</li>
+                    <li class="detail-time">08:20 - 08:30：学习 (Study)</li>
+                    <li class="detail-time">08:30 - 08:35：收拾书包 (Pack Bag)</li>
+                    <li class="detail-time">08:35 - 08:45：刷牙 (Brush)</li>
+                    <li class="detail-time">08:45 - 09:00：自由时间</li>
+                    <li class="bedtime">09:00：睡觉 (Bedtime)</li>
+                </ul>
+            </div>
             
-            <tr>
-                <td>07:30 - 08:10</td>
-                <td data-label="安排" class="general">开始写作和学习</td>
-                <td data-label="安排" class="general">开始写作和学习</td>
-                <td data-label="安排" class="general">开始写作和学习</td>
-            </tr>
+            <div id="thu-schedule" class="schedule-card hidden highlight">
+                <h2>周四安排</h2>
+                <ul>
+                    <li class="after-school">回家吃水果</li>
+                    <li>06:30 - 07:00：洗澡 (Shower)</li>
+                    <li>07:00 - 07:25：吃饭 (Eat)</li>
+                    <li>07:25 - 07:30：收拾书包 (Pack Bag)</li>
+                    <li>07:30 - 08:30：通用写作和学习 / 准备睡觉</li>
+                    <li class="detail-time">08:30 - 08:40：写作 (Write)</li>
+                    <li class="detail-time">08:40 - 08:45：收拾书包 (Pack Bag)</li>
+                    <li class="detail-time">08:45 - 08:55：刷牙 (Brush)</li>
+                    <li class="bedtime">08:55 - 09:00：睡觉 (Bedtime)</li>
+                </ul>
+            </div>
 
-            <tr>
-                <td>08:10 - 08:20</td>
-                <td data-label="安排" class="general">通用安排</td>
-                <td data-label="周三" class="highlight">写作 (Write)</td>
-                <td data-label="安排" class="general">通用安排</td>
-            </tr>
+            <div id="tue-schedule" class="schedule-card hidden">
+                <h2>周二安排</h2>
+                <p class="same-as">安排与周一相同。</p>
+                </div>
+            <div id="fri-schedule" class="schedule-card hidden">
+                <h2>周五安排</h2>
+                <p class="same-as">安排与周一相同。</p>
+                </div>
 
-            <tr>
-                <td>08:20 - 08:30</td>
-                <td data-label="安排" class="general">刷牙/准备睡觉</td>
-                <td data-label="周三" class="highlight">学习 (Study)</td>
-                <td data-label="安排" class="general">刷牙/准备睡觉</td>
-            </tr>
+        </div>
+    </div>
 
-            <tr>
-                <td>08:30 - 08:35</td>
-                <td data-label="安排" class="general">电子产品时间</td>
-                <td data-label="周三" class="highlight">收拾书包 (Pack Bag)</td>
-                <td data-label="周四" class="highlight">写作 (Write)</td>
-            </tr>
-
-            <tr>
-                <td>08:35 - 08:40</td>
-                <td data-label="安排" class="general">电子产品时间</td>
-                <td data-label="周三" class="highlight">刷牙 (Brush)</td>
-                <td data-label="周四" class="highlight">写作 (Write)</td>
-            </tr>
-            
-            <tr>
-                <td>08:40 - 08:45</td>
-                <td data-label="安排" class="general">电子产品时间</td>
-                <td data-label="周三" class="highlight">刷牙 (Brush)</td>
-                <td data-label="周四" class="highlight">收拾书包 (Pack Bag)</td>
-            </tr>
-            
-            <tr>
-                <td>08:45 - 08:50</td>
-                <td data-label="安排" class="general">电子产品时间</td>
-                <td data-label="周三" class="highlight">自由时间</td>
-                <td data-label="周四" class="highlight">刷牙 (Brush)</td>
-            </tr>
-            
-            <tr>
-                <td>08:50 - 08:55</td>
-                <td data-label="安排" class="general">自由时间</td>
-                <td data-label="周三" class="highlight">自由时间</td>
-                <td data-label="周四" class="highlight">刷牙 (Brush)</td>
-            </tr>
-
-            <tr>
-                <td>08:55 - 09:00</td>
-                <td data-label="安排" class="general">自由时间</td>
-                <td data-label="周三" class="highlight">自由时间</td>
-                <td data-label="周四" class="highlight">睡觉 (Bedtime)</td>
-            </tr>
-
-            <tr>
-                <td>09:00</td>
-                <td data-label="安排" class="relax">睡觉 (Bedtime)</td>
-                <td data-label="周三" class="highlight">睡觉 (Bedtime)</td>
-                <td data-label="安排" class="relax">已睡觉</td>
-            </tr>
-            
-            <tr>
-                <td>放学后 (After School)</td>
-                <td data-label="安排" class="general">回家吃水果</td>
-                <td data-label="周三" class="highlight">补习后吃水果</td>
-                <td data-label="周四" class="highlight">回家吃水果</td>
-            </tr>
-
-        </tbody>
-    </table>
-    <p style="text-align: center; margin-top: 20px; color: #555;">注：未提供具体安排的日子，使用“通用安排”填充。时间段已精确到 5 分钟。</p>
-</div>
-
+    <script src="script.js"></script>
 </body>
 </html>
