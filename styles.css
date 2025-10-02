@@ -5,6 +5,11 @@
     --bedtime-red: #ff4d4f; /* 睡觉时间红色 */
 }
 
+/* 关键样式：控制显示/隐藏 */
+.hidden {
+    display: none !important;
+}
+
 /* 基础样式和移动端适配 */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -14,7 +19,7 @@ body {
     color: #333;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* 顶部对齐 */
+    align-items: flex-start;
     min-height: 100vh;
 }
 
@@ -40,12 +45,12 @@ h1 {
     display: flex;
     justify-content: space-between;
     margin-bottom: 25px;
-    overflow-x: auto; /* 确保在小屏幕上可以横向滚动 */
+    overflow-x: auto;
     padding-bottom: 10px;
 }
 
 .day-button {
-    flex-shrink: 0; /* 防止按钮被压缩 */
+    flex-shrink: 0;
     padding: 10px 15px;
     border: none;
     border-radius: 8px;
@@ -55,7 +60,7 @@ h1 {
     font-size: 1em;
     font-weight: 600;
     transition: all 0.3s ease;
-    margin-right: 5px; /* 按钮间距 */
+    margin-right: 5px;
 }
 
 .day-button:last-child {
@@ -70,7 +75,7 @@ h1 {
 
 /* 时间表显示区域 */
 .schedule-display {
-    min-height: 300px; /* 预留空间，防止内容跳动 */
+    min-height: 300px;
 }
 
 .info-msg {
@@ -114,20 +119,20 @@ h1 {
 
 /* 特殊项目样式 */
 .schedule-card .after-school {
-    background-color: #d9f7be; /* 绿色系突出 */
+    background-color: #d9f7be; 
     font-weight: bold;
     border-left-color: #52c41a;
-    font-size: 1.1em; /* 放学吃水果更显眼 */
+    font-size: 1.1em; 
 }
 
 .schedule-card .bedtime {
-    background-color: #fcebeb; /* 浅红警告色 */
+    background-color: #fcebeb; 
     border-left-color: var(--bedtime-red);
     font-weight: bold;
 }
 
 .schedule-card .detail-time {
-    background-color: #fffae6; /* 细致安排用浅黄色区分 */
+    background-color: #fffae6; 
     border-left-color: #faad14;
 }
 
@@ -139,11 +144,6 @@ h1 {
 
 .schedule-card.highlight li {
     background-color: #fffafc;
-}
-
-/* 隐藏类 */
-.hidden {
-    display: none !important;
 }
 
 .same-as {
