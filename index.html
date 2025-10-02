@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的每周时间表 - 蓝色主题</title>
+    <title>我的每周时间表 - 最终版</title>
     
     <style>
         /* ======================================================= */
-        /* CSS 样式 (完全嵌入) */
+        /* CSS 样式 (完全嵌入 - 恢复色彩和动画) */
         /* ======================================================= */
         :root {
             --main-blue: #1a73e8; /* 主题蓝 */
             --main-dark-blue: #004d99; /* 深蓝用于标题 */
-            --soft-white: #fcfcfc; /* 柔和白色，替代纯白 */
+            --soft-white: #fcfcfc; /* 柔和白色 */
             --light-gray: #f8f8f8; /* 柔和浅灰 */
             --light-blue: #e6f7ff; /* 浅蓝背景 */
             --highlight-pink: #fff0f6; 
@@ -29,62 +29,30 @@
 
         /* --- 动画定义 --- */
         @keyframes fadeInSlide {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes breathingShadow {
-            0% {
-                box-shadow: 0 4px 12px rgba(255, 133, 192, 0.2);
-            }
-            50% {
-                box-shadow: 0 6px 15px rgba(255, 133, 192, 0.4);
-            }
-            100% {
-                box-shadow: 0 4px 12px rgba(255, 133, 192, 0.2);
-            }
-        }
-
-        @keyframes pulseBackground {
-            0% { background-color: var(--light-blue); }
-            50% { background-color: #f0f8ff; } 
-            100% { background-color: var(--light-blue); }
-        }
-
-        /* 核心修复：主背景渐变动画，确保色彩变化 */
         @keyframes background-gradient {
-            0% { background-color: #f4f7f6; } /* 浅灰白 */
-            50% { background-color: #eaf1f8; } /* 浅蓝灰色 */
+            0% { background-color: #f4f7f6; }
+            50% { background-color: #eaf1f8; } 
             100% { background-color: #f4f7f6; }
         }
 
-        /* 新增：默认信息欢迎动画 */
         @keyframes welcomeScale {
-            from {
-                opacity: 0;
-                transform: translateY(20px); 
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
 
-        /* --- 基础样式和布局压缩 (单屏优化) --- */
+        /* --- 基础样式和布局 --- */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             /* 应用背景动画 */
             background-color: #f4f7f6;
             animation: background-gradient 15s ease infinite alternate;
-            height: 100vh; /* 强制覆盖视口高度 */
-            width: 100vw;  /* 强制覆盖视口宽度 */
+            height: 100vh; 
+            width: 100vw;  
             
             margin: 0;
             padding: 10px; 
@@ -159,6 +127,7 @@
             color: var(--main-blue); 
             font-style: italic;
             font-size: 1em;
+            /* 恢复欢迎动画和图标 */
             opacity: 0;
             animation: welcomeScale 0.6s ease-out 0.8s forwards; 
         }
@@ -169,40 +138,21 @@
             margin-bottom: 5px;
         }
 
-        /* 时间表卡片样式 */
+        /* 卡片和列表项基础样式 */
         .schedule-card {
             border: 1px solid #ddd;
             padding: 10px; 
             border-radius: 8px;
             transition: opacity 0.3s ease;
-            background-color: var(--light-gray); /* 柔和浅灰色背景 */
-            
-            /* 默认状态：不占用空间，由 .hidden 类控制 */
+            background-color: var(--light-gray); 
             width: calc(100% - 20px); 
         }
 
-        /* 激活的卡片应用动画 */
         .schedule-card.active-animation {
-            /* 恢复到占据空间，并应用动画 */
             animation: fadeInSlide 0.4s ease-out forwards;
             opacity: 1;
             position: relative; 
             visibility: visible; 
-        }
-
-        .schedule-card h2 {
-            color: var(--main-blue);
-            border-bottom: 2px solid var(--light-blue);
-            padding-bottom: 5px;
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 1.4em; 
-        }
-
-        .schedule-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
         }
 
         .schedule-card li {
@@ -210,88 +160,14 @@
             margin-bottom: 5px; 
             border-radius: 5px;
             border-left: 5px solid var(--main-blue);
-            animation: pulseBackground 8s ease-in-out infinite alternate;
-            background-color: var(--soft-white); /* 列表项内部使用柔和白 */
+            background-color: var(--soft-white); 
         }
-
-        /* 列表项鼠标悬停效果 */
-        .schedule-card li:hover {
-            transform: translateX(5px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
 
         /* 特殊项目样式 */
-        .schedule-card .after-school {
-            background-color: #d9f7be; 
-            font-weight: bold;
-            border-left-color: #52c41a;
-            font-size: 1em; 
-            animation-delay: 0.1s;
-        }
+        .after-school { background-color: #d9f7be !important; border-left-color: #52c41a !important; font-weight: bold; }
+        .big-event { background-color: #ffe7ba !important; border-left-color: #fa8c16 !important; font-weight: bold; }
+        .bedtime { background-color: #fcebeb !important; border-left-color: #ff4d4f !important; font-weight: bold; }
 
-        .schedule-card .bedtime {
-            background-color: #fcebeb; 
-            border-left-color: var(--bedtime-red);
-            font-weight: bold;
-            animation-delay: 0.7s;
-        }
-
-        .schedule-card .detail-time {
-            background-color: #fffae6; 
-            border-left-color: #faad14;
-            animation-delay: 0.5s;
-        }
-
-        /* 新增：主要活动样式 */
-        .schedule-card .big-event {
-            background-color: #ffe7ba; 
-            border-left-color: #fa8c16;
-            font-weight: bold;
-            font-size: 1.15em;
-            margin-top: 15px; 
-        }
-
-        /* 周三/周四的突出样式和呼吸动画 */
-        .schedule-card.highlight {
-            background-color: var(--highlight-pink);
-            border-color: #ff85c0;
-            animation: breathingShadow 3s ease-in-out infinite alternate; 
-        }
-
-        .schedule-card.highlight li {
-            background-color: var(--soft-white);
-        }
-
-        .schedule-card.highlight li.detail-time {
-            background-color: #ffe0e9; 
-            border-left-color: #ff4d94;
-        }
-
-        .same-as {
-            text-align: center;
-            font-style: italic;
-            color: #666;
-            padding: 30px;
-        }
-
-        /* 媒体查询：应对极小屏幕，进一步压缩字体 */
-        @media (max-width: 380px) {
-            .main-container {
-                padding: 15px 10px;
-            }
-            h1 {
-                font-size: 1.6em;
-            }
-            .day-button {
-                font-size: 0.9em;
-                padding: 8px 10px;
-            }
-            .schedule-card li {
-                font-size: 0.9em;
-                padding: 6px 8px;
-            }
-        }
     </style>
 </head>
 <body>
