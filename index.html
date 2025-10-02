@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的每日时间表 (移动端适配)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="timetable-container">
+    <h1>我的每日时间表</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>时间</th>
+                <th>周一</th>
+                <th>周二</th>
+                <th class="highlight">周三</th>
+                <th class="highlight">周四</th>
+                <th>周五</th>
+                <th>周六</th>
+                <th>周日</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>06:30 - 07:00</td>
+                <td colspan="7" data-label="安排" class="general">洗澡 (Shower)</td>
+            </tr>
+            <tr>
+                <td>07:00 - 07:25</td>
+                <td colspan="7" data-label="安排" class="general">吃饭 (Eat)</td>
+            </tr>
+            <tr>
+                <td>07:25 - 07:30</td>
+                <td colspan="7" data-label="安排" class="general">收拾书包 (Pack Bag)</td>
+            </tr>
+            <tr>
+                <td>07:30 - 08:20</td>
+                <td colspan="7" data-label="安排" class="general">开始写作和学习 (Start Write & Study)</td>
+            </tr>
+            
+            <tr>
+                <td>08:10 - 08:30</td>
+                <td data-label="周一" class="general">通用安排</td>
+                <td data-label="周二" class="general">通用安排</td>
+                <td data-label="周三" class="highlight">写作 & 学习</td>
+                <td data-label="周四" class="general">通用安排</td>
+                <td data-label="周五" class="general">通用安排</td>
+                <td data-label="周六" class="general">通用安排</td>
+                <td data-label="周日" class="general">通用安排</td>
+            </tr>
+
+            <tr>
+                <td>08:30 - 08:50</td>
+                <td data-label="周一" class="general">电子产品时间</td>
+                <td data-label="周二" class="general">电子产品时间</td>
+                <td data-label="周三" class="highlight">8:30-8:45 刷牙/收拾</td>
+                <td data-label="周四" class="highlight">8:30-8:55 写作/收拾/刷牙</td>
+                <td data-label="周五" class="general">电子产品时间</td>
+                <td data-label="周六" class="general">电子产品时间</td>
+                <td data-label="周日" class="general">电子产品时间</td>
+            </tr>
+            
+            <tr>
+                <td>08:50 - 09:00</td>
+                <td data-label="周一" class="general">自由时间</td>
+                <td data-label="周二" class="general">自由时间</td>
+                <td data-label="周三" class="highlight">自由时间</td>
+                <td data-label="周四" class="highlight">9:00 睡觉</td>
+                <td data-label="周五" class="general">自由时间</td>
+                <td data-label="周六" class="general">自由时间</td>
+                <td data-label="周日" class="general">自由时间</td>
+            </tr>
+
+            <tr>
+                <td>09:00</td>
+                <td colspan="7" data-label="安排" class="relax">睡觉 (Bedtime)</td>
+            </tr>
+            
+            <tr>
+                <td>放学后 (After School)</td>
+                <td data-label="周一" class="general">吃水果</td>
+                <td data-label="周二" class="general">吃水果</td>
+                <td data-label="周三" class="highlight">补习后吃水果</td>
+                <td data-label="周四" class="highlight">回家吃水果</td>
+                <td data-label="周五" class="general">吃水果</td>
+                <td data-label="周六" class="relax">无安排</td>
+                <td data-label="周日" class="relax">无安排</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
