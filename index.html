@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,15 +8,15 @@
     
     <style>
         /* ======================================================= */
-        /* CSS 样式 (完全嵌入 - 移除卡片，内容居中) */
+        /* CSS 样式 - 小学生趣味版 */
         /* ======================================================= */
         :root {
-            --main-blue: #1a73e8; 
-            --main-dark-blue: #004d99; 
-            --soft-white: rgba(255, 255, 255, 0.95); /* 内容区使用的半透明白色 */
-            --light-blue: #e6f7ff; 
-            --highlight-pink: #fff0f6; 
-            --bedtime-red: #ff4d4f; 
+            --color-mon: #FF6B9D;
+            --color-tue: #FFA07A;
+            --color-wed: #FFD700;
+            --color-thu: #87CEEB;
+            --color-fri: #98FB98;
+            --bg-card: rgba(255, 255, 255, 0.95);
         }
 
         /* 关键样式：控制显示/隐藏 */
@@ -27,9 +28,19 @@
         }
 
         /* --- 动画定义 --- */
-        @keyframes fadeInSlide {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
 
         @keyframes bgShift {
@@ -73,14 +84,25 @@
         }
 
 
-        /* 主标题样式 */
+        /* 主标题样式 - 更可爱 */
         h1 {
             color: white; 
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); 
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4); 
             margin-bottom: 30px; 
-            font-weight: 700;
-            font-size: 2em; 
-            padding-top: 20px; /* 顶部留白 */
+            font-weight: 800;
+            font-size: 2.5em; 
+            padding-top: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        h1::before {
+            content: "🌟 ";
+            animation: rainbow 3s linear infinite;
+        }
+
+        h1::after {
+            content: " 🌟";
+            animation: rainbow 3s linear infinite;
         }
 
         /* 按钮组样式 */
@@ -97,22 +119,55 @@
 
         .day-button {
             flex-shrink: 0;
-            padding: 12px 18px; 
-            border-radius: 25px; 
-            background-color: var(--soft-white); /* 按钮使用白色，与背景形成对比 */
-            color: var(--main-dark-blue);
-            font-size: 1em; 
+            padding: 15px 25px; 
+            border-radius: 30px; 
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            color: #333;
+            font-size: 1.1em; 
+            font-weight: bold;
             transition: all 0.3s ease; 
-            border: none; 
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border: 3px solid transparent;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
         }
 
-        /* 按钮点击动画 */
-        .day-button:active { transform: scale(0.95); background-color: #d0d0d0; }
-        .day-button:hover, .day-button.active {
-            background-color: var(--main-blue);
+        .day-button:active { 
+            transform: scale(0.9) rotate(3deg); 
+        }
+        
+        .day-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .day-button[data-day="mon"]:hover, .day-button[data-day="mon"].active {
+            background: var(--color-mon);
             color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            border-color: #FF1493;
+        }
+
+        .day-button[data-day="tue"]:hover, .day-button[data-day="tue"].active {
+            background: var(--color-tue);
+            color: white;
+            border-color: #FF6347;
+        }
+
+        .day-button[data-day="wed"]:hover, .day-button[data-day="wed"].active {
+            background: var(--color-wed);
+            color: #333;
+            border-color: #FFA500;
+        }
+
+        .day-button[data-day="thu"]:hover, .day-button[data-day="thu"].active {
+            background: var(--color-thu);
+            color: white;
+            border-color: #4169E1;
+        }
+
+        .day-button[data-day="fri"]:hover, .day-button[data-day="fri"].active {
+            background: var(--color-fri);
+            color: #333;
+            border-color: #32CD32;
         }
 
         /* 时间表显示区域 */
@@ -122,52 +177,70 @@
         }
 
         .info-msg {
-            background-color: var(--soft-white); /* 提示信息半透明背景 */
-            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
             text-align: center;
-            padding: 40px 20px; 
-            color: var(--main-blue); 
-            font-style: italic;
-            font-size: 1.1em;
+            padding: 50px 30px; 
+            color: white;
+            font-size: 1.3em;
+            font-weight: bold;
             opacity: 1; 
             width: 100%;
             box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s ease-in-out infinite;
         }
         .info-msg::before {
-            content: "📅 "; 
-            font-size: 1.6em; 
+            content: "📅"; 
+            font-size: 3em; 
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            animation: bounce 1.5s ease-in-out infinite;
         }
 
-        /* 时间表内容卡片样式 (现在是半透明内容块) */
+        /* 时间表内容卡片样式 - 更可爱 */
         .schedule-card {
-            background-color: var(--soft-white); /* 统一使用半透明白色 */
-            border-radius: 10px;
-            padding: 15px; 
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 20px;
+            padding: 25px; 
             width: 100%;
             box-sizing: border-box;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 4px solid transparent;
             
             opacity: 0;
             position: absolute; 
             visibility: hidden; 
-            text-align: left; /* 恢复内部列表的左对齐 */
+            text-align: left;
         }
 
         .schedule-card.active-animation {
-            animation: fadeInSlide 0.4s ease-out forwards;
+            animation: fadeInSlide 0.5s ease-out forwards;
             opacity: 1;
             position: relative; 
             visibility: visible; 
         }
 
+        @keyframes fadeInSlide {
+            from { 
+                opacity: 0; 
+                transform: translateY(-30px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
         .schedule-card h2 {
-            color: var(--main-dark-blue);
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 5px;
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 1.5em; 
+            color: #fff;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin: -25px -25px 20px -25px;
+            font-size: 1.6em;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .schedule-card ul {
@@ -177,14 +250,82 @@
         }
 
         .schedule-card li {
-            padding: 10px 12px; 
-            margin-bottom: 8px; 
-            border-radius: 8px;
-            border-left: 6px solid var(--main-blue);
-            background-color: rgba(255, 255, 255, 0.7); /* 列表项使用更透明的白色 */
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            transition: all 0.2s ease;
+            padding: 15px 15px 15px 45px;
+            margin-bottom: 12px;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #e8f5e9, #fff);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            font-size: 1.05em;
+            font-weight: 500;
+            position: relative;
+            border-left: 5px solid #4CAF50;
         }
+
+        .schedule-card li:hover {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .schedule-card li::before {
+            position: absolute;
+            left: 12px;
+            font-size: 1.5em;
+        }
+
+        .schedule-card li:nth-child(1)::before { content: "🍎"; }
+        .schedule-card li:nth-child(2)::before { content: "🚿"; }
+        .schedule-card li:nth-child(3)::before { content: "🍽️"; }
+        .schedule-card li:nth-child(4)::before { content: "🎒"; }
+        .schedule-card li:nth-child(5)::before { content: "✏️"; }
+        .schedule-card li:nth-child(6)::before { content: "🪥"; }
+        .schedule-card li:nth-child(7)::before { content: "📱"; }
+        .schedule-card li:nth-child(8)::before { content: "🎈"; }
+        .schedule-card li:nth-child(9)::before { content: "🌙"; }
+
+        .schedule-card .bedtime {
+            background: linear-gradient(145deg, #ffe5e5, #ffcccc);
+            border-left-color: #ff4444;
+            font-weight: 700;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .schedule-card .big-event {
+            background: linear-gradient(145deg, #fff8dc, #ffd700);
+            border-left-color: #ff9800;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+
+        .schedule-card .big-event::before {
+            content: "⭐";
+        }
+
+        .schedule-card .after-school {
+            background: linear-gradient(145deg, #e1f5fe, #b3e5fc);
+            border-left-color: #03a9f4;
+        }
+
+        .schedule-card .detail-time {
+            background: linear-gradient(145deg, #f3e5f5, #e1bee7);
+            border-left-color: #9c27b0;
+        }
+
+        #wed-schedule li:nth-child(2)::before { content: "🍎"; }
+        #wed-schedule li:nth-child(3)::before { content: "🍽️"; }
+        #wed-schedule li:nth-child(4)::before { content: "✏️"; }
+        #wed-schedule li:nth-child(5)::before { content: "📖"; }
+        #wed-schedule li:nth-child(6)::before { content: "🎒"; }
+        #wed-schedule li:nth-child(7)::before { content: "🪥"; }
+        #wed-schedule li:nth-child(8)::before { content: "🎮"; }
+        #wed-schedule li:nth-child(9)::before { content: "🌙"; }
+
+        #thu-schedule li:nth-child(2)::before { content: "🍎"; }
+        #thu-schedule li:nth-child(3)::before { content: "🍽️"; }
+        #thu-schedule li:nth-child(4)::before { content: "✏️"; }
+        #thu-schedule li:nth-child(5)::before { content: "🎒"; }
+        #thu-schedule li:nth-child(6)::before { content: "🪥"; }
+        #thu-schedule li:nth-child(7)::before { content: "🌙"; }
         
         /* 媒体查询：调整移动端排版 */
         @media (max-width: 480px) {
@@ -347,3 +488,4 @@
     </script>
 </body>
 </html>
+```
