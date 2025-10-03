@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的专属动态时间表</title>
+    <title>我的每日时间安排</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
@@ -21,7 +17,6 @@
             position: relative;
             width: 100%;
             min-height: 100vh;
-            /* 你的主渐变背景 */
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             overflow: hidden;
         }
@@ -36,22 +31,10 @@
         }
 
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0) scale(1);
-                opacity: 0.3;
-            }
-            25% {
-                transform: translateY(-100px) translateX(50px) scale(1.2);
-                opacity: 0.6;
-            }
-            50% {
-                transform: translateY(-50px) translateX(-50px) scale(0.8);
-                opacity: 0.4;
-            }
-            75% {
-                transform: translateY(-150px) translateX(30px) scale(1.1);
-                opacity: 0.5;
-            }
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.3; }
+            25% { transform: translateY(-100px) translateX(50px) scale(1.2); opacity: 0.6; }
+            50% { transform: translateY(-50px) translateX(-50px) scale(0.8); opacity: 0.4; }
+            75% { transform: translateY(-150px) translateX(30px) scale(1.1); opacity: 0.5; }
         }
 
         /* 渐变光效 */
@@ -64,27 +47,18 @@
             opacity: 0.4;
             animation: glow 8s ease-in-out infinite;
         }
-
         .glow1 {
             background: radial-gradient(circle, rgba(255,107,237,0.6) 0%, transparent 70%);
-            top: -100px;
-            left: -100px;
+            top: -100px; left: -100px;
         }
-
         .glow2 {
             background: radial-gradient(circle, rgba(102,126,234,0.6) 0%, transparent 70%);
-            bottom: -100px;
-            right: -100px;
+            bottom: -100px; right: -100px;
             animation-delay: -4s;
         }
-
         @keyframes glow {
-            0%, 100% {
-                transform: scale(1) translate(0, 0);
-            }
-            50% {
-                transform: scale(1.3) translate(50px, 30px);
-            }
+            0%, 100% { transform: scale(1) translate(0, 0); }
+            50% { transform: scale(1.3) translate(50px, 30px); }
         }
 
         /* 主内容区 */
@@ -103,70 +77,46 @@
             margin: 30px 0;
             animation: fadeInDown 0.8s ease;
         }
-
         .title h1 {
             color: white;
             font-size: 28px;
             font-weight: 600;
             text-shadow: 0 2px 20px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-
-        .title-icon {
-            font-size: 32px;
-            animation: rotate 3s ease-in-out infinite;
-        }
-
-        @keyframes rotate {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(10deg); }
-        }
+        .title-icon { font-size: 32px; animation: rotate 3s ease-in-out infinite; }
+        @keyframes rotate { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(10deg); } }
 
         /* 星期导航 */
         .week-nav {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-            animation: fadeInDown 0.8s ease 0.2s both;
-            flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 10px; margin: 20px 0;
+            animation: fadeInDown 0.8s ease 0.2s both; flex-wrap: wrap;
         }
-
         .week-btn {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 25px;
             padding: 12px 20px;
-            color: white;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            color: white; font-size: 15px; font-weight: 500;
+            cursor: pointer; transition: all 0.3s ease;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
-
         .week-btn:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
         }
-
         .week-btn.active {
             background: rgba(255, 255, 255, 0.9);
-            color: #667eea;
-            font-weight: 600;
+            color: #667eea; font-weight: 600;
             box-shadow: 0 12px 40px rgba(255, 255, 255, 0.3);
         }
 
         /* 主卡片区域 */
         .main-card {
-            margin: 20px auto;
-            max-width: 700px;
-            width: 100%;
+            margin: 20px auto 100px;
+            max-width: 700px; width: 100%;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
             border-radius: 30px;
@@ -174,22 +124,16 @@
             padding: 40px;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
             animation: fadeInUp 0.8s ease 0.4s both;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 100px;
+            position: relative; overflow: hidden;
         }
 
         /* 卡片光效 */
         .card-shine {
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
             background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
             animation: shine 3s infinite;
         }
-
         @keyframes shine {
             0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
             100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
@@ -197,340 +141,114 @@
 
         /* 空状态视图 */
         .empty-state {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            position: relative; z-index: 2;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             min-height: 400px;
         }
 
         /* 日历图标区 */
         .calendar-icon {
-            width: 150px;
-            height: 150px;
-            background: white;
-            border-radius: 20px;
+            width: 150px; height: 150px; background: white; border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            animation: pulse 2s ease-in-out infinite;
-            cursor: pointer;
-            transition: transform 0.3s ease;
+            display: flex; flex-direction: column; overflow: hidden;
+            animation: pulse 2s ease-in-out infinite; cursor: pointer; transition: transform 0.3s ease;
         }
-
-        .calendar-icon:hover {
-            transform: scale(1.1) rotateY(10deg);
-        }
-
+        .calendar-icon:hover { transform: scale(1.1) rotateY(10deg); }
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 25px 80px rgba(255, 255, 255, 0.4);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 25px 80px rgba(255, 255, 255, 0.4); }
         }
-
         .calendar-header {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 12px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 1px;
+            color: white; padding: 12px; text-align: center;
+            font-size: 14px; font-weight: 600; letter-spacing: 1px;
         }
-
         .calendar-body {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 56px;
-            font-weight: 700;
-            color: #333;
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            font-size: 56px; font-weight: 700; color: #333;
         }
 
         /* 提示文字 */
-        .hint-text {
-            margin-top: 40px;
-            color: white;
-            font-size: 16px;
-            text-align: center;
-            opacity: 0.95;
-        }
+        .hint-text { margin-top: 40px; color: white; font-size: 16px; text-align: center; opacity: 0.95; }
 
-        /* 统计卡片 (简化版) */
-        .stats {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
+        /* 统计卡片 */
+        .stats { display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap; }
         .stat-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 15px 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 15px;
+            padding: 15px 25px; text-align: center; transition: all 0.3s ease; cursor: pointer;
         }
-
-        .stat-card:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-5px);
-        }
-
-        .stat-number {
-            color: white;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 12px;
-        }
+        .stat-card:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-5px); }
+        .stat-number { color: white; font-size: 28px; font-weight: 700; margin-bottom: 5px; }
+        .stat-label { color: rgba(255, 255, 255, 0.9); font-size: 12px; }
 
         /* 时间表内容 */
-        .schedule-content {
-            position: relative;
-            z-index: 2;
-            display: none;
-        }
-
-        .schedule-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .schedule-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .schedule-date {
-            color: white;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .schedule-day {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 16px;
-        }
+        .schedule-content { position: relative; z-index: 2; display: none; }
+        .schedule-content.active { display: block; animation: fadeIn 0.5s ease; }
+        .schedule-header { text-align: center; margin-bottom: 30px; }
+        .schedule-date { color: white; font-size: 24px; font-weight: 600; margin-bottom: 10px; }
+        .schedule-day { color: rgba(255, 255, 255, 0.9); font-size: 16px; }
 
         /* 时间线 */
-        .timeline {
-            position: relative;
-        }
-
+        .timeline { position: relative; }
         .timeline-item {
-            position: relative;
-            padding-left: 40px;
-            margin-bottom: 30px;
-            animation: slideInLeft 0.5s ease;
+            position: relative; padding-left: 40px; margin-bottom: 30px; animation: slideInLeft 0.5s ease;
         }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
         .timeline-dot {
-            position: absolute;
-            left: 0;
-            top: 5px;
-            width: 20px;
-            height: 20px;
+            position: absolute; left: 0; top: 5px; width: 20px; height: 20px;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(245, 87, 108, 0.6);
-            z-index: 2;
+            border-radius: 50%; box-shadow: 0 0 20px rgba(245, 87, 108, 0.6); z-index: 2;
         }
-
         .timeline-dot::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
+            content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            width: 8px; height: 8px; background: white; border-radius: 50%;
         }
-        
-        /* 特殊点样式 */
-        .timeline-dot.tag-study { background: linear-gradient(135deg, #ffe066 0%, #ffc000 100%); }
-        .timeline-dot.tag-sport { background: linear-gradient(135deg, #4dff88 0%, #00b33c 100%); }
-        .timeline-dot.tag-tuition { background: linear-gradient(135deg, #ff80b3 0%, #cc0052 100%); }
-
         .timeline-line {
-            position: absolute;
-            left: 9px;
-            top: 25px;
-            width: 2px;
-            height: calc(100% + 5px);
+            position: absolute; left: 9px; top: 25px; width: 2px; height: calc(100% + 5px);
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
         }
-
         .timeline-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 15px;
+            padding: 20px; transition: all 0.3s ease; cursor: pointer;
         }
-
-        .timeline-card:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateX(5px);
-        }
-
-        .timeline-time {
-            color: #f5576c;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .timeline-time.time-bed {
-             color: #667eea;
-        }
-
-
-        .timeline-title {
-            color: white;
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .timeline-desc {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .timeline-tags {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-
-        /* 标签颜色定义 */
-        .tag {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-        .tag-rest { background: rgba(0, 179, 115, 0.5); }
-        .tag-study { background: rgba(255, 192, 0, 0.5); }
-        .tag-duty { background: rgba(255, 128, 179, 0.5); }
-        .tag-prep { background: rgba(102, 126, 234, 0.5); }
-
+        .timeline-card:hover { background: rgba(255, 255, 255, 0.25); transform: translateX(5px); }
+        .timeline-time { color: #f5576c; font-size: 14px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+        .timeline-title { color: white; font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .timeline-desc { color: rgba(255, 255, 255, 0.9); font-size: 14px; line-height: 1.6; }
+        .timeline-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+        .tag { background: rgba(255, 255, 255, 0.2); color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500; }
 
         /* 浮动动作按钮 */
         .fab {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
-            animation: bounce 2s ease-in-out infinite;
-            z-index: 100;
-            border: none;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 28px; cursor: pointer; box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            animation: bounce 2s ease-in-out infinite; z-index: 100; border: none;
         }
-
-        .fab:hover {
-            transform: scale(1.1);
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
+        .fab:hover { transform: scale(1.1); }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         /* 动画关键帧 */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- 背景光效 -->
         <div class="glow glow1"></div>
         <div class="glow glow2"></div>
 
+        <!-- 动态粒子 -->
         <div id="particles"></div>
 
+        <!-- 主内容 -->
         <div class="content">
+            <!-- 标题 -->
             <div class="title">
                 <h1>
                     <span class="title-icon">💫</span>
@@ -539,6 +257,7 @@
                 </h1>
             </div>
 
+            <!-- 星期导航 -->
             <div class="week-nav">
                 <button class="week-btn" data-day="monday">周一</button>
                 <button class="week-btn" data-day="tuesday">周二</button>
@@ -547,218 +266,185 @@
                 <button class="week-btn" data-day="friday">周五</button>
             </div>
 
+            <!-- 主卡片 -->
             <div class="main-card">
                 <div class="card-shine"></div>
                 
-                <div class="empty-state" id="emptyState" style="display: none;">
+                <!-- 空状态 -->
+                <div class="empty-state" id="emptyState">
                     <div class="calendar-icon">
-                        <div class="calendar-header">OCT 十月</div>
-                        <div class="calendar-body">3</div>
+                        <div class="calendar-header">JUL 七月</div>
+                        <div class="calendar-body">17</div>
                     </div>
-                    <div class="hint-text">
-                        请点击上方按钮查看当日的时间表。
+
+                    <div class="hint-text">请点击上方按钮查看当日的时间表。</div>
+
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">今日待办</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">进行中</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">本周完成</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="schedule-content active" id="scheduleContent">
+                <!-- 时间表内容 -->
+                <div class="schedule-content" id="scheduleContent">
                     <div class="schedule-header">
-                        <div class="schedule-date" id="scheduleDate"></div>
-                        <div class="schedule-day">今天共有 <span id="taskCount"></span> 项安排</div>
+                        <div class="schedule-date" id="scheduleDate">10月3日 周三</div>
+                        <div class="schedule-day">今天共有 <span id="taskCount">5</span> 项安排</div>
                     </div>
 
-                    <div class="timeline" id="timeline">
-                        </div>
+                    <div class="timeline" id="timeline"><!-- 由 JS 动态生成 --></div>
                 </div>
             </div>
         </div>
 
+        <!-- 浮动按钮 -->
         <button class="fab" title="添加新日程">➕</button>
     </div>
 
-<script>
-    // 时间表数据 - 替换为你的真实数据
-    const scheduleData = {
-        // 通用作息时间
-        common_morning: [
-            { time: '06:30 - 07:00', title: '洗澡 (Shower)', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '07:00 - 07:25', title: '吃饭 (Eat)', tags: ['日常', '休息'], dotClass: 'tag-rest' },
-            { time: '07:25 - 07:30', title: '收拾书包 (Pack Bag)', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '07:30 - 08:20', title: '开始写作和学习', tags: ['学习', '专注'], dotClass: 'tag-study' }
-        ],
-        common_evening: [
-            { time: '08:20 - 08:30', title: '刷牙/准备睡觉', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '08:30 - 08:50', title: '电子产品时间 (Gadget)', tags: ['娱乐', '休息'], dotClass: 'tag-rest' },
-            { time: '08:50 - 09:00', title: '自由时间', tags: ['休息'], dotClass: 'tag-rest' },
-            { time: '09:00', title: '睡觉 (Bedtime)', tags: ['休息'], dotClass: 'tag-rest', isBedtime: true }
-        ],
-
-        // 周一日程 (通用作息)
-        monday: [
-            { time: '放学后', title: '吃水果', tags: ['日常', '休息'], dotClass: 'tag-rest' },
-            ...Array.from({length: 4}, (v, i) => scheduleData.common_morning[i]),
-            ...Array.from({length: 4}, (v, i) => scheduleData.common_evening[i]),
-        ],
-
-        // 周三日程 (补习日)
-        wednesday: [
-            // 上午通用
-            { time: '06:30 - 07:00', title: '洗澡 (Shower)', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '07:00 - 07:25', title: '吃饭 (Eat)', tags: ['日常', '休息'], dotClass: 'tag-rest' },
-            { time: '07:25 - 07:30', title: '收拾书包 (Pack Bag)', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            
-            // 下午特定活动
-            { time: '04:15 - 07:30', title: '补习 (Tuition)', tags: ['学习', '特定'], dotClass: 'tag-tuition' },
-            { time: '07:30 - 08:10', title: '回家/吃饭/收拾/准备', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '放学后', title: '补习后吃水果', tags: ['日常', '休息'], dotClass: 'tag-rest' },
-            
-            // 晚上精确作息
-            { time: '08:10 - 08:20', title: '写作 (Write)', tags: ['学习', '专注'], dotClass: 'tag-study' },
-            { time: '08:20 - 08:30', title: '学习 (Study)', tags: ['学习', '专注'], dotClass: 'tag-study' },
-            { time: '08:30 - 08:35', title: '收拾书包 (Pack Bag)', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '08:35 - 08:45', title: '刷牙 (Brush)', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '08:45 - 09:00', title: '自由时间', tags: ['休息'], dotClass: 'tag-rest' },
-            { time: '09:00', title: '睡觉 (Bedtime)', tags: ['休息'], dotClass: 'tag-rest', isBedtime: true }
-        ],
-
-        // 周四日程 (跆拳道日)
-        thursday: [
-            // 上午通用
-            { time: '06:30 - 07:00', title: '洗澡 (Shower)', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '07:00 - 07:25', title: '吃饭 (Eat)', tags: ['日常', '休息'], dotClass: 'tag-rest' },
-            { time: '07:25 - 07:30', title: '收拾书包 (Pack Bag)', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '07:30 - 08:00', title: '通用学习 / 准备', tags: ['学习', '准备'], dotClass: 'tag-study' },
-            
-            // 下午特定活动
-            { time: '05:15 - 08:00', title: '跆拳道 (Taekwondo)', tags: ['运动', '特定'], dotClass: 'tag-sport' },
-            { time: '08:00 - 08:30', title: '回家/吃饭/准备', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '放学后', title: '回家吃水果', tags: ['日常', '休息'], dotClass: 'tag-rest' },
-            
-            // 晚上精确作息
-            { time: '08:30 - 08:40', title: '写作 (Write)', tags: ['学习', '专注'], dotClass: 'tag-study' },
-            { time: '08:40 - 08:45', title: '收拾书包 (Pack Bag)', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '08:45 - 08:55', title: '刷牙 (Brush)', tags: ['日常', '准备'], dotClass: 'tag-prep' },
-            { time: '08:55 - 09:00', title: '睡觉 (Bedtime)', tags: ['休息'], dotClass: 'tag-rest', isBedtime: true }
-        ],
-
-        // 周二/周五直接使用周一作息
-        tuesday: [
-             { time: '放学后', title: '吃水果', tags: ['日常', '休息'], dotClass: 'tag-rest' },
-            ...Array.from({length: 4}, (v, i) => scheduleData.common_morning[i]),
-            ...Array.from({length: 4}, (v, i) => scheduleData.common_evening[i]),
-        ],
-        friday: [
-            { time: '放学后', title: '吃水果', tags: ['日常', '休息'], dotClass: 'tag-rest' },
-            ...Array.from({length: 4}, (v, i) => scheduleData.common_morning[i]),
-            ...Array.from({length: 4}, (v, i) => scheduleData.common_evening[i]),
-        ]
-    };
-
-    // 创建动态粒子
-    function createParticles() {
-        const container = document.getElementById('particles');
-        if (!container) return; // 安全检查
-        for (let i = 0; i < 30; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            const size = Math.random() * 60 + 20;
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.top = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 20 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-            
-            container.appendChild(particle);
-        }
-    }
-
-    // 渲染时间表
-    function renderSchedule(day) {
-        const timeline = document.getElementById('timeline');
-        const schedule = scheduleData[day];
-        
-        // 确保日程是按照时间排序的 (虽然数据已手动排序，但这是一个好习惯)
-        // schedule.sort((a, b) => a.time.localeCompare(b.time)); 
-        
-        timeline.innerHTML = '';
-        
-        schedule.forEach((item, index) => {
-            const timelineItem = document.createElement('div');
-            timelineItem.className = 'timeline-item';
-            timelineItem.style.animationDelay = (index * 0.1) + 's';
-            
-            // 标签处理
-            const tagsHtml = item.tags.map(tag => {
-                let tagClass = tag.toLowerCase().replace(/[^a-z0-9]/g, '');
-                return `<span class="tag tag-${tagClass}">${tag}</span>`;
-            }).join('');
-            
-            const isBedtime = item.isBedtime ? ' time-bed' : '';
-            const dotClass = item.dotClass || '';
-            
-            timelineItem.innerHTML = `
-                <div class="timeline-dot ${dotClass}"></div>
-                ${index < schedule.length - 1 ? '<div class="timeline-line"></div>' : ''}
-                <div class="timeline-card">
-                    <div class="timeline-time 🕐${isBedtime}"> ${item.time}</div>
-                    <div class="timeline-title">${item.title}</div>
-                    <div class="timeline-tags">${tagsHtml}</div>
-                </div>
-            `;
-            
-            timeline.appendChild(timelineItem);
-        });
-        
-        document.getElementById('taskCount').textContent = schedule.length;
-    }
-
-    // 更新日期显示
-    function updateDateDisplay(day) {
-        const dayMap = {
-            monday: '周一',
-            tuesday: '周二',
-            wednesday: '周三',
-            thursday: '周四',
-            friday: '周五'
+    <script>
+        // ====== 用你的“拟定时间表”替换：保持结构不变，仅替换数据 ======
+        const scheduleData = {
+            monday: [
+                { time: '放学后',         title: '吃水果',           desc: '放学后补充维生素与能量',             tags: ['放学', '习惯'] },
+                { time: '06:30 - 07:00', title: '洗澡 (Shower)',    desc: '清洁放松，准备晚上学习',             tags: ['卫生'] },
+                { time: '07:00 - 07:25', title: '吃饭 (Eat)',       desc: '营养均衡的晚餐',                     tags: ['用餐'] },
+                { time: '07:25 - 07:30', title: '收拾书包',          desc: '准备好第二天需要的学习用品',          tags: ['整理'] },
+                { time: '07:30 - 08:20', title: '写作与学习',        desc: '专注完成当天写作与学习任务',          tags: ['学习', '专注'] },
+                { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉',   desc: '睡前清洁，进入休息模式',              tags: ['卫生', '就寝前'] },
+                { time: '08:30 - 08:50', title: '电子产品时间',       desc: '有节制地使用电子产品放松',            tags: ['放松', '电子'] },
+                { time: '08:50 - 09:00', title: '自由时间',          desc: '随心安排片刻自由',                    tags: ['放松'] },
+                { time: '09:00',         title: '睡觉 (Bedtime)',   desc: '按时入睡，保证充足睡眠',              tags: ['就寝'] }
+            ],
+            tuesday: [
+                { time: '放学后',         title: '吃水果',           desc: '放学后补充维生素与能量',             tags: ['放学', '习惯'] },
+                { time: '06:30 - 07:00', title: '洗澡 (Shower)',    desc: '清洁放松，准备晚上学习',             tags: ['卫生'] },
+                { time: '07:00 - 07:25', title: '吃饭 (Eat)',       desc: '营养均衡的晚餐',                     tags: ['用餐'] },
+                { time: '07:25 - 07:30', title: '收拾书包',          desc: '准备好第二天需要的学习用品',          tags: ['整理'] },
+                { time: '07:30 - 08:20', title: '写作与学习',        desc: '专注完成当天写作与学习任务',          tags: ['学习', '专注'] },
+                { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉',   desc: '睡前清洁，进入休息模式',              tags: ['卫生', '就寝前'] },
+                { time: '08:30 - 08:50', title: '电子产品时间',       desc: '有节制地使用电子产品放松',            tags: ['放松', '电子'] },
+                { time: '08:50 - 09:00', title: '自由时间',          desc: '随心安排片刻自由',                    tags: ['放松'] },
+                { time: '09:00',         title: '睡觉 (Bedtime)',   desc: '按时入睡，保证充足睡眠',              tags: ['就寝'] }
+            ],
+            wednesday: [
+                { time: '04:15 - 07:30', title: '补习 (Tuition)',    desc: '重点补强与巩固知识',                 tags: ['补习', '重要'] },
+                { time: '补习后',         title: '吃水果',           desc: '补习后补充能量',                     tags: ['补习后', '习惯'] },
+                { time: '07:30 - 08:10', title: '吃饭 / 收拾 / 准备', desc: '补充能量并整理状态',                 tags: ['用餐', '整理'] },
+                { time: '08:10 - 08:20', title: '写作 (Write)',      desc: '完成当日写作任务',                   tags: ['写作', '学习'] },
+                { time: '08:20 - 08:30', title: '学习 (Study)',      desc: '短时高效巩固',                       tags: ['学习', '专注'] },
+                { time: '08:30 - 08:35', title: '收拾书包',          desc: '为第二天做好准备',                   tags: ['整理'] },
+                { time: '08:35 - 08:45', title: '刷牙 (Brush)',      desc: '睡前清洁',                           tags: ['卫生'] },
+                { time: '08:45 - 09:00', title: '自由时间',          desc: '轻松片刻',                           tags: ['放松'] },
+                { time: '09:00',         title: '睡觉 (Bedtime)',   desc: '按时入睡',                           tags: ['就寝'] }
+            ],
+            thursday: [
+                { time: '05:15 - 08:00', title: '跆拳道 (Taekwondo)', desc: '锻炼体魄与意志',                    tags: ['运动', '训练'] },
+                { time: '回家后',         title: '吃水果',            desc: '运动后补充能量',                    tags: ['习惯'] },
+                { time: '08:00 - 08:30', title: '吃饭 / 准备',        desc: '补充能量并整理状态',                 tags: ['用餐', '整理'] },
+                { time: '08:30 - 08:40', title: '写作 (Write)',       desc: '短时写作练习',                      tags: ['写作'] },
+                { time: '08:40 - 08:45', title: '收拾书包',           desc: '准备好第二天的用品',                tags: ['整理'] },
+                { time: '08:45 - 08:55', title: '刷牙 (Brush)',       desc: '睡前清洁',                          tags: ['卫生'] },
+                { time: '08:55 - 09:00', title: '睡觉 (Bedtime)',    desc: '按时入睡',                          tags: ['就寝'] }
+            ],
+            friday: [
+                { time: '放学后',         title: '吃水果',           desc: '放学后补充维生素与能量',             tags: ['放学', '习惯'] },
+                { time: '06:30 - 07:00', title: '洗澡 (Shower)',    desc: '清洁放松，准备晚上学习',             tags: ['卫生'] },
+                { time: '07:00 - 07:25', title: '吃饭 (Eat)',       desc: '营养均衡的晚餐',                     tags: ['用餐'] },
+                { time: '07:25 - 07:30', title: '收拾书包',          desc: '准备好第二天需要的学习用品',          tags: ['整理'] },
+                { time: '07:30 - 08:20', title: '写作与学习',        desc: '专注完成当天写作与学习任务',          tags: ['学习', '专注'] },
+                { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉',   desc: '睡前清洁，进入休息模式',              tags: ['卫生', '就寝前'] },
+                { time: '08:30 - 08:50', title: '电子产品时间',       desc: '有节制地使用电子产品放松',            tags: ['放松', '电子'] },
+                { time: '08:50 - 09:00', title: '自由时间',          desc: '随心安排片刻自由',                    tags: ['放松'] },
+                { time: '09:00',         title: '睡觉 (Bedtime)',   desc: '按时入睡，保证充足睡眠',              tags: ['就寝'] }
+            ]
         };
-        const date = new Date();
-        const month = date.getMonth() + 1;
-        const dayOfMonth = date.getDate();
-        
-        document.getElementById('scheduleDate').textContent = `${month}月${dayOfMonth}日 ${dayMap[day]}`;
-    }
 
-    // 星期按钮点击事件
-    document.querySelectorAll('.week-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const day = this.getAttribute('data-day');
-            
-            // 更新按钮状态
-            document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            
-            // 显示时间表，隐藏空状态
-            document.getElementById('emptyState').style.display = 'none';
-            const scheduleContent = document.getElementById('scheduleContent');
-            scheduleContent.classList.add('active');
-            
-            // 渲染时间表
-            renderSchedule(day);
-            updateDateDisplay(day);
+        // 创建动态粒子
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 60 + 20;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // 渲染时间表
+        function renderSchedule(day) {
+            const timeline = document.getElementById('timeline');
+            const schedule = scheduleData[day] || [];
+            timeline.innerHTML = '';
+
+            schedule.forEach((item, index) => {
+                const el = document.createElement('div');
+                el.className = 'timeline-item';
+                el.style.animationDelay = (index * 0.08) + 's';
+
+                const tagsHtml = (item.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('');
+                el.innerHTML = `
+                    <div class="timeline-dot"></div>
+                    ${index < schedule.length - 1 ? '<div class="timeline-line"></div>' : ''}
+                    <div class="timeline-card">
+                        <div class="timeline-time">🕐 ${item.time}</div>
+                        <div class="timeline-title">${item.title}</div>
+                        ${item.desc ? `<div class="timeline-desc">${item.desc}</div>` : ''}
+                        ${tagsHtml ? `<div class="timeline-tags">${tagsHtml}</div>` : ''}
+                    </div>
+                `;
+                timeline.appendChild(el);
+            });
+
+            document.getElementById('taskCount').textContent = schedule.length;
+        }
+
+        // 更新日期显示（保持原结构）
+        function updateDateDisplay(day) {
+            const dayMap = { monday: '周一', tuesday: '周二', wednesday: '周三', thursday: '周四', friday: '周五' };
+            document.getElementById('scheduleDate').textContent = `10月 ${dayMap[day]}`;
+        }
+
+        // 星期按钮点击事件
+        document.querySelectorAll('.week-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const day = this.getAttribute('data-day');
+                document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // 显示时间表，隐藏空状态
+                document.getElementById('emptyState').style.display = 'none';
+                const scheduleContent = document.getElementById('scheduleContent');
+                scheduleContent.classList.add('active');
+
+                // 渲染时间表
+                renderSchedule(day);
+                updateDateDisplay(day);
+            });
         });
-    });
 
-    // 浮动按钮点击事件
-    document.querySelector('.fab').addEventListener('click', function() {
-        alert('添加新日程功能\n\n可以在这里添加：\n• 新的日程安排\n• 设置提醒\n• 标记重要事项');
-    });
+        // 浮动按钮点击事件（占位）
+        document.querySelector('.fab').addEventListener('click', function () {
+            alert('添加新日程功能\n\n可以在这里添加：\n• 新的日程安排\n• 设置提醒\n• 标记重要事项');
+        });
 
-    // 初始化：默认显示周三 (第一个按钮是周一，默认激活的是周三)
-    createParticles();
-    const defaultDay = 'wednesday';
-    document.querySelector(`.week-btn[data-day="${defaultDay}"]`).click();
-
-</script>
+        // 初始化：创建粒子
+        createParticles();
+    </script>
 </body>
 </html>
