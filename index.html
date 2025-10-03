@@ -15,14 +15,14 @@
 ```
     body {
         font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-        overflow: hidden;
-        height: 100vh;
+        overflow-x: hidden;
+        min-height: 100vh;
     }
 
     .container {
         position: relative;
         width: 100%;
-        height: 100vh;
+        min-height: 100vh;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
         overflow: hidden;
     }
@@ -93,7 +93,7 @@
         position: relative;
         z-index: 10;
         padding: 20px;
-        height: 100%;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
     }
@@ -133,6 +133,7 @@
         gap: 10px;
         margin: 20px 0;
         animation: fadeInDown 0.8s ease 0.2s both;
+        flex-wrap: wrap;
     }
 
     .week-btn {
@@ -164,23 +165,19 @@
 
     /* 主卡片区域 */
     .main-card {
-        flex: 1;
         margin: 20px auto;
-        max-width: 600px;
+        max-width: 700px;
         width: 100%;
         background: rgba(255, 255, 255, 0.1);
         backdrop-filter: blur(20px);
         border-radius: 30px;
         border: 1px solid rgba(255, 255, 255, 0.2);
         padding: 40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
         box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
         animation: fadeInUp 0.8s ease 0.4s both;
         position: relative;
         overflow: hidden;
+        margin-bottom: 100px;
     }
 
     /* 卡片光效 */
@@ -199,10 +196,19 @@
         100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
     }
 
-    /* 日历图标区 */
-    .calendar-icon {
+    /* 空状态视图 */
+    .empty-state {
         position: relative;
         z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+    }
+
+    /* 日历图标区 */
+    .calendar-icon {
         width: 150px;
         height: 150px;
         background: white;
@@ -253,24 +259,20 @@
 
     /* 提示文字 */
     .hint-text {
-        position: relative;
-        z-index: 2;
         margin-top: 40px;
         color: white;
         font-size: 16px;
         text-align: center;
         opacity: 0.95;
-        animation: fadeIn 1s ease 0.8s both;
     }
 
     /* 统计卡片 */
     .stats {
-        position: relative;
-        z-index: 2;
         display: flex;
         gap: 15px;
         margin-top: 30px;
-        animation: fadeIn 1s ease 1s both;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     .stat-card {
@@ -301,9 +303,148 @@
         font-size: 12px;
     }
 
+    /* 时间表内容 */
+    .schedule-content {
+        position: relative;
+        z-index: 2;
+        display: none;
+    }
+
+    .schedule-content.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .schedule-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .schedule-date {
+        color: white;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .schedule-day {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 16px;
+    }
+
+    /* 时间线 */
+    .timeline {
+        position: relative;
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-left: 40px;
+        margin-bottom: 30px;
+        animation: slideInLeft 0.5s ease;
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .timeline-dot {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border-radius: 50%;
+        box-shadow: 0 0 20px rgba(245, 87, 108, 0.6);
+        z-index: 2;
+    }
+
+    .timeline-dot::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        background: white;
+        border-radius: 50%;
+    }
+
+    .timeline-line {
+        position: absolute;
+        left: 9px;
+        top: 25px;
+        width: 2px;
+        height: calc(100% + 5px);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
+    }
+
+    .timeline-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .timeline-card:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateX(5px);
+    }
+
+    .timeline-time {
+        color: #f5576c;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .timeline-title {
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .timeline-desc {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .timeline-tags {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+    }
+
+    .tag {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
     /* 浮动动作按钮 */
     .fab {
-        position: absolute;
+        position: fixed;
         bottom: 30px;
         right: 30px;
         width: 60px;
@@ -319,6 +460,7 @@
         box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
         animation: bounce 2s ease-in-out infinite;
         z-index: 100;
+        border: none;
     }
 
     .fab:hover {
@@ -392,51 +534,102 @@
 
         <!-- 星期导航 -->
         <div class="week-nav">
-            <button class="week-btn">周一</button>
-            <button class="week-btn">周二</button>
-            <button class="week-btn active">周三</button>
-            <button class="week-btn">周四</button>
-            <button class="week-btn">周五</button>
+            <button class="week-btn" data-day="monday">周一</button>
+            <button class="week-btn" data-day="tuesday">周二</button>
+            <button class="week-btn active" data-day="wednesday">周三</button>
+            <button class="week-btn" data-day="thursday">周四</button>
+            <button class="week-btn" data-day="friday">周五</button>
         </div>
 
         <!-- 主卡片 -->
         <div class="main-card">
             <div class="card-shine"></div>
             
-            <!-- 日历图标 -->
-            <div class="calendar-icon">
-                <div class="calendar-header">JUL 七月</div>
-                <div class="calendar-body">17</div>
+            <!-- 空状态 -->
+            <div class="empty-state" id="emptyState">
+                <div class="calendar-icon">
+                    <div class="calendar-header">JUL 七月</div>
+                    <div class="calendar-body">17</div>
+                </div>
+
+                <div class="hint-text">
+                    请点击上方按钮查看当日的时间表。
+                </div>
+
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">今日待办</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">进行中</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">本周完成</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- 提示文字 -->
-            <div class="hint-text">
-                请点击上方按钮查看当日的时间表。
-            </div>
+            <!-- 时间表内容 -->
+            <div class="schedule-content" id="scheduleContent">
+                <div class="schedule-header">
+                    <div class="schedule-date" id="scheduleDate">10月3日 周三</div>
+                    <div class="schedule-day">今天共有 <span id="taskCount">5</span> 项安排</div>
+                </div>
 
-            <!-- 统计卡片 -->
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-number">5</div>
-                    <div class="stat-label">今日待办</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">3</div>
-                    <div class="stat-label">进行中</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">本周完成</div>
+                <div class="timeline" id="timeline">
+                    <!-- 时间线项目将通过 JS 动态生成 -->
                 </div>
             </div>
         </div>
     </div>
 
     <!-- 浮动按钮 -->
-    <div class="fab" title="添加新日程">➕</div>
+    <button class="fab" title="添加新日程">➕</button>
 </div>
 
 <script>
+    // 时间表数据
+    const scheduleData = {
+        monday: [
+            { time: '08:00 - 09:00', title: '晨间会议', desc: '团队周例会，讨论本周工作计划', tags: ['工作', '重要'] },
+            { time: '09:30 - 11:30', title: '项目开发', desc: '完成用户界面设计和前端开发', tags: ['开发', '专注'] },
+            { time: '12:00 - 13:00', title: '午餐时间', desc: '和同事一起午餐，放松休息', tags: ['休息'] },
+            { time: '14:00 - 16:00', title: '客户沟通', desc: '与客户讨论需求变更和时间安排', tags: ['会议', '重要'] },
+            { time: '16:30 - 18:00', title: '代码审查', desc: '审查团队成员提交的代码', tags: ['工作'] }
+        ],
+        tuesday: [
+            { time: '08:30 - 10:00', title: '学习时间', desc: '学习新技术框架和最佳实践', tags: ['学习', '个人'] },
+            { time: '10:30 - 12:00', title: '产品设计', desc: '设计新功能的用户体验流程', tags: ['设计', '创意'] },
+            { time: '12:00 - 13:00', title: '午餐', desc: '享用美味午餐', tags: ['休息'] },
+            { time: '14:00 - 15:30', title: '技术分享', desc: '参加技术分享会，学习前沿技术', tags: ['学习', '团队'] },
+            { time: '16:00 - 18:00', title: '项目推进', desc: '继续完成项目核心功能开发', tags: ['开发', '专注'] }
+        ],
+        wednesday: [
+            { time: '09:00 - 10:30', title: '需求分析', desc: '分析新项目需求，制定开发计划', tags: ['规划', '重要'] },
+            { time: '11:00 - 12:00', title: '团队协作', desc: '与设计师讨论界面方案', tags: ['团队', '创意'] },
+            { time: '12:00 - 13:00', title: '午餐时间', desc: '休息充电', tags: ['休息'] },
+            { time: '14:00 - 16:30', title: '编程开发', desc: '实现核心业务逻辑和数据处理', tags: ['开发', '专注'] },
+            { time: '17:00 - 18:00', title: '每日总结', desc: '整理今日工作成果，规划明日任务', tags: ['总结'] }
+        ],
+        thursday: [
+            { time: '08:00 - 09:30', title: '早间复盘', desc: '回顾本周进度，调整工作重点', tags: ['规划'] },
+            { time: '10:00 - 12:00', title: '功能测试', desc: '测试新开发的功能模块', tags: ['测试', '质量'] },
+            { time: '12:00 - 13:00', title: '午餐', desc: '午间休息', tags: ['休息'] },
+            { time: '13:30 - 15:30', title: '文档编写', desc: '完善项目技术文档和API文档', tags: ['文档', '工作'] },
+            { time: '16:00 - 18:00', title: '代码优化', desc: '优化代码性能和用户体验', tags: ['开发', '优化'] }
+        ],
+        friday: [
+            { time: '09:00 - 11:00', title: '周总结会', desc: '总结本周工作，分享经验心得', tags: ['会议', '总结'] },
+            { time: '11:30 - 12:30', title: '技术研讨', desc: '讨论技术难题和解决方案', tags: ['学习', '团队'] },
+            { time: '12:30 - 13:30', title: '午餐', desc: '周五放松午餐', tags: ['休息'] },
+            { time: '14:00 - 16:00', title: '项目收尾', desc: '完成本周开发任务', tags: ['开发'] },
+            { time: '16:30 - 18:00', title: '周末规划', desc: '规划下周工作和个人学习', tags: ['规划', '个人'] }
+        ]
+    };
+
     // 创建动态粒子
     function createParticles() {
         const container = document.getElementById('particles');
@@ -456,25 +649,72 @@
         }
     }
 
-    // 星期按钮点击效果
+    // 渲染时间表
+    function renderSchedule(day) {
+        const timeline = document.getElementById('timeline');
+        const schedule = scheduleData[day];
+        
+        timeline.innerHTML = '';
+        
+        schedule.forEach((item, index) => {
+            const timelineItem = document.createElement('div');
+            timelineItem.className = 'timeline-item';
+            timelineItem.style.animationDelay = (index * 0.1) + 's';
+            
+            const tagsHtml = item.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+            
+            timelineItem.innerHTML = `
+                <div class="timeline-dot"></div>
+                ${index < schedule.length - 1 ? '<div class="timeline-line"></div>' : ''}
+                <div class="timeline-card">
+                    <div class="timeline-time">🕐 ${item.time}</div>
+                    <div class="timeline-title">${item.title}</div>
+                    <div class="timeline-desc">${item.desc}</div>
+                    <div class="timeline-tags">${tagsHtml}</div>
+                </div>
+            `;
+            
+            timeline.appendChild(timelineItem);
+        });
+        
+        document.getElementById('taskCount').textContent = schedule.length;
+    }
+
+    // 更新日期显示
+    function updateDateDisplay(day) {
+        const dayMap = {
+            monday: '周一',
+            tuesday: '周二',
+            wednesday: '周三',
+            thursday: '周四',
+            friday: '周五'
+        };
+        document.getElementById('scheduleDate').textContent = `10月 ${dayMap[day]}`;
+    }
+
+    // 星期按钮点击事件
     document.querySelectorAll('.week-btn').forEach(btn => {
         btn.addEventListener('click', function() {
+            const day = this.getAttribute('data-day');
+            
+            // 更新按钮状态
             document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
+            
+            // 显示时间表，隐藏空状态
+            document.getElementById('emptyState').style.display = 'none';
+            const scheduleContent = document.getElementById('scheduleContent');
+            scheduleContent.classList.add('active');
+            
+            // 渲染时间表
+            renderSchedule(day);
+            updateDateDisplay(day);
         });
     });
 
-    // 日历图标点击效果
-    document.querySelector('.calendar-icon').addEventListener('click', function() {
-        this.style.animation = 'none';
-        setTimeout(() => {
-            this.style.animation = 'pulse 2s ease-in-out infinite';
-        }, 10);
-    });
-
-    // 浮动按钮点击效果
+    // 浮动按钮点击事件
     document.querySelector('.fab').addEventListener('click', function() {
-        alert('添加新日程功能');
+        alert('添加新日程功能\n\n可以在这里添加：\n• 新的日程安排\n• 设置提醒\n• 标记重要事项');
     });
 
     // 初始化
