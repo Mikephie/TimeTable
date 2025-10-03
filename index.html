@@ -1,546 +1,486 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>我的每周时间表 - 单屏版</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的每日时间安排</title>
     <style>
-        /* ======================================================= */
-        /* CSS 样式 - 小学生趣味版 - 单屏锁定 */
-        /* ======================================================= */
-        :root {
-            --color-mon: #FF6B9D;
-            --color-tue: #FFA07A;
-            --color-wed: #FFD700;
-            --color-thu: #87CEEB;
-            --color-fri: #98FB98;
-        }
-
-        /* 关键样式：控制显示/隐藏 */
-        .hidden {
-            display: none !important;
-            opacity: 0 !important;
-            visibility: hidden !important; 
-        }
-
-        /* --- 动画定义 --- */
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-
-        @keyframes rainbow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-
-        @keyframes bgShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes fadeInSlide {
-            from { 
-                opacity: 0; 
-                transform: translateY(-20px) scale(0.95); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0) scale(1); 
-            }
-        }
-
-        /* --- 基础样式和布局 --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        html, body {
-            height: 100vh;
-            height: 100dvh; /* 动态视口高度，更准确 */
-            width: 100vw;
-            overflow: hidden;
-            position: fixed;
-            touch-action: pan-y; /* 只允许垂直滑动（但我们会在内部控制） */
-        }
+```
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+        overflow: hidden;
+        height: 100vh;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(270deg, #1a73e8, #ff4d4f, #52c41a, #fa8c16);
-            background-size: 800% 800%;
-            animation: bgShift 15s ease infinite alternate;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 1.5vh 3vw;
-            text-align: center;
-        }
+    .container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        overflow: hidden;
+    }
 
-        /* 主标题样式 - 压缩版 */
-        h1 {
-            color: white; 
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4); 
-            font-weight: 800;
-            font-size: clamp(1.2em, 4.5vw, 1.8em);
-            margin-bottom: 1vh;
-            animation: bounce 2s ease-in-out infinite;
-            flex-shrink: 0;
-            line-height: 1.2;
-        }
+    /* 动态背景粒子 */
+    .particle {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: float 20s infinite;
+    }
 
-        h1::before {
-            content: "🌟 ";
-            animation: rainbow 3s linear infinite;
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) translateX(0) scale(1);
+            opacity: 0.3;
         }
+        25% {
+            transform: translateY(-100px) translateX(50px) scale(1.2);
+            opacity: 0.6;
+        }
+        50% {
+            transform: translateY(-50px) translateX(-50px) scale(0.8);
+            opacity: 0.4;
+        }
+        75% {
+            transform: translateY(-150px) translateX(30px) scale(1.1);
+            opacity: 0.5;
+        }
+    }
 
-        h1::after {
-            content: " 🌟";
-            animation: rainbow 3s linear infinite;
-        }
+    /* 渐变光效 */
+    .glow {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        filter: blur(100px);
+        opacity: 0.4;
+        animation: glow 8s ease-in-out infinite;
+    }
 
-        /* 按钮组样式 - 压缩版 */
-        .button-group {
-            display: flex;
-            justify-content: center; 
-            gap: 1.5vw; 
-            padding: 1vh 2vw;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            flex-shrink: 0;
-            margin-bottom: 1.5vh;
-        }
+    .glow1 {
+        background: radial-gradient(circle, rgba(255,107,237,0.6) 0%, transparent 70%);
+        top: -100px;
+        left: -100px;
+    }
 
-        .day-button {
-            flex-shrink: 0;
-            padding: 1vh 3vw; 
-            border-radius: 20px; 
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            color: #333;
-            font-size: clamp(0.75em, 2.2vw, 0.9em);
-            font-weight: bold;
-            transition: all 0.2s ease; 
-            border: 2px solid transparent;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-        }
+    .glow2 {
+        background: radial-gradient(circle, rgba(102,126,234,0.6) 0%, transparent 70%);
+        bottom: -100px;
+        right: -100px;
+        animation-delay: -4s;
+    }
 
-        .day-button:active { 
-            transform: scale(0.92); 
+    @keyframes glow {
+        0%, 100% {
+            transform: scale(1) translate(0, 0);
         }
+        50% {
+            transform: scale(1.3) translate(50px, 30px);
+        }
+    }
 
-        .day-button[data-day="mon"].active {
-            background: var(--color-mon);
-            color: white;
-            border-color: #FF1493;
-        }
+    /* 主内容区 */
+    .content {
+        position: relative;
+        z-index: 10;
+        padding: 20px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 
-        .day-button[data-day="tue"].active {
-            background: var(--color-tue);
-            color: white;
-            border-color: #FF6347;
-        }
+    /* 标题 */
+    .title {
+        text-align: center;
+        margin: 30px 0;
+        animation: fadeInDown 0.8s ease;
+    }
 
-        .day-button[data-day="wed"].active {
-            background: var(--color-wed);
-            color: #333;
-            border-color: #FFA500;
-        }
+    .title h1 {
+        color: white;
+        font-size: 28px;
+        font-weight: 600;
+        text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
 
-        .day-button[data-day="thu"].active {
-            background: var(--color-thu);
-            color: white;
-            border-color: #4169E1;
-        }
+    .title-icon {
+        font-size: 32px;
+        animation: rotate 3s ease-in-out infinite;
+    }
 
-        .day-button[data-day="fri"].active {
-            background: var(--color-fri);
-            color: #333;
-            border-color: #32CD32;
-        }
+    @keyframes rotate {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(10deg); }
+    }
 
-        /* 时间表显示区域 - 占据剩余所有空间 */
-        .schedule-display {
-            position: relative; 
-            flex: 1;
-            display: flex;
-            align-items: stretch;
-            justify-content: center;
-            width: 100%;
-            max-width: 600px;
-            overflow: hidden;
-            min-height: 0; /* 重要：允许 flex 子元素收缩 */
-        }
+    /* 星期导航 */
+    .week-nav {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px 0;
+        animation: fadeInDown 0.8s ease 0.2s both;
+    }
 
-        .info-msg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            text-align: center;
-            padding: 4vh 4vw; 
-            color: white;
-            font-size: clamp(0.9em, 2.8vw, 1.1em);
-            font-weight: bold;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        .info-msg::before {
-            content: "📅"; 
-            font-size: 2.5em; 
-            display: block;
-            margin-bottom: 2vh;
-            animation: bounce 1.5s ease-in-out infinite;
-        }
+    .week-btn {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 25px;
+        padding: 12px 20px;
+        color: white;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
 
-        /* 时间表内容卡片样式 - 完全无滚动版 */
-        .schedule-card {
-            background: linear-gradient(145deg, #ffffff, #f8f9fa);
-            border-radius: 15px;
-            padding: 1.5vh 2.5vw; 
-            width: 100%;
-            height: 100%;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-            border: 3px solid transparent;
-            
+    .week-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .week-btn.active {
+        background: rgba(255, 255, 255, 0.9);
+        color: #667eea;
+        font-weight: 600;
+        box-shadow: 0 12px 40px rgba(255, 255, 255, 0.3);
+    }
+
+    /* 主卡片区域 */
+    .main-card {
+        flex: 1;
+        margin: 20px auto;
+        max-width: 600px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+        animation: fadeInUp 0.8s ease 0.4s both;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* 卡片光效 */
+    .card-shine {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    /* 日历图标区 */
+    .calendar-icon {
+        position: relative;
+        z-index: 2;
+        width: 150px;
+        height: 150px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        animation: pulse 2s ease-in-out infinite;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+    .calendar-icon:hover {
+        transform: scale(1.1) rotateY(10deg);
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        50% {
+            transform: scale(1.05);
+            box-shadow: 0 25px 80px rgba(255, 255, 255, 0.4);
+        }
+    }
+
+    .calendar-header {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 12px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .calendar-body {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 56px;
+        font-weight: 700;
+        color: #333;
+    }
+
+    /* 提示文字 */
+    .hint-text {
+        position: relative;
+        z-index: 2;
+        margin-top: 40px;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        opacity: 0.95;
+        animation: fadeIn 1s ease 0.8s both;
+    }
+
+    /* 统计卡片 */
+    .stats {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+        animation: fadeIn 1s ease 1s both;
+    }
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 15px;
+        padding: 15px 25px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .stat-card:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-5px);
+    }
+
+    .stat-number {
+        color: white;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .stat-label {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 12px;
+    }
+
+    /* 浮动动作按钮 */
+    .fab {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 28px;
+        cursor: pointer;
+        box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        animation: bounce 2s ease-in-out infinite;
+        z-index: 100;
+    }
+
+    .fab:hover {
+        transform: scale(1.1);
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    /* 动画关键帧 */
+    @keyframes fadeInDown {
+        from {
             opacity: 0;
-            position: absolute;
-            visibility: hidden;
-            text-align: left;
-            
-            display: flex;
-            flex-direction: column;
-            overflow: hidden; /* 完全禁止滚动 */
+            transform: translateY(-30px);
         }
-
-        .schedule-card.active-animation {
-            animation: fadeInSlide 0.4s ease-out forwards;
+        to {
             opacity: 1;
-            position: relative;
-            visibility: visible;
+            transform: translateY(0);
         }
+    }
 
-        .schedule-card h2 {
-            color: #fff;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 12px;
-            padding: 1.2vh 2vw;
-            margin: -1.5vh -2.5vw 1.2vh -2.5vw;
-            font-size: clamp(1em, 3.5vw, 1.3em);
-            text-align: center;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
-            flex-shrink: 0;
-            line-height: 1.3;
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
         }
-
-        .schedule-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around; /* 均匀分布 */
-            overflow: hidden;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        .schedule-card li {
-            padding: 0.8vh 0.8vh 0.8vh 9vw;
-            border-radius: 10px;
-            background: linear-gradient(145deg, #e8f5e9, #fff);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: all 0.2s ease;
-            font-size: clamp(0.7em, 2.2vw, 0.85em);
-            font-weight: 500;
-            position: relative;
-            border-left: 4px solid #4CAF50;
-            line-height: 1.3;
-            flex-shrink: 0;
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
         }
-
-        .schedule-card li:hover {
-            transform: translateX(5px) scale(1.01);
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+        to {
+            opacity: 1;
         }
+    }
+</style>
+```
 
-        .schedule-card li::before {
-            position: absolute;
-            left: 2vw;
-            font-size: 1.2em;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        /* 图标定义 */
-        .schedule-card li:nth-child(1)::before { content: "🍎"; }
-        .schedule-card li:nth-child(2)::before { content: "🚿"; }
-        .schedule-card li:nth-child(3)::before { content: "🍽️"; }
-        .schedule-card li:nth-child(4)::before { content: "🎒"; }
-        .schedule-card li:nth-child(5)::before { content: "✏️"; }
-        .schedule-card li:nth-child(6)::before { content: "🪥"; }
-        .schedule-card li:nth-child(7)::before { content: "📱"; }
-        .schedule-card li:nth-child(8)::before { content: "🎈"; }
-        .schedule-card li:nth-child(9)::before { content: "🌙"; }
-
-        .schedule-card .bedtime {
-            background: linear-gradient(145deg, #ffe5e5, #ffcccc);
-            border-left-color: #ff4444;
-            font-weight: 700;
-        }
-
-        .schedule-card .big-event {
-            background: linear-gradient(145deg, #fff8dc, #ffd700);
-            border-left-color: #ff9800;
-            font-weight: 700;
-        }
-
-        .schedule-card .big-event::before {
-            content: "⭐";
-        }
-
-        .schedule-card .after-school {
-            background: linear-gradient(145deg, #e1f5fe, #b3e5fc);
-            border-left-color: #03a9f4;
-        }
-
-        .schedule-card .detail-time {
-            background: linear-gradient(145deg, #f3e5f5, #e1bee7);
-            border-left-color: #9c27b0;
-            font-size: clamp(0.65em, 2vw, 0.78em);
-        }
-
-        /* 周三周四特殊图标 */
-        #wed-schedule li:nth-child(2)::before { content: "🍎"; }
-        #wed-schedule li:nth-child(3)::before { content: "🍽️"; }
-        #wed-schedule li:nth-child(4)::before { content: "✏️"; }
-        #wed-schedule li:nth-child(5)::before { content: "📖"; }
-        #wed-schedule li:nth-child(6)::before { content: "🎒"; }
-        #wed-schedule li:nth-child(7)::before { content: "🪥"; }
-        #wed-schedule li:nth-child(8)::before { content: "🎮"; }
-        #wed-schedule li:nth-child(9)::before { content: "🌙"; }
-
-        #thu-schedule li:nth-child(2)::before { content: "🍎"; }
-        #thu-schedule li:nth-child(3)::before { content: "🍽️"; }
-        #thu-schedule li:nth-child(4)::before { content: "✏️"; }
-        #thu-schedule li:nth-child(5)::before { content: "🎒"; }
-        #thu-schedule li:nth-child(6)::before { content: "🪥"; }
-        #thu-schedule li:nth-child(7)::before { content: "🌙"; }
-        
-        /* 超小屏幕优化 */
-        @media (max-height: 667px) {
-            body {
-                padding: 1vh 2.5vw;
-            }
-            h1 {
-                font-size: 1em;
-                margin-bottom: 0.5vh;
-            }
-            .button-group {
-                padding: 0.8vh 1.5vw;
-                margin-bottom: 1vh;
-            }
-            .day-button {
-                padding: 0.8vh 2.5vw;
-                font-size: 0.7em;
-            }
-            .schedule-card li {
-                padding: 0.6vh 0.6vh 0.6vh 8vw;
-                font-size: 0.65em;
-            }
-            .schedule-card h2 {
-                font-size: 0.95em;
-                padding: 1vh 1.5vw;
-            }
-        }
-
-        /* 横屏模式优化 */
-        @media (orientation: landscape) and (max-height: 500px) {
-            h1 {
-                font-size: 0.9em;
-                margin-bottom: 0.3vh;
-            }
-            h1::before, h1::after {
-                content: "";
-            }
-            .button-group {
-                padding: 0.5vh 1vw;
-                margin-bottom: 0.5vh;
-            }
-            .day-button {
-                padding: 0.5vh 2vw;
-                font-size: 0.65em;
-            }
-            .schedule-card li {
-                padding: 0.4vh 0.4vh 0.4vh 7vw;
-                font-size: 0.6em;
-            }
-        }
-    </style>
 </head>
 <body>
+    <div class="container">
+        <!-- 背景光效 -->
+        <div class="glow glow1"></div>
+        <div class="glow glow2"></div>
 
-    <h1 id="main-title">我的每日时间安排</h1>
-    
-    <div class="button-group">
-        <button class="day-button" data-day="mon">周一</button>
-        <button class="day-button" data-day="tue">周二</button>
-        <button class="day-button" data-day="wed">周三</button>
-        <button class="day-button" data-day="thu">周四</button>
-        <button class="day-button" data-day="fri">周五</button>
-    </div>
+```
+    <!-- 动态粒子 -->
+    <div id="particles"></div>
 
-    <div class="schedule-display">
-        <div id="default-msg" class="info-msg">
-            请点击上方按钮查看当日时间表。
+    <!-- 主内容 -->
+    <div class="content">
+        <!-- 标题 -->
+        <div class="title">
+            <h1>
+                <span class="title-icon">💫</span>
+                我的每日时间安排
+                <span class="title-icon">💫</span>
+            </h1>
         </div>
 
-        <div id="mon-schedule" class="schedule-card hidden">
-            <h2>周一安排</h2>
-            <ul>
-                <li class="after-school">放学吃水果</li>
-                <li>06:30-07:00 洗澡</li>
-                <li>07:00-07:25 吃饭</li>
-                <li>07:25-07:30 收拾书包</li>
-                <li>07:30-08:20 写作学习</li>
-                <li>08:20-08:30 刷牙准备</li>
-                <li>08:30-08:50 电子产品</li>
-                <li>08:50-09:00 自由时间</li>
-                <li class="bedtime">09:00 睡觉</li>
-            </ul>
-        </div>
-        
-        <div id="tue-schedule" class="schedule-card hidden">
-             <h2>周二安排</h2>
-             <ul>
-                <li class="after-school">放学吃水果</li>
-                <li>06:30-07:00 洗澡</li>
-                <li>07:00-07:25 吃饭</li>
-                <li>07:25-07:30 收拾书包</li>
-                <li>07:30-08:20 写作学习</li>
-                <li>08:20-08:30 刷牙准备</li>
-                <li>08:30-08:50 电子产品</li>
-                <li>08:50-09:00 自由时间</li>
-                <li class="bedtime">09:00 睡觉</li>
-            </ul>
-        </div>
-        
-        <div id="fri-schedule" class="schedule-card hidden">
-             <h2>周五安排</h2>
-             <ul>
-                <li class="after-school">放学吃水果</li>
-                <li>06:30-07:00 洗澡</li>
-                <li>07:00-07:25 吃饭</li>
-                <li>07:25-07:30 收拾书包</li>
-                <li>07:30-08:20 写作学习</li>
-                <li>08:20-08:30 刷牙准备</li>
-                <li>08:30-08:50 电子产品</li>
-                <li>08:50-09:00 自由时间</li>
-                <li class="bedtime">09:00 睡觉</li>
-            </ul>
+        <!-- 星期导航 -->
+        <div class="week-nav">
+            <button class="week-btn">周一</button>
+            <button class="week-btn">周二</button>
+            <button class="week-btn active">周三</button>
+            <button class="week-btn">周四</button>
+            <button class="week-btn">周五</button>
         </div>
 
-        <div id="wed-schedule" class="schedule-card hidden">
-            <h2>周三安排 (补习日)</h2>
-            <ul>
-                <li class="big-event">04:15-07:30 补习</li>
-                <li class="after-school">补习后吃水果</li>
-                <li>07:30-08:10 吃饭准备</li>
-                <li class="detail-time">08:10-08:20 写作</li>
-                <li class="detail-time">08:20-08:30 学习</li>
-                <li class="detail-time">08:30-08:35 收拾</li>
-                <li class="detail-time">08:35-08:45 刷牙</li>
-                <li class="detail-time">08:45-09:00 自由</li>
-                <li class="bedtime">09:00 睡觉</li>
-            </ul>
-        </div>
-
-        <div id="thu-schedule" class="schedule-card hidden">
-            <h2>周四安排 (跆拳道)</h2>
-            <ul>
-                <li class="big-event">05:15-08:00 跆拳道</li>
-                <li class="after-school">回家吃水果</li>
-                <li>08:00-08:30 吃饭准备</li>
-                <li class="detail-time">08:30-08:40 写作</li>
-                <li class="detail-time">08:40-08:45 收拾</li>
-                <li class="detail-time">08:45-08:55 刷牙</li>
-                <li class="bedtime">08:55 睡觉</li>
-            </ul>
-        </div>
-    </div>
-
-    <script>
-        /* ======================================================= */
-        /* JavaScript 逻辑 */
-        /* ======================================================= */
-        document.addEventListener('DOMContentLoaded', () => {
-            const buttons = document.querySelectorAll('.day-button');
-            const schedules = document.querySelectorAll('.schedule-card');
-            const defaultMsg = document.getElementById('default-msg');
+        <!-- 主卡片 -->
+        <div class="main-card">
+            <div class="card-shine"></div>
             
-            // 页面加载时，确保所有时间表内容是隐藏的
-            schedules.forEach(card => card.classList.add('hidden'));
-            defaultMsg.classList.remove('hidden');
+            <!-- 日历图标 -->
+            <div class="calendar-icon">
+                <div class="calendar-header">JUL 七月</div>
+                <div class="calendar-body">17</div>
+            </div>
 
-            // 防止移动端双击缩放和其他手势
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', (e) => {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
-                    e.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, false);
+            <!-- 提示文字 -->
+            <div class="hint-text">
+                请点击上方按钮查看当日的时间表。
+            </div>
 
-            // 防止页面被拖动
-            document.body.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-            }, { passive: false });
+            <!-- 统计卡片 -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">今日待办</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">进行中</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">本周完成</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const day = button.getAttribute('data-day');
-                    
-                    // 隐藏所有卡片并移除动画类
-                    schedules.forEach(card => {
-                        card.classList.add('hidden');
-                        card.classList.remove('active-animation');
-                    });
-                    defaultMsg.classList.add('hidden');
-                    
-                    // 移除所有按钮的激活状态
-                    buttons.forEach(btn => btn.classList.remove('active'));
+    <!-- 浮动按钮 -->
+    <div class="fab" title="添加新日程">➕</div>
+</div>
 
-                    const targetScheduleId = `${day}-schedule`;
-                    const targetSchedule = document.getElementById(targetScheduleId);
-                    
-                    // 显示目标时间表并添加动画类
-                    if (targetSchedule) {
-                        targetSchedule.classList.remove('hidden');
-                        void targetSchedule.offsetWidth; 
-                        targetSchedule.classList.add('active-animation');
-                    }
-                    
-                    // 设置当前点击按钮为激活状态
-                    button.classList.add('active');
-                });
-            });
+<script>
+    // 创建动态粒子
+    function createParticles() {
+        const container = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const size = Math.random() * 60 + 20;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            
+            container.appendChild(particle);
+        }
+    }
+
+    // 星期按钮点击效果
+    document.querySelectorAll('.week-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
         });
-    </script>
+    });
+
+    // 日历图标点击效果
+    document.querySelector('.calendar-icon').addEventListener('click', function() {
+        this.style.animation = 'none';
+        setTimeout(() => {
+            this.style.animation = 'pulse 2s ease-in-out infinite';
+        }, 10);
+    });
+
+    // 浮动按钮点击效果
+    document.querySelector('.fab').addEventListener('click', function() {
+        alert('添加新日程功能');
+    });
+
+    // 初始化
+    createParticles();
+</script>
+```
+
 </body>
 </html>
