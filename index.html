@@ -211,25 +211,53 @@
         .timeline-card {
             background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 15px;
-            padding: 20px; transition: all 0.3s ease; cursor: pointer;
+            padding: 12px 16px; transition: all 0.3s ease; cursor: pointer;
         }
         .timeline-card:hover { background: rgba(255, 255, 255, 0.25); transform: translateX(5px); }
-        .timeline-time { color: #f5576c; font-size: 14px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
-        .timeline-title { color: white; font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-        .timeline-desc { color: rgba(255, 255, 255, 0.9); font-size: 14px; line-height: 1.6; }
-        .timeline-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-        .tag { background: rgba(255, 255, 255, 0.2); color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+        .timeline-time { color: #f5576c; font-size: 13px; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+        .timeline-title { color: white; font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+        .timeline-desc { color: rgba(255, 255, 255, 0.9); font-size: 13px; line-height: 1.5; }
+        .timeline-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+        .tag { background: rgba(255, 255, 255, 0.2); color: white; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 500; }
 
-        /* 浮动动作按钮 */
+        /* 浮动音乐按钮 */
         .fab {
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 28px; cursor: pointer; box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            color: white; font-size: 24px; cursor: pointer; box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
             animation: bounce 2s ease-in-out infinite; z-index: 100; border: none;
+            transition: all 0.3s ease;
         }
         .fab:hover { transform: scale(1.1); }
+        .fab:active { transform: scale(0.95); }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* 音乐控制面板 */
+        .music-panel {
+            position: fixed; bottom: 100px; right: 30px; width: 280px;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            border-radius: 20px; padding: 20px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            display: none; z-index: 99; border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .music-panel.active { display: block; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .music-info { margin-bottom: 15px; }
+        .music-title { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px; }
+        .music-artist { font-size: 13px; color: #666; }
+        .music-list { max-height: 200px; overflow-y: auto; margin-bottom: 15px; }
+        .music-item {
+            padding: 10px; margin-bottom: 5px; background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px; cursor: pointer; transition: all 0.3s ease;
+            font-size: 14px; color: #333;
+        }
+        .music-item:hover { background: rgba(102, 126, 234, 0.2); transform: translateX(5px); }
+        .music-item.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .close-panel {
+            text-align: center; padding: 8px; background: rgba(245, 87, 108, 0.1);
+            border-radius: 10px; cursor: pointer; color: #f5576c; font-size: 13px; font-weight: 500;
+        }
+        .close-panel:hover { background: rgba(245, 87, 108, 0.2); }
 
         /* 动画关键帧 */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
@@ -307,12 +335,36 @@
             </div>
         </div>
 
-        <!-- 浮动按钮 -->
-        <button class="fab" title="添加新日程">➕</button>
+        <!-- 浮动音乐按钮 -->
+        <button class="fab" id="musicBtn" title="音乐播放器">▶️</button>
+
+        <!-- 音乐控制面板 -->
+        <div class="music-panel" id="musicPanel">
+            <div class="music-info">
+                <div class="music-title" id="currentTitle">暂无播放</div>
+                <div class="music-artist" id="currentArtist">请选择歌曲</div>
+            </div>
+            <div class="music-list" id="musicList">
+                <!-- 由 JS 动态生成 -->
+            </div>
+            <div class="close-panel" id="closePanel">关闭</div>
+        </div>
+
+        <!-- 隐藏的音频播放器 -->
+        <audio id="audioPlayer"></audio>
     </div>
 
     <script>
-        // ====== 用你的"拟定时间表"替换：保持结构不变，仅替换数据 ======
+        // ====== 音乐列表配置（可以自由修改歌曲）======
+        const musicLibrary = [
+            { title: '夜曲', artist: '周杰伦', url: 'https://example.com/music1.mp3' },
+            { title: '晴天', artist: '周杰伦', url: 'https://example.com/music2.mp3' },
+            { title: '告白气球', artist: '周杰伦', url: 'https://example.com/music3.mp3' },
+            { title: '七里香', artist: '周杰伦', url: 'https://example.com/music4.mp3' },
+            { title: '稻香', artist: '周杰伦', url: 'https://example.com/music5.mp3' }
+        ];
+
+        // ====== 时间表数据 ======
         const scheduleData = {
             monday: [
                 { time: '放学后',         title: '吃水果',           desc: '放学后补充维生素与能量',             tags: ['放学', '习惯'] },
@@ -369,6 +421,73 @@
             ]
         };
 
+        // ====== 音乐播放器逻辑 ======
+        let isPlaying = false;
+        let currentSongIndex = -1;
+        const audioPlayer = document.getElementById('audioPlayer');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicPanel = document.getElementById('musicPanel');
+
+        // 初始化音乐列表
+        function initMusicList() {
+            const musicList = document.getElementById('musicList');
+            musicLibrary.forEach((song, index) => {
+                const item = document.createElement('div');
+                item.className = 'music-item';
+                item.textContent = `${song.title} - ${song.artist}`;
+                item.addEventListener('click', () => playSong(index));
+                musicList.appendChild(item);
+            });
+        }
+
+        // 播放歌曲
+        function playSong(index) {
+            currentSongIndex = index;
+            const song = musicLibrary[index];
+            
+            document.getElementById('currentTitle').textContent = song.title;
+            document.getElementById('currentArtist').textContent = song.artist;
+            
+            document.querySelectorAll('.music-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+            
+            audioPlayer.src = song.url;
+            audioPlayer.play();
+            isPlaying = true;
+            musicBtn.textContent = '⏸️';
+        }
+
+        // 音乐按钮点击事件
+        musicBtn.addEventListener('click', function() {
+            if (!musicPanel.classList.contains('active')) {
+                musicPanel.classList.add('active');
+            } else {
+                if (isPlaying) {
+                    audioPlayer.pause();
+                    isPlaying = false;
+                    musicBtn.textContent = '▶️';
+                } else {
+                    if (currentSongIndex >= 0) {
+                        audioPlayer.play();
+                        isPlaying = true;
+                        musicBtn.textContent = '⏸️';
+                    }
+                }
+            }
+        });
+
+        // 关闭面板
+        document.getElementById('closePanel').addEventListener('click', function() {
+            musicPanel.classList.remove('active');
+        });
+
+        // 音频结束后自动播放下一首
+        audioPlayer.addEventListener('ended', function() {
+            currentSongIndex = (currentSongIndex + 1) % musicLibrary.length;
+            playSong(currentSongIndex);
+        });
+
         // 创建动态粒子
         function createParticles() {
             const container = document.getElementById('particles');
@@ -414,7 +533,7 @@
             document.getElementById('taskCount').textContent = schedule.length;
         }
 
-        // 更新日期显示（保持原结构）
+        // 更新日期显示
         function updateDateDisplay(day) {
             const dayMap = { monday: '周一', tuesday: '周二', wednesday: '周三', thursday: '周四', friday: '周五' };
             document.getElementById('scheduleDate').textContent = `10月 ${dayMap[day]}`;
@@ -427,20 +546,13 @@
                 document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
 
-                // 显示时间表，隐藏空状态
                 document.getElementById('emptyState').style.display = 'none';
                 const scheduleContent = document.getElementById('scheduleContent');
                 scheduleContent.classList.add('active');
 
-                // 渲染时间表
                 renderSchedule(day);
                 updateDateDisplay(day);
             });
-        });
-
-        // 浮动按钮点击事件（占位）
-        document.querySelector('.fab').addEventListener('click', function () {
-            alert('添加新日程功能\n\n可以在这里添加：\n• 新的日程安排\n• 设置提醒\n• 标记重要事项');
         });
 
         // 更新日历为当前日期
@@ -458,9 +570,10 @@
             document.getElementById('calendarDay').textContent = day;
         }
 
-        // 初始化：创建粒子并更新日历
+        // 初始化
         createParticles();
         updateCalendar();
+        initMusicList();
     </script>
 </body>
 </html>
