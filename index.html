@@ -192,7 +192,7 @@
         /* 时间线 */
         .timeline { position: relative; }
         .timeline-item {
-            position: relative; padding-left: 40px; margin-bottom: 30px; animation: slideInLeft 0.5s ease;
+            position: relative; padding-left: 40px; margin-bottom: 15px; animation: slideInLeft 0.5s ease;
         }
         @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
         .timeline-dot {
@@ -273,8 +273,8 @@
                 <!-- 空状态 -->
                 <div class="empty-state" id="emptyState">
                     <div class="calendar-icon">
-                        <div class="calendar-header">JUL 七月</div>
-                        <div class="calendar-body">17</div>
+                        <div class="calendar-header" id="calendarMonth">JUL 七月</div>
+                        <div class="calendar-body" id="calendarDay">17</div>
                     </div>
 
                     <div class="hint-text">请点击上方按钮查看当日的时间表。</div>
@@ -312,7 +312,7 @@
     </div>
 
     <script>
-        // ====== 用你的“拟定时间表”替换：保持结构不变，仅替换数据 ======
+        // ====== 用你的"拟定时间表"替换：保持结构不变，仅替换数据 ======
         const scheduleData = {
             monday: [
                 { time: '放学后',         title: '吃水果',           desc: '放学后补充维生素与能量',             tags: ['放学', '习惯'] },
@@ -443,8 +443,24 @@
             alert('添加新日程功能\n\n可以在这里添加：\n• 新的日程安排\n• 设置提醒\n• 标记重要事项');
         });
 
-        // 初始化：创建粒子
+        // 更新日历为当前日期
+        function updateCalendar() {
+            const now = new Date();
+            const day = now.getDate();
+            const monthNames = {
+                0: { en: 'JAN', cn: '一月' }, 1: { en: 'FEB', cn: '二月' }, 2: { en: 'MAR', cn: '三月' },
+                3: { en: 'APR', cn: '四月' }, 4: { en: 'MAY', cn: '五月' }, 5: { en: 'JUN', cn: '六月' },
+                6: { en: 'JUL', cn: '七月' }, 7: { en: 'AUG', cn: '八月' }, 8: { en: 'SEP', cn: '九月' },
+                9: { en: 'OCT', cn: '十月' }, 10: { en: 'NOV', cn: '十一月' }, 11: { en: 'DEC', cn: '十二月' }
+            };
+            const month = monthNames[now.getMonth()];
+            document.getElementById('calendarMonth').textContent = `${month.en} ${month.cn}`;
+            document.getElementById('calendarDay').textContent = day;
+        }
+
+        // 初始化：创建粒子并更新日历
         createParticles();
+        updateCalendar();
     </script>
 </body>
 </html>
