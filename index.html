@@ -6,46 +6,28 @@
     <title>我的每日时间安排</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
+            overflow-x: hidden; min-height: 100vh;
         }
-
         .container {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
+            position: relative; width: 100%; min-height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             overflow: hidden;
         }
-
-        /* 动态背景粒子 */
         .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            pointer-events: none;
-            animation: float 20s infinite;
+            position: absolute; background: rgba(255, 255, 255, 0.1); border-radius: 50%;
+            pointer-events: none; animation: float 20s infinite;
         }
-
         @keyframes float {
             0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.3; }
             25% { transform: translateY(-100px) translateX(50px) scale(1.2); opacity: 0.6; }
             50% { transform: translateY(-50px) translateX(-50px) scale(0.8); opacity: 0.4; }
             75% { transform: translateY(-150px) translateX(30px) scale(1.1); opacity: 0.5; }
         }
-
-        /* 渐变光效 */
         .glow {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.4;
-            animation: glow 8s ease-in-out infinite;
+            position: absolute; width: 400px; height: 400px; border-radius: 50%;
+            filter: blur(100px); opacity: 0.4; animation: glow 8s ease-in-out infinite;
         }
         .glow1 {
             background: radial-gradient(circle, rgba(255,107,237,0.6) 0%, transparent 70%);
@@ -53,84 +35,51 @@
         }
         .glow2 {
             background: radial-gradient(circle, rgba(102,126,234,0.6) 0%, transparent 70%);
-            bottom: -100px; right: -100px;
-            animation-delay: -4s;
+            bottom: -100px; right: -100px; animation-delay: -4s;
         }
         @keyframes glow {
             0%, 100% { transform: scale(1) translate(0, 0); }
             50% { transform: scale(1.3) translate(50px, 30px); }
         }
-
-        /* 主内容区 */
         .content {
-            position: relative;
-            z-index: 10;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            position: relative; z-index: 10; padding: 20px; min-height: 100vh;
+            display: flex; flex-direction: column;
         }
-
-        /* 标题 */
-        .title {
-            text-align: center;
-            margin: 30px 0;
-            animation: fadeInDown 0.8s ease;
-        }
+        .title { text-align: center; margin: 30px 0; animation: fadeInDown 0.8s ease; }
         .title h1 {
-            color: white;
-            font-size: 28px;
-            font-weight: 600;
+            color: white; font-size: 28px; font-weight: 600;
             text-shadow: 0 2px 20px rgba(0,0,0,0.2);
             display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         .title-icon { font-size: 32px; animation: rotate 3s ease-in-out infinite; }
         @keyframes rotate { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(10deg); } }
-
-        /* 星期导航 */
         .week-nav {
             display: flex; justify-content: center; gap: 10px; margin: 20px 0;
             animation: fadeInDown 0.8s ease 0.2s both; flex-wrap: wrap;
         }
         .week-btn {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 25px;
-            padding: 12px 20px;
-            color: white; font-size: 15px; font-weight: 500;
-            cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 25px;
+            padding: 12px 20px; color: white; font-size: 15px; font-weight: 500;
+            cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
         .week-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.25); transform: translateY(-3px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
         }
         .week-btn.active {
-            background: rgba(255, 255, 255, 0.9);
-            color: #667eea; font-weight: 600;
+            background: rgba(255, 255, 255, 0.9); color: #667eea; font-weight: 600;
             box-shadow: 0 12px 40px rgba(255, 255, 255, 0.3);
         }
-
-        /* 主卡片区域 */
         .main-card {
-            margin: 20px auto 100px;
-            max-width: 700px; width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 40px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-            animation: fadeInUp 0.8s ease 0.4s both;
-            position: relative; overflow: hidden;
+            margin: 20px auto 100px; max-width: 700px; width: 100%;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
+            border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s ease 0.4s both; position: relative; overflow: hidden;
         }
-
-        /* 卡片光效 */
         .card-shine {
-            position: absolute; top: -50%; left: -50%;
-            width: 200%; height: 200%;
+            position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
             animation: shine 3s infinite;
         }
@@ -138,20 +87,15 @@
             0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
             100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
         }
-
-        /* 空状态视图 */
         .empty-state {
-            position: relative; z-index: 2;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 400px;
+            position: relative; z-index: 2; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; min-height: 400px;
         }
-
-        /* 日历图标区 */
         .calendar-icon {
             width: 150px; height: 150px; background: white; border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            display: flex; flex-direction: column; overflow: hidden;
-            animation: pulse 2s ease-in-out infinite; cursor: pointer; transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); display: flex;
+            flex-direction: column; overflow: hidden; animation: pulse 2s ease-in-out infinite;
+            cursor: pointer; transition: transform 0.3s ease;
         }
         .calendar-icon:hover { transform: scale(1.1) rotateY(10deg); }
         @keyframes pulse {
@@ -167,11 +111,7 @@
             flex: 1; display: flex; align-items: center; justify-content: center;
             font-size: 56px; font-weight: 700; color: #333;
         }
-
-        /* 提示文字 */
         .hint-text { margin-top: 40px; color: white; font-size: 16px; text-align: center; opacity: 0.95; }
-
-        /* 统计卡片 */
         .stats { display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap; }
         .stat-card {
             background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
@@ -181,18 +121,15 @@
         .stat-card:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-5px); }
         .stat-number { color: white; font-size: 28px; font-weight: 700; margin-bottom: 5px; }
         .stat-label { color: rgba(255, 255, 255, 0.9); font-size: 12px; }
-
-        /* 时间表内容 */
         .schedule-content { position: relative; z-index: 2; display: none; }
         .schedule-content.active { display: block; animation: fadeIn 0.5s ease; }
         .schedule-header { text-align: center; margin-bottom: 30px; }
         .schedule-date { color: white; font-size: 24px; font-weight: 600; margin-bottom: 10px; }
         .schedule-day { color: rgba(255, 255, 255, 0.9); font-size: 16px; }
-
-        /* 时间线 */
         .timeline { position: relative; }
         .timeline-item {
-            position: relative; padding-left: 40px; margin-bottom: 15px; animation: slideInLeft 0.5s ease;
+            position: relative; padding-left: 40px; margin-bottom: 15px;
+            animation: slideInLeft 0.5s ease;
         }
         @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
         .timeline-dot {
@@ -219,21 +156,16 @@
         .timeline-desc { color: rgba(255, 255, 255, 0.9); font-size: 13px; line-height: 1.5; }
         .timeline-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
         .tag { background: rgba(255, 255, 255, 0.2); color: white; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 500; }
-
-        /* 浮动音乐按钮 */
         .fab {
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             color: white; font-size: 24px; cursor: pointer; box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
-            animation: bounce 2s ease-in-out infinite; z-index: 100; border: none;
-            transition: all 0.3s ease;
+            animation: bounce 2s ease-in-out infinite; z-index: 100; border: none; transition: all 0.3s ease;
         }
         .fab:hover { transform: scale(1.1); }
         .fab:active { transform: scale(0.95); }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-        /* 音乐控制面板 */
         .music-panel {
             position: fixed; bottom: 100px; right: 30px; width: 280px;
             background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
@@ -245,11 +177,11 @@
         .music-info { margin-bottom: 15px; }
         .music-title { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px; }
         .music-artist { font-size: 13px; color: #666; }
+        .music-error { font-size: 11px; color: #f5576c; margin-top: 5px; }
         .music-list { max-height: 200px; overflow-y: auto; margin-bottom: 15px; }
         .music-item {
             padding: 10px; margin-bottom: 5px; background: rgba(102, 126, 234, 0.1);
-            border-radius: 10px; cursor: pointer; transition: all 0.3s ease;
-            font-size: 14px; color: #333;
+            border-radius: 10px; cursor: pointer; transition: all 0.3s ease; font-size: 14px; color: #333;
         }
         .music-item:hover { background: rgba(102, 126, 234, 0.2); transform: translateX(5px); }
         .music-item.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
@@ -258,8 +190,6 @@
             border-radius: 10px; cursor: pointer; color: #f5576c; font-size: 13px; font-weight: 500;
         }
         .close-panel:hover { background: rgba(245, 87, 108, 0.2); }
-
-        /* 动画关键帧 */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -267,25 +197,13 @@
 </head>
 <body>
     <div class="container">
-        <!-- 背景光效 -->
         <div class="glow glow1"></div>
         <div class="glow glow2"></div>
-
-        <!-- 动态粒子 -->
         <div id="particles"></div>
-
-        <!-- 主内容 -->
         <div class="content">
-            <!-- 标题 -->
             <div class="title">
-                <h1>
-                    <span class="title-icon">💫</span>
-                    我的每日时间安排
-                    <span class="title-icon">💫</span>
-                </h1>
+                <h1><span class="title-icon">💫</span>我的每日时间安排<span class="title-icon">💫</span></h1>
             </div>
-
-            <!-- 星期导航 -->
             <div class="week-nav">
                 <button class="week-btn" data-day="monday">周一</button>
                 <button class="week-btn" data-day="tuesday">周二</button>
@@ -293,142 +211,106 @@
                 <button class="week-btn" data-day="thursday">周四</button>
                 <button class="week-btn" data-day="friday">周五</button>
             </div>
-
-            <!-- 主卡片 -->
             <div class="main-card">
                 <div class="card-shine"></div>
-                
-                <!-- 空状态 -->
                 <div class="empty-state" id="emptyState">
                     <div class="calendar-icon">
-                        <div class="calendar-header" id="calendarMonth">JUL 七月</div>
-                        <div class="calendar-body" id="calendarDay">17</div>
+                        <div class="calendar-header" id="calendarMonth">OCT 十月</div>
+                        <div class="calendar-body" id="calendarDay">9</div>
                     </div>
-
                     <div class="hint-text">请点击上方按钮查看当日的时间表。</div>
-
                     <div class="stats">
-                        <div class="stat-card">
-                            <div class="stat-number">5</div>
-                            <div class="stat-label">今日待办</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">3</div>
-                            <div class="stat-label">进行中</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">12</div>
-                            <div class="stat-label">本周完成</div>
-                        </div>
+                        <div class="stat-card"><div class="stat-number">5</div><div class="stat-label">今日待办</div></div>
+                        <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">进行中</div></div>
+                        <div class="stat-card"><div class="stat-number">12</div><div class="stat-label">本周完成</div></div>
                     </div>
                 </div>
-
-                <!-- 时间表内容 -->
                 <div class="schedule-content" id="scheduleContent">
                     <div class="schedule-header">
-                        <div class="schedule-date" id="scheduleDate">10月3日 周三</div>
+                        <div class="schedule-date" id="scheduleDate">10月 周三</div>
                         <div class="schedule-day">今天共有 <span id="taskCount">5</span> 项安排</div>
                     </div>
-
-                    <div class="timeline" id="timeline"><!-- 由 JS 动态生成 --></div>
+                    <div class="timeline" id="timeline"></div>
                 </div>
             </div>
         </div>
-
-        <!-- 浮动音乐按钮 -->
         <button class="fab" id="musicBtn" title="音乐播放器">▶️</button>
-
-        <!-- 音乐控制面板 -->
         <div class="music-panel" id="musicPanel">
             <div class="music-info">
                 <div class="music-title" id="currentTitle">暂无播放</div>
                 <div class="music-artist" id="currentArtist">请选择歌曲</div>
+                <div class="music-error" id="musicError" style="display:none;"></div>
             </div>
-            <div class="music-list" id="musicList">
-                <!-- 由 JS 动态生成 -->
-            </div>
+            <div class="music-list" id="musicList"></div>
             <div class="close-panel" id="closePanel">关闭</div>
         </div>
-
-        <!-- 隐藏的音频播放器 -->
         <audio id="audioPlayer"></audio>
     </div>
-
     <script>
-        // ====== 音乐列表配置（可以自由修改歌曲）======
         const musicLibrary = [
-            { title: 'Rabbit', artist: '12Zodiac', url: 'https://drive.google.com/uc?export=download&id=1X0HiKY3UxVXslG9680xTeKsrfra5i2LS' },
-            { title: '晴天', artist: '周杰伦', url: 'https://example.com/music2.mp3' },
-            { title: '告白气球', artist: '周杰伦', url: 'https://example.com/music3.mp3' },
-            { title: '七里香', artist: '周杰伦', url: 'https://example.com/music4.mp3' },
-            { title: '稻香', artist: '周杰伦', url: 'https://drive.google.com/uc?export=download&id=12dkTmkPIbZrWkrx3JgeHbgniRUeu9bCK' }
+            { title: '示例音乐 1', artist: 'SoundHelix', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+            { title: '示例音乐 2', artist: 'SoundHelix', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+            { title: '示例音乐 3', artist: 'SoundHelix', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' }
         ];
-
-        // ====== 时间表数据 ======
         const scheduleData = {
             monday: [
-                { time: '放学后',         title: '吃水果',           desc: '放学后补充维生素与能量',             tags: ['放学', '习惯'] },
-                { time: '06:30 - 07:00', title: '洗澡 (Shower)',    desc: '清洁放松，准备晚上学习',             tags: ['卫生'] },
-                { time: '07:00 - 07:25', title: '吃饭 (Eat)',       desc: '营养均衡的晚餐',                     tags: ['用餐'] },
-                { time: '07:25 - 07:30', title: '收拾书包',          desc: '准备好第二天需要的学习用品',          tags: ['整理'] },
-                { time: '07:30 - 08:20', title: '写作与学习',        desc: '专注完成当天写作与学习任务',          tags: ['学习', '专注'] },
-                { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉',   desc: '睡前清洁，进入休息模式',              tags: ['卫生', '就寝前'] },
-                { time: '08:30 - 08:50', title: '电子产品时间',       desc: '有节制地使用电子产品放松',            tags: ['放松', '电子'] },
-                { time: '08:50 - 09:00', title: '自由时间',          desc: '随心安排片刻自由',                    tags: ['放松'] },
-                { time: '09:00',         title: '睡觉 (Bedtime)',   desc: '按时入睡，保证充足睡眠',              tags: ['就寝'] }
+                { time: '放学后', title: '吃水果', desc: '放学后补充维生素与能量', tags: ['放学', '习惯'] },
+                { time: '06:30 - 07:00', title: '洗澡 (Shower)', desc: '清洁放松,准备晚上学习', tags: ['卫生'] },
+                { time: '07:00 - 07:25', title: '吃饭 (Eat)', desc: '营养均衡的晚餐', tags: ['用餐'] },
+                { time: '07:25 - 07:30', title: '收拾书包', desc: '准备好第二天需要的学习用品', tags: ['整理'] },
+                { time: '07:30 - 08:20', title: '写作与学习', desc: '专注完成当天写作与学习任务', tags: ['学习', '专注'] },
+                { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', desc: '睡前清洁,进入休息模式', tags: ['卫生', '就寝前'] },
+                { time: '08:30 - 08:50', title: '电子产品时间', desc: '有节制地使用电子产品放松', tags: ['放松', '电子'] },
+                { time: '08:50 - 09:00', title: '自由时间', desc: '随心安排片刻自由', tags: ['放松'] },
+                { time: '09:00', title: '睡觉 (Bedtime)', desc: '按时入睡,保证充足睡眠', tags: ['就寝'] }
             ],
             tuesday: [
-                { time: '放学后',         title: '吃水果',           desc: '放学后补充维生素与能量',             tags: ['放学', '习惯'] },
-                { time: '06:30 - 07:00', title: '洗澡 (Shower)',    desc: '清洁放松，准备晚上学习',             tags: ['卫生'] },
-                { time: '07:00 - 07:25', title: '吃饭 (Eat)',       desc: '营养均衡的晚餐',                     tags: ['用餐'] },
-                { time: '07:25 - 07:30', title: '收拾书包',          desc: '准备好第二天需要的学习用品',          tags: ['整理'] },
-                { time: '07:30 - 08:20', title: '写作与学习',        desc: '专注完成当天写作与学习任务',          tags: ['学习', '专注'] },
-                { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉',   desc: '睡前清洁，进入休息模式',              tags: ['卫生', '就寝前'] },
-                { time: '08:30 - 08:50', title: '电子产品时间',       desc: '有节制地使用电子产品放松',            tags: ['放松', '电子'] },
-                { time: '08:50 - 09:00', title: '自由时间',          desc: '随心安排片刻自由',                    tags: ['放松'] },
-                { time: '09:00',         title: '睡觉 (Bedtime)',   desc: '按时入睡，保证充足睡眠',              tags: ['就寝'] }
+                { time: '放学后', title: '吃水果', desc: '放学后补充维生素与能量', tags: ['放学', '习惯'] },
+                { time: '06:30 - 07:00', title: '洗澡 (Shower)', desc: '清洁放松,准备晚上学习', tags: ['卫生'] },
+                { time: '07:00 - 07:25', title: '吃饭 (Eat)', desc: '营养均衡的晚餐', tags: ['用餐'] },
+                { time: '07:25 - 07:30', title: '收拾书包', desc: '准备好第二天需要的学习用品', tags: ['整理'] },
+                { time: '07:30 - 08:20', title: '写作与学习', desc: '专注完成当天写作与学习任务', tags: ['学习', '专注'] },
+                { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', desc: '睡前清洁,进入休息模式', tags: ['卫生', '就寝前'] },
+                { time: '08:30 - 08:50', title: '电子产品时间', desc: '有节制地使用电子产品放松', tags: ['放松', '电子'] },
+                { time: '08:50 - 09:00', title: '自由时间', desc: '随心安排片刻自由', tags: ['放松'] },
+                { time: '09:00', title: '睡觉 (Bedtime)', desc: '按时入睡,保证充足睡眠', tags: ['就寝'] }
             ],
             wednesday: [
-                { time: '04:15 - 07:30', title: '补习 (Tuition)',    desc: '重点补强与巩固知识',                 tags: ['补习', '重要'] },
-                { time: '补习后',         title: '吃水果',           desc: '补习后补充能量',                     tags: ['补习后', '习惯'] },
-                { time: '07:30 - 08:10', title: '吃饭 / 收拾 / 准备', desc: '补充能量并整理状态',                 tags: ['用餐', '整理'] },
-                { time: '08:10 - 08:20', title: '写作 (Write)',      desc: '完成当日写作任务',                   tags: ['写作', '学习'] },
-                { time: '08:20 - 08:30', title: '学习 (Study)',      desc: '短时高效巩固',                       tags: ['学习', '专注'] },
-                { time: '08:30 - 08:35', title: '收拾书包',          desc: '为第二天做好准备',                   tags: ['整理'] },
-                { time: '08:35 - 08:45', title: '刷牙 (Brush)',      desc: '睡前清洁',                           tags: ['卫生'] },
-                { time: '08:45 - 09:00', title: '自由时间',          desc: '轻松片刻',                           tags: ['放松'] },
-                { time: '09:00',         title: '睡觉 (Bedtime)',   desc: '按时入睡',                           tags: ['就寝'] }
+                { time: '04:15 - 07:30', title: '补习 (Tuition)', desc: '重点补强与巩固知识', tags: ['补习', '重要'] },
+                { time: '补习后', title: '吃水果', desc: '补习后补充能量', tags: ['补习后', '习惯'] },
+                { time: '07:30 - 08:10', title: '吃饭 / 收拾 / 准备', desc: '补充能量并整理状态', tags: ['用餐', '整理'] },
+                { time: '08:10 - 08:20', title: '写作 (Write)', desc: '完成当日写作任务', tags: ['写作', '学习'] },
+                { time: '08:20 - 08:30', title: '学习 (Study)', desc: '短时高效巩固', tags: ['学习', '专注'] },
+                { time: '08:30 - 08:35', title: '收拾书包', desc: '为第二天做好准备', tags: ['整理'] },
+                { time: '08:35 - 08:45', title: '刷牙 (Brush)', desc: '睡前清洁', tags: ['卫生'] },
+                { time: '08:45 - 09:00', title: '自由时间', desc: '轻松片刻', tags: ['放松'] },
+                { time: '09:00', title: '睡觉 (Bedtime)', desc: '按时入睡', tags: ['就寝'] }
             ],
             thursday: [
-                { time: '05:15 - 08:00', title: '跆拳道 (Taekwondo)', desc: '锻炼体魄与意志',                    tags: ['运动', '训练'] },
-                { time: '回家后',         title: '吃水果',            desc: '运动后补充能量',                    tags: ['习惯'] },
-                { time: '08:00 - 08:30', title: '吃饭 / 准备',        desc: '补充能量并整理状态',                 tags: ['用餐', '整理'] },
-                { time: '08:30 - 08:40', title: '写作 (Write)',       desc: '短时写作练习',                      tags: ['写作'] },
-                { time: '08:40 - 08:45', title: '收拾书包',           desc: '准备好第二天的用品',                tags: ['整理'] },
-                { time: '08:45 - 08:55', title: '刷牙 (Brush)',       desc: '睡前清洁',                          tags: ['卫生'] },
-                { time: '08:55 - 09:00', title: '睡觉 (Bedtime)',    desc: '按时入睡',                          tags: ['就寝'] }
+                { time: '05:15 - 08:00', title: '跆拳道 (Taekwondo)', desc: '锻炼体魄与意志', tags: ['运动', '训练'] },
+                { time: '回家后', title: '吃水果', desc: '运动后补充能量', tags: ['习惯'] },
+                { time: '08:00 - 08:30', title: '吃饭 / 准备', desc: '补充能量并整理状态', tags: ['用餐', '整理'] },
+                { time: '08:30 - 08:40', title: '写作 (Write)', desc: '短时写作练习', tags: ['写作'] },
+                { time: '08:40 - 08:45', title: '收拾书包', desc: '准备好第二天的用品', tags: ['整理'] },
+                { time: '08:45 - 08:55', title: '刷牙 (Brush)', desc: '睡前清洁', tags: ['卫生'] },
+                { time: '08:55 - 09:00', title: '睡觉 (Bedtime)', desc: '按时入睡', tags: ['就寝'] }
             ],
             friday: [
-                { time: '放学后',         title: '吃水果',           desc: '放学后补充维生素与能量',             tags: ['放学', '习惯'] },
-                { time: '06:30 - 07:00', title: '洗澡 (Shower)',    desc: '清洁放松，准备晚上学习',             tags: ['卫生'] },
-                { time: '07:00 - 07:25', title: '吃饭 (Eat)',       desc: '营养均衡的晚餐',                     tags: ['用餐'] },
-                { time: '07:25 - 07:30', title: '收拾书包',          desc: '准备好第二天需要的学习用品',          tags: ['整理'] },
-                { time: '07:30 - 08:20', title: '写作与学习',        desc: '专注完成当天写作与学习任务',          tags: ['学习', '专注'] },
-                { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉',   desc: '睡前清洁，进入休息模式',              tags: ['卫生', '就寝前'] },
-                { time: '08:30 - 08:50', title: '电子产品时间',       desc: '有节制地使用电子产品放松',            tags: ['放松', '电子'] },
-                { time: '08:50 - 09:00', title: '自由时间',          desc: '随心安排片刻自由',                    tags: ['放松'] },
-                { time: '09:00',         title: '睡觉 (Bedtime)',   desc: '按时入睡，保证充足睡眠',              tags: ['就寝'] }
+                { time: '放学后', title: '吃水果', desc: '放学后补充维生素与能量', tags: ['放学', '习惯'] },
+                { time: '06:30 - 07:00', title: '洗澡 (Shower)', desc: '清洁放松,准备晚上学习', tags: ['卫生'] },
+                { time: '07:00 - 07:25', title: '吃饭 (Eat)', desc: '营养均衡的晚餐', tags: ['用餐'] },
+                { time: '07:25 - 07:30', title: '收拾书包', desc: '准备好第二天需要的学习用品', tags: ['整理'] },
+                { time: '07:30 - 08:20', title: '写作与学习', desc: '专注完成当天写作与学习任务', tags: ['学习', '专注'] },
+                { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', desc: '睡前清洁,进入休息模式', tags: ['卫生', '就寝前'] },
+                { time: '08:30 - 08:50', title: '电子产品时间', desc: '有节制地使用电子产品放松', tags: ['放松', '电子'] },
+                { time: '08:50 - 09:00', title: '自由时间', desc: '随心安排片刻自由', tags: ['放松'] },
+                { time: '09:00', title: '睡觉 (Bedtime)', desc: '按时入睡,保证充足睡眠', tags: ['就寝'] }
             ]
         };
-
-        // ====== 音乐播放器逻辑 ======
-        let isPlaying = false;
-        let currentSongIndex = -1;
+        let isPlaying = false, currentSongIndex = -1;
         const audioPlayer = document.getElementById('audioPlayer');
         const musicBtn = document.getElementById('musicBtn');
         const musicPanel = document.getElementById('musicPanel');
-
-        // 初始化音乐列表
         function initMusicList() {
             const musicList = document.getElementById('musicList');
             musicLibrary.forEach((song, index) => {
@@ -439,26 +321,28 @@
                 musicList.appendChild(item);
             });
         }
-
-        // 播放歌曲
         function playSong(index) {
             currentSongIndex = index;
             const song = musicLibrary[index];
-            
             document.getElementById('currentTitle').textContent = song.title;
             document.getElementById('currentArtist').textContent = song.artist;
-            
+            document.getElementById('musicError').style.display = 'none';
             document.querySelectorAll('.music-item').forEach((item, i) => {
                 item.classList.toggle('active', i === index);
             });
-            
             audioPlayer.src = song.url;
-            audioPlayer.play();
-            isPlaying = true;
-            musicBtn.textContent = '⏸️';
+            audioPlayer.load();
+            audioPlayer.play().then(() => {
+                isPlaying = true;
+                musicBtn.textContent = '⏸️';
+            }).catch(error => {
+                console.error('播放失败:', error);
+                document.getElementById('musicError').textContent = '播放失败,请检查音频链接';
+                document.getElementById('musicError').style.display = 'block';
+                isPlaying = false;
+                musicBtn.textContent = '▶️';
+            });
         }
-
-        // 音乐按钮点击事件
         musicBtn.addEventListener('click', function() {
             if (!musicPanel.classList.contains('active')) {
                 musicPanel.classList.add('active');
@@ -476,19 +360,13 @@
                 }
             }
         });
-
-        // 关闭面板
         document.getElementById('closePanel').addEventListener('click', function() {
             musicPanel.classList.remove('active');
         });
-
-        // 音频结束后自动播放下一首
         audioPlayer.addEventListener('ended', function() {
             currentSongIndex = (currentSongIndex + 1) % musicLibrary.length;
             playSong(currentSongIndex);
         });
-
-        // 创建动态粒子
         function createParticles() {
             const container = document.getElementById('particles');
             for (let i = 0; i < 30; i++) {
