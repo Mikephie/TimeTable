@@ -1,5 +1,5 @@
 const musicLibrary = [
-    { title: '多情的生肖兔（토끼 들어온다）', artist: 'SomeLove', url: 'https://music.mikephie.site/audio/%E5%A4%9A%E6%83%85%E7%9A%84%E7%94%9F%E8%82%96%E5%85%94%20(%E5%85%94%E5%AD%90%E6%9D%A5%E4%BA%86%EF%BC%89.FLAC' },
+    { title: '多情的生肖兔（토끼 들어온다）', artist: 'SomeLove', url: 'https://music.mikephie.site/audio/rabbit.MP3' },
     { title: '示例音乐 2', artist: 'SoundHelix', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
     { title: '示例音乐 3', artist: 'SoundHelix', url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' }
 ];
