@@ -5,32 +5,33 @@ body {
 }
 .container {
     position: relative; width: 100%; min-height: 100vh;
-    /* 🧡 活力暖阳橙背景渐变 🧡 */
-    background: linear-gradient(135deg, #ff9944 0%, #ff5e62 50%, #fdbb2d 100%);
+    /* 💥 优化 1: 增加背景渐变色差，使其更深沉 */
+    background: linear-gradient(135deg, #ff6600 0%, #ff4b2b 50%, #ff8c00 100%); 
     overflow: hidden;
 }
 .particle {
-    position: absolute; background: rgba(255, 255, 255, 0.1); border-radius: 50%;
+    position: absolute; background: rgba(255, 255, 255, 0.15); /* 略微提高粒子透明度 */
     pointer-events: none; animation: float 20s infinite;
 }
 @keyframes float {
-    0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.3; }
-    25% { transform: translateY(-100px) translateX(50px) scale(1.2); opacity: 0.6; }
-    50% { transform: translateY(-50px) translateX(-50px) scale(0.8); opacity: 0.4; }
-    75% { transform: translateY(-150px) translateX(30px) scale(1.1); opacity: 0.5; }
+    0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.4; } /* 提高基础粒子不透明度 */
+    25% { transform: translateY(-100px) translateX(50px) scale(1.2); opacity: 0.7; }
+    50% { transform: translateY(-50px) translateX(-50px) scale(0.8); opacity: 0.5; }
+    75% { transform: translateY(-150px) translateX(30px) scale(1.1); opacity: 0.6; }
 }
 .glow {
     position: absolute; width: 400px; height: 400px; border-radius: 50%;
-    filter: blur(100px); opacity: 0.4; animation: glow 8s ease-in-out infinite;
+    filter: blur(120px); opacity: 0.5; /* 增加模糊和不透明度 */
+    animation: glow 8s ease-in-out infinite;
 }
 .glow1 {
-    /* 🧡 橙色光晕 🧡 */
-    background: radial-gradient(circle, rgba(255,153,68,0.6) 0%, transparent 70%);
+    /* 💥 保持橙色光晕 */
+    background: radial-gradient(circle, rgba(255,102,0,0.6) 0%, transparent 70%);
     top: -100px; left: -100px;
 }
 .glow2 {
-    /* 🧡 黄色光晕 🧡 */
-    background: radial-gradient(circle, rgba(253,187,45,0.6) 0%, transparent 70%);
+    /* 💥 保持黄色光晕 */
+    background: radial-gradient(circle, rgba(255,140,0,0.6) 0%, transparent 70%);
     bottom: -100px; right: -100px; animation-delay: -4s;
 }
 @keyframes glow {
@@ -44,7 +45,8 @@ body {
 .title { text-align: center; margin: 30px 0; animation: fadeInDown 0.8s ease; }
 .title h1 {
     color: white; font-size: 28px; font-weight: 600;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    /* 💥 标题文字阴影加强 */
+    text-shadow: 0 0 10px rgba(0,0,0,0.4); 
     display: flex; align-items: center; justify-content: center; gap: 10px;
 }
 .title-icon { font-size: 32px; animation: rotate 3s ease-in-out infinite; }
@@ -54,32 +56,36 @@ body {
     animation: fadeInDown 0.8s ease 0.2s both; flex-wrap: wrap;
 }
 .week-btn {
-    background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 25px;
+    background: rgba(255, 255, 255, 0.2); /* 略微提高透明度 */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4); /* 增强边框可见性 */
+    border-radius: 25px;
     padding: 12px 20px; color: white; font-size: 15px; font-weight: 500;
-    cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 .week-btn:hover {
-    background: rgba(255, 255, 255, 0.25); transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.3); transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
 .week-btn.active {
     background: rgba(255, 255, 255, 0.9); 
-    /* 🧡 激活按钮颜色 🧡 */
-    color: #ff9944; 
+    color: #ff6600; /* 💥 激活按钮颜色 - 使用最亮的橙色 */
     font-weight: 600;
-    box-shadow: 0 12px 40px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(255, 255, 255, 0.4);
 }
 .main-card {
     margin: 20px auto 100px; max-width: 700px; width: 100%;
-    background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px);
-    border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 40px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+    /* 💥 优化 2: 给主卡片一个淡淡的底色，增加质感 */
+    background: rgba(255, 255, 255, 0.1); 
+    background: rgba(255, 120, 0, 0.15); /* 橙色玻璃拟态底色 */
+    backdrop-filter: blur(20px);
+    border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 40px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
     animation: fadeInUp 0.8s ease 0.4s both; position: relative; overflow: hidden;
 }
 .card-shine {
     position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.15), transparent);
     animation: shine 3s infinite;
 }
 @keyframes shine {
@@ -90,14 +96,20 @@ body {
     position: relative; z-index: 2; display: flex; flex-direction: column;
     align-items: center; justify-content: center; min-height: 400px;
 }
+.calendar-icon {
+    width: 150px; height: 150px; background: white; border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); display: flex;
+    flex-direction: column; overflow: hidden; animation: pulse 2s ease-in-out infinite;
+    cursor: pointer; transition: transform 0.3s ease;
+}
 .calendar-icon:hover { transform: scale(1.1) rotateY(10deg); }
 @keyframes pulse {
     0%, 100% { transform: scale(1); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
     50% { transform: scale(1.05); box-shadow: 0 25px 80px rgba(255, 255, 255, 0.4); }
 }
 .calendar-header {
-    /* 🧡 日历头部渐变 🧡 */
-    background: linear-gradient(135deg, #ff9944 0%, #fdbb2d 100%);
+    /* 💥 日历头部渐变 */
+    background: linear-gradient(135deg, #ff8c00 0%, #ff4b2b 100%);
     color: white; padding: 12px; text-align: center;
     font-size: 14px; font-weight: 600; letter-spacing: 1px;
 }
@@ -105,7 +117,14 @@ body {
     flex: 1; display: flex; align-items: center; justify-content: center;
     font-size: 56px; font-weight: 700; color: #333;
 }
-.hint-text { margin-top: 40px; color: white; font-size: 16px; text-align: center; opacity: 0.95; }
+.hint-text { 
+    margin-top: 40px; 
+    color: white; 
+    font-size: 16px; 
+    text-align: center; 
+    opacity: 1; /* 确保文字不透明 */
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
 .stats { display: flex; gap: 15px; margin-top: 30px; justify-content: center; flex-wrap: wrap; }
 .stat-card {
     background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
@@ -127,69 +146,75 @@ body {
 }
 .timeline { position: relative; }
 .timeline-item {
-    position: relative; padding-left: 40px; margin-bottom: 15px;
+    position: relative; padding-left: 40px; margin-bottom: 25px; /* 增加行距 */
     animation: slideInLeft 0.5s ease;
 }
 @keyframes slideInLeft { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
 .timeline-dot {
-    position: absolute; left: 0; top: 5px; width: 20px; height: 20px;
-    /* 🧡 时间线圆点渐变 🧡 */
-    background: linear-gradient(135deg, #ff9944 0%, #fdbb2d 100%);
-    /* 🧡 时间线圆点阴影 🧡 */
-    box-shadow: 0 0 20px rgba(255, 153, 68, 0.6); 
+    position: absolute; left: 0; top: 8px; /* 调整圆点位置 */
+    width: 24px; height: 24px; /* 增大圆点 */
+    /* 💥 时间线圆点渐变 */
+    background: linear-gradient(135deg, #ff8c00 0%, #ff4b2b 100%);
+    /* 💥 时间线圆点阴影加强 */
+    box-shadow: 0 0 25px rgba(255, 75, 43, 0.8); 
     border-radius: 50%; z-index: 2;
 }
 .timeline-dot::before {
     content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    width: 8px; height: 8px; background: white; border-radius: 50%;
+    width: 10px; height: 10px; background: white; border-radius: 50%; /* 增大内点 */
 }
 .timeline-line {
-    position: absolute; left: 9px; top: 25px; width: 2px; height: calc(100% + 5px);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
+    position: absolute; left: 11px; top: 32px; /* 调整线的位置 */
+    width: 2px; height: calc(100% + 5px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, transparent 100%); /* 增强线的透明度 */
 }
 .timeline-card {
-    background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 15px;
-    padding: 12px 16px; transition: all 0.3s ease; cursor: pointer;
+    /* 💥 优化 2: 略微提高卡片背景的不透明度 */
+    background: rgba(255, 255, 255, 0.2); 
+    border: 1px solid rgba(255, 255, 255, 0.4); /* 增强边框 */
+    border-radius: 15px;
+    padding: 15px 20px; /* 增加内边距 */
+    transition: all 0.3s ease; cursor: pointer;
 }
-.timeline-card:hover { background: rgba(255, 255, 255, 0.25); transform: translateX(5px); }
+.timeline-card:hover { background: rgba(255, 255, 255, 0.3); transform: translateX(5px); }
 /* 优化：时间文本颜色和阴影 */
 .timeline-time { 
-    /* 🧡 时间文本颜色 🧡 */
-    color: #ff5e62; 
-    font-size: 13px; 
-    font-weight: 600; 
-    margin-bottom: 6px; 
-    display: flex; 
-    align-items: center; 
-    gap: 5px; 
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.2); 
+    color: #ff4b2b; /* 💥 使用深红色，对比更强 */
+    font-size: 14px; 
+    font-weight: 700; /* 加粗 */
+    margin-bottom: 8px; 
+    display: flex; align-items: center; gap: 5px; 
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.2); 
 }
-/* 优化：标题的白色文字和阴影 */
+/* 💥 优化 3: 标题的白色文字和阴影加强 */
 .timeline-title { 
     color: white; 
-    font-size: 16px; 
-    font-weight: 600; 
-    margin-bottom: 5px; 
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.4); 
+    font-size: 17px; 
+    font-weight: 700; 
+    margin-bottom: 6px; 
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.6); /* 阴影加强 */
 }
-/* 优化：描述的白色文字和阴影 */
+/* 💥 优化 3: 描述的白色文字和阴影加强 */
 .timeline-desc { 
     color: white; 
-    font-size: 13px; 
-    line-height: 1.5; 
-    text-shadow: 0 0 4px rgba(0, 0, 0, 0.3); 
+    font-size: 14px; 
+    line-height: 1.6; 
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.5); /* 阴影加强 */
 }
-.timeline-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-.tag { background: rgba(255, 255, 255, 0.2); color: white; padding: 3px 10px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+.timeline-tags { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.tag { 
+    background: rgba(255, 255, 255, 0.3); /* 提高标签透明度 */
+    color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; 
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
 .fab {
     position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
-    /* 🧡 FAB 按钮渐变 🧡 */
-    background: linear-gradient(135deg, #ff9944 0%, #fdbb2d 100%);
+    /* 💥 FAB 按钮渐变 */
+    background: linear-gradient(135deg, #ff6600 0%, #ff4b2b 100%);
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
     color: white; font-size: 24px; cursor: pointer; 
-    /* 🧡 FAB 阴影 🧡 */
-    box-shadow: 0 10px 30px rgba(255, 153, 68, 0.4);
+    /* 💥 FAB 阴影加强 */
+    box-shadow: 0 10px 30px rgba(255, 75, 43, 0.6);
     animation: bounce 2s ease-in-out infinite; z-index: 100; border: none; transition: all 0.3s ease;
 }
 .fab:hover { transform: scale(1.1); }
@@ -206,34 +231,31 @@ body {
 .music-info { margin-bottom: 15px; }
 .music-title { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px; }
 .music-artist { font-size: 13px; color: #666; }
-.music-error { font-size: 11px; color: #f5576c; margin-top: 5px; }
+.music-error { font-size: 11px; color: #ff4b2b; margin-top: 5px; }
 .music-list { max-height: 200px; overflow-y: auto; margin-bottom: 15px; }
 .music-item {
-    /* 调整音乐列表项的背景色以配合新主题 */
-    background: rgba(255, 153, 68, 0.1); 
+    background: rgba(255, 102, 0, 0.1); 
     border-radius: 10px; cursor: pointer; transition: all 0.3s ease; font-size: 14px; color: #333;
     padding: 10px; margin-bottom: 5px; 
 }
 .music-item:hover { 
-    background: rgba(255, 153, 68, 0.2); 
+    background: rgba(255, 102, 0, 0.2); 
     transform: translateX(5px); 
 }
 .music-item.active { 
-    /* 🧡 选中音乐项背景渐变 🧡 */
-    background: linear-gradient(135deg, #ff9944 0%, #ff5e62 100%); 
+    /* 💥 选中音乐项背景渐变 */
+    background: linear-gradient(135deg, #ff6600 0%, #ff4b2b 100%); 
     color: white; 
 }
 .close-panel {
     text-align: center; padding: 8px; 
-    /* 🧡 关闭按钮背景 🧡 */
-    background: rgba(255, 153, 68, 0.1);
+    background: rgba(255, 102, 0, 0.1);
     border-radius: 10px; cursor: pointer; 
-    /* 🧡 关闭按钮文字颜色 🧡 */
-    color: #ff5e62; 
+    color: #ff4b2b; 
     font-size: 13px; font-weight: 500;
 }
 .close-panel:hover { 
-    background: rgba(255, 153, 68, 0.2); 
+    background: rgba(255, 102, 0, 0.2); 
 }
 @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
