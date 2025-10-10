@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的每日时间安排</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 背景光效 -->
+        <div class="glow glow1"></div>
+        <div class="glow glow2"></div>
+
+        <!-- 动态粒子 -->
+        <div id="particles"></div>
+
+        <!-- 主内容 -->
+        <div class="content">
+            <!-- 标题 -->
+            <div class="title">
+                <h1>
+                    <span class="title-icon">💫</span>
+                    我的每日时间安排
+                    <span class="title-icon">💫</span>
+                </h1>
+            </div>
+
+            <!-- 星期导航 -->
+            <div class="week-nav">
+                <button class="week-btn" data-day="monday">周一</button>
+                <button class="week-btn" data-day="tuesday">周二</button>
+                <button class="week-btn active" data-day="wednesday">周三</button>
+                <button class="week-btn" data-day="thursday">周四</button>
+                <button class="week-btn" data-day="friday">周五</button>
+            </div>
+
+            <!-- 主卡片 -->
+            <div class="main-card">
+                <div class="card-shine"></div>
+                
+                <!-- 空状态 -->
+                <div class="empty-state" id="emptyState">
+                    <div class="calendar-icon">
+                        <div class="calendar-header" id="calendarMonth">OCT 十月</div>
+                        <div class="calendar-body" id="calendarDay">10</div>
+                    </div>
+
+                    <div class="hint-text">请点击上方按钮查看当日的时间表。</div>
+
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">今日待办</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">进行中</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">本周完成</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 时间表内容 -->
+                <div class="schedule-content" id="scheduleContent">
+                    <div class="schedule-header">
+                        <div class="schedule-date" id="scheduleDate">10月 周三</div>
+                        <div class="schedule-day">今天共有 <span id="taskCount">5</span> 项安排</div>
+                    </div>
+
+                    <div class="timeline" id="timeline"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 浮动音乐按钮 -->
+        <button class="fab" id="musicBtn" title="音乐播放器">▶️</button>
+
+        <!-- 音乐控制面板 -->
+        <div class="music-panel" id="musicPanel">
+            <div class="music-info">
+                <div class="music-title" id="currentTitle">暂无播放</div>
+                <div class="music-artist" id="currentArtist">请选择歌曲</div>
+                <div class="music-error" id="musicError" style="display:none;"></div>
+            </div>
+            <div class="music-list" id="musicList"></div>
+            <div class="close-panel" id="closePanel">关闭</div>
+        </div>
+
+        <!-- 隐藏的音频播放器 -->
+        <audio id="audioPlayer"></audio>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
