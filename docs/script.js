@@ -68,7 +68,7 @@ const currentCover = document.getElementById('currentCover'); // 获取封面元
 // 工具函数：只移除非法字符，不替换空格
 function sanitizeAndEncode(s) {
     if (!s) return ''; 
-    // 💥 仅清理非字母、数字、中文、空格的字符
+    // 仅清理非字母、数字、中文、空格的字符
     return s.replace(/[^a-zA-Z0-9\s\u4e00-\u9fa5.\-]/g, '').trim(); 
 }
 
@@ -77,7 +77,12 @@ function initMusicList() {
     musicLibrary.forEach((song, index) => {
         const item = document.createElement('div');
         item.className = 'music-item';
-        item.textContent = `${song.title} - ${song.artist}`;
+        
+        // 💥 关键修改：在列表中显示 Album 名称
+        // 格式: Title - Artist (Album)
+        const albumDisplay = song.album ? ` (${song.album})` : '';
+        item.textContent = `${song.title} - ${song.artist}${albumDisplay}`;
+        
         item.addEventListener('click', () => playSong(index));
         musicList.appendChild(item);
     });
