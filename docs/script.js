@@ -1,7 +1,8 @@
 const musicLibrary = [
-    { title: 'Song of the Rabbit', artist: 'Jangdan', url: 'https://music.mikephie.site/audio/Song%20of%20the%20Rabbit.FLAC', cover: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=60&h=60&auto=format&fit=crop' },
-    { title: '孤勇者', artist: '陈奕迅', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC', cover: 'https://images.unsplash.com/photo-1470225640330-5d63b2c28248?w=60&h=60&auto=format&fit=crop' },
-    { title: '稻香', artist: '周杰伦', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC', cover: 'https://images.unsplash.com/photo-1458560871784-56d23406a096?w=60&h=60&auto=format&fit=crop' }
+    // 移除硬编码的 'cover' 属性，保留 title, artist, url
+    { title: 'Song of the Rabbit', artist: 'Jangdan', album: 'Rabbit Album', url: 'https://music.mikephie.site/audio/Song%20of%20the%20Rabbit.FLAC' },
+    { title: '孤勇者', artist: '陈奕迅', album: 'Fearless', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
+    { title: '稻香', artist: '周杰伦', album: '稻香 The Album', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC' }
 ];
 const scheduleData = {
     monday: [
@@ -62,7 +63,14 @@ let isPlaying = false, currentSongIndex = -1;
 const audioPlayer = document.getElementById('audioPlayer');
 const musicBtn = document.getElementById('musicBtn');
 const musicPanel = document.getElementById('musicPanel');
-const currentCover = document.getElementById('currentCover'); // 新增：获取封面元素
+const currentCover = document.getElementById('currentCover'); // 获取封面元素
+
+// 新增工具函数：用于清理名称并构造 URL 路径
+function sanitizeAndEncode(s) {
+    if (!s) return 'unknown';
+    // 移除所有非中文字符、字母、数字、空格、点和连字符，并替换空格为连字符
+    return s.replace(/[^a-zA-Z0-9\s\u4e00-\u9fa5.\-]/g, '').trim().replace(/\s+/g, '-');
+}
 
 function initMusicList() {
     const musicList = document.getElementById('musicList');
@@ -79,7 +87,20 @@ function playSong(index) {
     const song = musicLibrary[index];
     document.getElementById('currentTitle').textContent = song.title;
     document.getElementById('currentArtist').textContent = song.artist;
-    currentCover.style.backgroundImage = `url('${song.cover}')`; // 新增：设置封面背景图
+    
+    // --- 核心修改：动态构造封面 URL ---
+    const artistKey = sanitizeAndEncode(song.artist);
+    const albumKey = sanitizeAndEncode(song.album);
+    
+    // 假设您的 PUBLIC_BASE_URL 是 https://music.mikephie.site
+    // 约定：封面文件名为 "covers/艺术家-专辑名.JPG" (或 PNG)
+    const baseCoverUrl = `https://music.mikephie.site/covers/${artistKey}-${albumKey}`;
+    
+    // 我们尝试优先加载 JPG，如果失败，浏览器会自动加载 PNG (通过 style.css 中的 fallback)
+    // 最终设置的 URL 是第一个尝试的链接
+    currentCover.style.backgroundImage = `url('${baseCoverUrl}.JPG')`;
+    // --- 核心修改结束 ---
+
     document.getElementById('musicError').style.display = 'none';
     document.querySelectorAll('.music-item').forEach((item, i) => {
         item.classList.toggle('active', i === index);
