@@ -1,7 +1,7 @@
 const musicLibrary = [
     { title: 'Song of the Rabbit', artist: 'Jangdan', url: 'https://music.mikephie.site/audio/Jangdan%20-%20Song%20of%20the%20Rabbit.FLAC' },
-    { title: '孤勇者', artist: '陈奕迅', url: 'https://music.mikephie.site/audio/%E9%99%88%E5%A5%95%E8%BF%85%20-%20%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
-    { title: '稻香', artist: '周杰伦', url: 'https://music.mikephie.site/audio/%E5%91%A8%E6%9D%B0%E4%BC%A6%20-%20%E7%A8%BB%E9%A6%99.FLAC' }
+    { title: '孤勇者', artist: '陈奕迅', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
+    { title: '稻香', artist: '周杰伦', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC' }
 ];
 const scheduleData = {
     monday: [
