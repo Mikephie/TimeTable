@@ -285,7 +285,8 @@ body {
     width: 60px; /* 封面宽度 */
     height: 60px; /* 封面高度 */
     border-radius: 8px; /* 圆角 */
-    background: #ccc url('https://via.placeholder.com/60') center/cover no-repeat; /* 默认灰色背景和占位图 */
+    /* 💥 关键修复: 确保有一个默认的可见背景 */
+    background: #ccc url('https://via.placeholder.com/60/FF9900/FFFFFF?text=🎵') center/cover no-repeat; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 简单阴影 */
     flex-shrink: 0; /* 防止封面被压缩 */
     transition: transform 0.3s ease;
