@@ -67,9 +67,10 @@ const currentCover = document.getElementById('currentCover'); // 获取封面元
 
 // 工具函数：用于清理名称并生成 URL Key
 function sanitizeAndEncode(s) {
-    if (!s) return ''; // 返回空字符串以防止生成多余的连字符
-    // 移除所有非中文字符、字母、数字、空格、点和连字符，并替换空格为连字符
-    return s.replace(/[^a-zA-Z0-9\s\u4e00-\u9fa5.\-]/g, '').trim().replace(/\s+/g, '-');
+    if (!s) return ''; 
+    // 💥 关键修改：不再将空格替换为连字符 (-)
+    // 仅移除非中文字符、字母、数字、空格、点和连字符
+    return s.replace(/[^a-zA-Z0-9\s\u4e00-\u9fa5.\-]/g, '').trim(); 
 }
 
 function initMusicList() {
@@ -89,26 +90,27 @@ function playSong(index) {
     document.getElementById('currentTitle').textContent = song.title;
     document.getElementById('currentArtist').textContent = song.artist;
     
-    // --- 核心逻辑：动态构造和 URL 编码 (匹配 app.js 上传的文件名) ---
+    // --- 核心逻辑：动态构造和 URL 编码 (匹配 CDN 上的空格命名约定) ---
     const titleKey = sanitizeAndEncode(song.title);
     const artistKey = sanitizeAndEncode(song.artist);
     const albumKey = sanitizeAndEncode(song.album);
     
-    // 1. 组合 rawKey (Title-Artist-Album)
+    // 1. 组合 rawKey (Title Artist Album，使用空格作为分隔符)
     let rawKey = [];
     if (titleKey) rawKey.push(titleKey);
     if (artistKey) rawKey.push(artistKey);
     if (albumKey) rawKey.push(albumKey);
 
-    const finalRawKey = rawKey.join('-');
+    // 使用空格作为连接符，确保与 CDN 上的文件名匹配
+    const finalRawKey = rawKey.join(' '); 
     
-    // 2. 对最终的 Key 进行 URL 编码，确保中文路径正确
+    // 2. 对最终的 Key 进行 URL 编码，确保空格被转换为 %20
     const encodedKey = encodeURIComponent(finalRawKey);
 
     // 3. 构造最终的 URL
     const finalCoverUrl = `https://music.mikephie.site/covers/${encodedKey}.JPG`;
     
-    // 4. 设置背景图，浏览器会自动加载
+    // 4. 设置背景图
     currentCover.style.backgroundImage = `url('${finalCoverUrl}')`;
     // --- 核心逻辑结束 ---
 
