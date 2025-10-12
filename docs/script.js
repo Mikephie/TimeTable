@@ -1,5 +1,5 @@
 const musicLibrary = [
-    // 💥 必须包含完整的元数据，用于构造封面路径
+    // 💥 必须包含 title, artist, album 字段
     { title: 'Song of the Rabbit', artist: 'Jangdan', album: 'Rabbit Album', url: 'https://music.mikephie.site/audio/Song%20of%20the%20Rabbit.FLAC' },
     { title: '孤勇者', artist: '陈奕迅', album: 'Fearless', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
     { title: '稻香', artist: '周杰伦', album: '稻香 The Album', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC' }
@@ -94,7 +94,7 @@ function playSong(index) {
     const artistKey = sanitizeAndEncode(song.artist);
     const albumKey = sanitizeAndEncode(song.album);
     
-    // 1. 组合 rawKey (Title-Artist-Album)，这是 app.js 最终上传的封面文件名
+    // 1. 组合 rawKey (Title-Artist-Album)
     let rawKey = [];
     if (titleKey) rawKey.push(titleKey);
     if (artistKey) rawKey.push(artistKey);
@@ -105,7 +105,7 @@ function playSong(index) {
     // 2. 对最终的 Key 进行 URL 编码，确保中文路径正确
     const encodedKey = encodeURIComponent(finalRawKey);
 
-    // 3. 构造最终的 URL (使用 app.js 定义的 PUBLIC_BASE_URL 和 covers 目录)
+    // 3. 构造最终的 URL
     const finalCoverUrl = `https://music.mikephie.site/covers/${encodedKey}.JPG`;
     
     // 4. 设置背景图，浏览器会自动加载
