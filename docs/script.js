@@ -1,6 +1,5 @@
-// 移除硬编码的 const musicLibrary = [...]
-
-let musicLibrary = []; // 定义为空数组，等待加载
+// 移除所有硬编码的 musicLibrary 数据。
+let musicLibrary = []; 
 
 const scheduleData = {
     monday: [
@@ -18,7 +17,7 @@ const scheduleData = {
         { time: '放学后', title: '吃水果', desc: '放学后补充维生素与能量', tags: ['放学', '习惯'] },
         { time: '06:30 - 07:00', title: '洗澡 (Shower)', desc: '清洁放松,准备晚上学习', tags: ['卫生'] },
         { time: '07:00 - 07:25', title: '吃饭 (Eat)', desc: '营养均衡的晚餐', tags: ['用餐'] },
-        { time: '07:25 - 07:30', title: '收拾书包', tags: ['整理'] },
+        { time: '07:25 - 07-30', title: '收拾书包', tags: ['整理'] },
         { time: '07:30 - 08:20', title: '写作与学习', desc: '专注完成当天写作与学习任务', tags: ['学习', '专注'] },
         { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', tags: ['卫生', '就寝前'] },
         { time: '08:30 - 08:50', title: '电子产品时间', desc: '有节制地使用电子产品放松', tags: ['放松', '电子'] },
@@ -32,7 +31,7 @@ const scheduleData = {
         { time: '08:10 - 08:20', title: '写作 (Write)', desc: '完成当日写作任务', tags: ['写作', '学习'] },
         { time: '08:20 - 08:30', title: '学习 (Study)', desc: '短时高效巩固', tags: ['学习', '专注'] },
         { time: '08:30 - 08:35', title: '收拾书包', tags: ['整理'] },
-        { time: '08:35 - 08:45', title: '刷牙 (Brush)', tags: ['卫生'] },
+        { time: '08:35 - 08-45', title: '刷牙 (Brush)', tags: ['卫生'] },
         { time: '08:45 - 09:00', title: '自由时间', desc: '轻松片刻', tags: ['放松'] },
         { time: '09:00', title: '睡觉 (Bedtime)', tags: ['就寝'] }
     ],
@@ -41,15 +40,15 @@ const scheduleData = {
         { time: '回家后', title: '吃水果', desc: '运动后补充能量', tags: ['习惯'] },
         { time: '08:00 - 08:30', title: '吃饭 / 准备', desc: '补充能量并整理状态', tags: ['用餐', '整理'] },
         { time: '08:30 - 08:40', title: '写作 (Write)', desc: '短时写作练习', tags: ['写作'] },
-        { time: '08:40 - 08:45', title: '收拾书包', tags: ['整理'] },
-        { time: '08:45 - 08:55', title: '刷牙 (Brush)', tags: ['卫生'] },
+        { time: '08:40 - 08-45', title: '收拾书包', tags: ['整理'] },
+        { time: '08:45 - 08-55', title: '刷牙 (Brush)', tags: ['卫生'] },
         { time: '08:55 - 09:00', title: '睡觉 (Bedtime)', tags: ['就寝'] }
     ],
     friday: [
         { time: '放学后', title: '吃水果', desc: '放学后补充维生素与能量', tags: ['放学', '习惯'] },
         { time: '06:30 - 07:00', title: '洗澡 (Shower)', desc: '清洁放松,准备晚上学习', tags: ['卫生'] },
         { time: '07:00 - 07:25', title: '吃饭 (Eat)', desc: '营养均衡的晚餐', tags: ['用餐'] },
-        { time: '07:25 - 07:30', title: '收拾书包', tags: ['整理'] },
+        { time: '07:25 - 07-30', title: '收拾书包', tags: ['整理'] },
         { time: '07:30 - 08:20', title: '写作与学习', desc: '专注完成当天写作与学习任务', tags: ['学习', '专注'] },
         { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', tags: ['卫生', '就寝前'] },
         { time: '08:30 - 08:50', title: '电子产品时间', desc: '有节制地使用电子产品放松', tags: ['放松', '电子'] },
@@ -75,10 +74,8 @@ function initMusicList() {
     musicList.innerHTML = ''; // 清空旧列表
     
     musicLibrary.forEach((asset, index) => {
-        // 关键：现在 asset 是整个 asset 对象，我们需要访问其 metadata 属性
         const song = asset.metadata;
         
-        // 确保跳过非音频资产（如封面本身，如果它们也在列表中）
         if (asset.type !== 'audio' || !song) return;
         
         const item = document.createElement('div');
@@ -88,14 +85,12 @@ function initMusicList() {
         const albumDisplay = song.album ? ` (${song.album})` : '';
         item.textContent = `${song.title} - ${song.artist}${albumDisplay}`;
         
-        // 我们将整个 asset 对象（包括 url 和 metadata）传递给 playSong
         item.addEventListener('click', () => playSong(index));
         musicList.appendChild(item);
     });
 }
 
 function playSong(index) {
-    // 关键：从 musicLibrary 中获取 asset 对象，而不是 song 对象
     const asset = musicLibrary[index];
     if (!asset || asset.type !== 'audio') return; 
 
@@ -106,17 +101,12 @@ function playSong(index) {
     document.getElementById('currentArtist').textContent = song.artist;
     
     // --- 核心逻辑：使用 Album Name 构造 URL ---
-    
-    // 1. 清理并获取 Album Key
     const rawKey = sanitizeAndEncode(song.album);
-    
-    // 2. 对 Album Key 进行 URL 编码，确保空格被转换为 %20
     const encodedKey = encodeURIComponent(rawKey);
 
-    // 3. 构造最终的 URL (Album Name.JPG)
+    // 构造最终的 URL (Album Name.JPG)
     const finalCoverUrl = `https://music.mikephie.site/covers/${encodedKey}.JPG`;
     
-    // 4. 设置背景图
     currentCover.style.backgroundImage = `url('${finalCoverUrl}')`;
     // --- 核心逻辑结束 ---
 
@@ -125,7 +115,7 @@ function playSong(index) {
         item.classList.toggle('active', i === index);
     });
     
-    // 关键：使用 asset.url 作为音频源
+    // 使用 asset.url 作为音频源
     audioPlayer.src = asset.url;
     audioPlayer.load();
     audioPlayer.play().then(() => {
@@ -133,7 +123,7 @@ function playSong(index) {
         musicBtn.textContent = '⏸️';
     }).catch(error => {
         console.error('播放失败:', error);
-        document.getElementById('musicError').textContent = '播放失败,请检查音频链接';
+        document.getElementById('musicError').textContent = '播放失败,请检查音频链接或 CORS 设置';
         document.getElementById('musicError').style.display = 'block';
         isPlaying = false;
         musicBtn.textContent = '▶️';
@@ -250,16 +240,23 @@ async function loadMusicLibrary() {
         // 关键修改：引用正确的 JSON 文件名
         const response = await fetch('https://music.mikephie.site/music_assets.json'); 
         if (!response.ok) {
-            throw new Error('无法加载音乐数据文件，状态码: ' + response.status);
+            throw new Error('无法加载音乐数据文件，请检查 JSON 文件是否存在或 CORS 设置');
         }
+        
         // 过滤非音频资产，确保 musicLibrary 只包含歌曲
         const fullAssets = await response.json();
+        // 确保 fullAssets.assets 存在且是数组
+        if (!fullAssets.assets || !Array.isArray(fullAssets.assets)) {
+             throw new Error('JSON 格式不正确，缺少 assets 数组');
+        }
+        
+        // 过滤出音频资产，并映射到 musicLibrary
         musicLibrary = fullAssets.assets.filter(asset => asset.type === 'audio');
         
         initMusicList(); // 数据加载成功后，渲染列表
     } catch (error) {
         console.error('音乐库加载失败:', error);
-        document.getElementById('musicList').innerHTML = '<div style="color:red;padding:10px;font-size:14px;text-align:center;">错误: 音乐数据加载失败。请检查 music_assets.json 的 **CORS 设置** 或 **JSON 格式**。</div>';
+        document.getElementById('musicList').innerHTML = '<div style="color:red;padding:10px;font-size:14px;text-align:center;">错误: 音乐数据加载失败。请检查 music_assets.json 的 CORS 设置或 JSON 格式。</div>';
     }
 }
 
