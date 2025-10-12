@@ -1,5 +1,5 @@
 const musicLibrary = [
-    { title: 'Song of the Rabbit', artist: 'Jangdan', url: 'https://music.mikephie.site/audio/Jangdan%20-%20Song%20of%20the%20Rabbit.FLAC' },
+    { title: 'Song of the Rabbit', artist: 'Jangdan', url: 'https://music.mikephie.site/audio/Song%20of%20the%20Rabbit.FLAC' },
     { title: '孤勇者', artist: '陈奕迅', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
     { title: '稻香', artist: '周杰伦', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC' }
 ];
