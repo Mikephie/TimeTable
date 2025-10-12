@@ -1,5 +1,5 @@
 const musicLibrary = [
-    // 确保每首歌曲都包含 artist 和 album 字段
+    // 💥 必须包含完整的元数据，用于构造封面路径
     { title: 'Song of the Rabbit', artist: 'Jangdan', album: 'Rabbit Album', url: 'https://music.mikephie.site/audio/Song%20of%20the%20Rabbit.FLAC' },
     { title: '孤勇者', artist: '陈奕迅', album: 'Fearless', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
     { title: '稻香', artist: '周杰伦', album: '稻香 The Album', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC' }
@@ -67,7 +67,7 @@ const currentCover = document.getElementById('currentCover'); // 获取封面元
 
 // 工具函数：用于清理名称并生成 URL Key
 function sanitizeAndEncode(s) {
-    if (!s) return 'unknown';
+    if (!s) return ''; // 返回空字符串以防止生成多余的连字符
     // 移除所有非中文字符、字母、数字、空格、点和连字符，并替换空格为连字符
     return s.replace(/[^a-zA-Z0-9\s\u4e00-\u9fa5.\-]/g, '').trim().replace(/\s+/g, '-');
 }
@@ -89,19 +89,23 @@ function playSong(index) {
     document.getElementById('currentTitle').textContent = song.title;
     document.getElementById('currentArtist').textContent = song.artist;
     
-    // --- 核心逻辑：动态构造和 URL 编码 ---
-    const artist = song.artist || 'Unknown Artist';
-    const album = song.album || 'Unknown Album';
+    // --- 核心逻辑：动态构造和 URL 编码 (匹配 app.js 上传的文件名) ---
+    const titleKey = sanitizeAndEncode(song.title);
+    const artistKey = sanitizeAndEncode(song.artist);
+    const albumKey = sanitizeAndEncode(song.album);
     
-    // 1. 清理并生成 KEY 名称 (如: 陈奕迅-Fearless)
-    const rawKey = `${sanitizeAndEncode(artist)}-${sanitizeAndEncode(album)}`;
+    // 1. 组合 rawKey (Title-Artist-Album)，这是 app.js 最终上传的封面文件名
+    let rawKey = [];
+    if (titleKey) rawKey.push(titleKey);
+    if (artistKey) rawKey.push(artistKey);
+    if (albumKey) rawKey.push(albumKey);
 
-    // 2. 对完整的 KEY 名称进行 URL 编码，确保中文和特殊符号正确传输
-    // 这是解决中文路径问题的关键步骤
-    const encodedKey = encodeURIComponent(rawKey);
+    const finalRawKey = rawKey.join('-');
+    
+    // 2. 对最终的 Key 进行 URL 编码，确保中文路径正确
+    const encodedKey = encodeURIComponent(finalRawKey);
 
-    // 3. 构造最终的 URL
-    // 约定：文件位于 https://music.mikephie.site/covers/ 路径下
+    // 3. 构造最终的 URL (使用 app.js 定义的 PUBLIC_BASE_URL 和 covers 目录)
     const finalCoverUrl = `https://music.mikephie.site/covers/${encodedKey}.JPG`;
     
     // 4. 设置背景图，浏览器会自动加载
