@@ -273,8 +273,37 @@ body {
 }
 .music-panel.active { display: block; animation: slideUp 0.3s ease; }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.music-info { margin-bottom: 15px; }
-.music-title { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 5px; }
+/* 调整 music-info 布局，使用 flex 让封面和文字并排 */
+.music-info { 
+    margin-bottom: 15px; 
+    display: flex; /* 启用 Flex 布局 */
+    align-items: center; /* 垂直居中对齐 */
+    gap: 15px; /* 封面和文字之间的间距 */
+}
+/* 新增：音频封面样式 */
+.music-cover {
+    width: 60px; /* 封面宽度 */
+    height: 60px; /* 封面高度 */
+    border-radius: 8px; /* 圆角 */
+    background: #ccc url('https://via.placeholder.com/60') center/cover no-repeat; /* 默认灰色背景和占位图 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 简单阴影 */
+    flex-shrink: 0; /* 防止封面被压缩 */
+    transition: transform 0.3s ease;
+}
+.music-cover:hover {
+    transform: scale(1.05) rotate(2deg);
+}
+/* 调整 music-title 和 music-artist 的父容器，使它们垂直堆叠 */
+.music-info > div:not(.music-cover) {
+    display: flex;
+    flex-direction: column;
+}
+.music-title { 
+    font-size: 16px; 
+    font-weight: 600; 
+    color: #333; 
+    margin-bottom: 0; /* 移除默认 margin-bottom */
+}
 .music-artist { font-size: 13px; color: #666; }
 .music-error { font-size: 11px; color: #ff4b2b; margin-top: 5px; }
 .music-list { max-height: 200px; overflow-y: auto; margin-bottom: 15px; }
