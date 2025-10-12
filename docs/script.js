@@ -1,8 +1,8 @@
 const musicLibrary = [
-    // 💥 必须包含 title, artist, album 字段
+    // 💥 确保 album 字段是您 CDN 上实际的文件名（不含 .JPG）
     { title: 'Song of the Rabbit', artist: 'Jangdan', album: 'Rabbit Album', url: 'https://music.mikephie.site/audio/Song%20of%20the%20Rabbit.FLAC' },
     { title: '孤勇者', artist: '陈奕迅', album: 'Fearless', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
-    { title: '稻香', artist: '周杰伦', album: '稻香 The Album', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%99%99.FLAC' }
+    { title: '稻香', artist: '周杰伦', album: '稻香 The Album', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC' }
 ];
 const scheduleData = {
     monday: [
@@ -65,10 +65,10 @@ const musicBtn = document.getElementById('musicBtn');
 const musicPanel = document.getElementById('musicPanel');
 const currentCover = document.getElementById('currentCover'); // 获取封面元素
 
-// 工具函数：只移除非法字符，保留空格，以便后续 join(' ')
+// 工具函数：只移除非法字符，不替换空格
 function sanitizeAndEncode(s) {
     if (!s) return ''; 
-    // 💥 关键修改：只移除非法字符，保留空格
+    // 💥 仅清理非字母、数字、中文、空格的字符
     return s.replace(/[^a-zA-Z0-9\s\u4e00-\u9fa5.\-]/g, '').trim(); 
 }
 
@@ -89,24 +89,15 @@ function playSong(index) {
     document.getElementById('currentTitle').textContent = song.title;
     document.getElementById('currentArtist').textContent = song.artist;
     
-    // --- 核心逻辑：动态构造和 URL 编码 ---
-    const titleKey = sanitizeAndEncode(song.title);
-    const artistKey = sanitizeAndEncode(song.artist);
-    const albumKey = sanitizeAndEncode(song.album);
+    // --- 核心逻辑：使用 Album Name 构造 URL ---
     
-    // 1. 组合 rawKey (使用空格作为连接符)
-    let rawKey = [];
-    if (titleKey) rawKey.push(titleKey);
-    if (artistKey) rawKey.push(artistKey);
-    if (albumKey) rawKey.push(albumKey);
-
-    // 💥 关键修改：使用空格连接，生成最终的原始文件名
-    const finalRawKey = rawKey.join(' '); 
+    // 1. 清理并获取 Album Key
+    const rawKey = sanitizeAndEncode(song.album);
     
-    // 2. 对最终的 Key 进行 URL 编码，确保空格被转换为 %20
-    const encodedKey = encodeURIComponent(finalRawKey);
+    // 2. 对 Album Key 进行 URL 编码，确保空格被转换为 %20
+    const encodedKey = encodeURIComponent(rawKey);
 
-    // 3. 构造最终的 URL
+    // 3. 构造最终的 URL (Album Name.JPG)
     const finalCoverUrl = `https://music.mikephie.site/covers/${encodedKey}.JPG`;
     
     // 4. 设置背景图
