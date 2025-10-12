@@ -1,7 +1,7 @@
 const musicLibrary = [
-    { title: '多情的生肖兔（토끼 들어온다）', artist: 'SomeLove', url: 'https://music.mikephie.site/audio/%E5%A4%9A%E6%83%85%E7%9A%84%E7%94%9F%E8%82%96%E5%85%94%20(%E5%85%94%E5%AD%90%E6%9D%A5%E4%BA%86%EF%BC%89.FLAC' },
-    { title: '孤勇者', artist: '陈奕迅', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
-    { title: '稻香', artist: '周杰伦', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC' }
+    { title: 'Song of the Rabbit', artist: 'Jangdan', url: 'https://music.mikephie.site/audio/Jangdan%20-%20Song%20of%20the%20Rabbit.FLAC' },
+    { title: '孤勇者', artist: '陈奕迅', url: 'https://music.mikephie.site/audio/%E9%99%88%E5%A5%95%E8%BF%85%20-%20%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
+    { title: '稻香', artist: '周杰伦', url: 'https://music.mikephie.site/audio/%E5%91%A8%E6%9D%B0%E4%BC%A6%20-%20%E7%A8%BB%E9%A6%99.FLAC' }
 ];
 const scheduleData = {
     monday: [
