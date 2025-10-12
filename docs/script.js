@@ -1,5 +1,5 @@
 const musicLibrary = [
-    // 移除硬编码的 'cover' 属性，保留 title, artist, url
+    // 确保每首歌曲都包含 artist 和 album 字段
     { title: 'Song of the Rabbit', artist: 'Jangdan', album: 'Rabbit Album', url: 'https://music.mikephie.site/audio/Song%20of%20the%20Rabbit.FLAC' },
     { title: '孤勇者', artist: '陈奕迅', album: 'Fearless', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
     { title: '稻香', artist: '周杰伦', album: '稻香 The Album', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC' }
@@ -65,7 +65,7 @@ const musicBtn = document.getElementById('musicBtn');
 const musicPanel = document.getElementById('musicPanel');
 const currentCover = document.getElementById('currentCover'); // 获取封面元素
 
-// 新增工具函数：用于清理名称并构造 URL 路径
+// 工具函数：用于清理名称并生成 URL Key
 function sanitizeAndEncode(s) {
     if (!s) return 'unknown';
     // 移除所有非中文字符、字母、数字、空格、点和连字符，并替换空格为连字符
@@ -82,24 +82,31 @@ function initMusicList() {
         musicList.appendChild(item);
     });
 }
+
 function playSong(index) {
     currentSongIndex = index;
     const song = musicLibrary[index];
     document.getElementById('currentTitle').textContent = song.title;
     document.getElementById('currentArtist').textContent = song.artist;
     
-    // --- 核心修改：动态构造封面 URL ---
-    const artistKey = sanitizeAndEncode(song.artist);
-    const albumKey = sanitizeAndEncode(song.album);
+    // --- 核心逻辑：动态构造和 URL 编码 ---
+    const artist = song.artist || 'Unknown Artist';
+    const album = song.album || 'Unknown Album';
     
-    // 假设您的 PUBLIC_BASE_URL 是 https://music.mikephie.site
-    // 约定：封面文件名为 "covers/艺术家-专辑名.JPG" (或 PNG)
-    const baseCoverUrl = `https://music.mikephie.site/covers/${artistKey}-${albumKey}`;
+    // 1. 清理并生成 KEY 名称 (如: 陈奕迅-Fearless)
+    const rawKey = `${sanitizeAndEncode(artist)}-${sanitizeAndEncode(album)}`;
+
+    // 2. 对完整的 KEY 名称进行 URL 编码，确保中文和特殊符号正确传输
+    // 这是解决中文路径问题的关键步骤
+    const encodedKey = encodeURIComponent(rawKey);
+
+    // 3. 构造最终的 URL
+    // 约定：文件位于 https://music.mikephie.site/covers/ 路径下
+    const finalCoverUrl = `https://music.mikephie.site/covers/${encodedKey}.JPG`;
     
-    // 我们尝试优先加载 JPG，如果失败，浏览器会自动加载 PNG (通过 style.css 中的 fallback)
-    // 最终设置的 URL 是第一个尝试的链接
-    currentCover.style.backgroundImage = `url('${baseCoverUrl}.JPG')`;
-    // --- 核心修改结束 ---
+    // 4. 设置背景图，浏览器会自动加载
+    currentCover.style.backgroundImage = `url('${finalCoverUrl}')`;
+    // --- 核心逻辑结束 ---
 
     document.getElementById('musicError').style.display = 'none';
     document.querySelectorAll('.music-item').forEach((item, i) => {
