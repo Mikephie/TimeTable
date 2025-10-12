@@ -1,7 +1,7 @@
 const musicLibrary = [
-    { title: 'Song of the Rabbit', artist: 'Jangdan', url: 'https://music.mikephie.site/audio/Song%20of%20the%20Rabbit.FLAC' },
-    { title: '孤勇者', artist: '陈奕迅', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
-    { title: '稻香', artist: '周杰伦', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC' }
+    { title: 'Song of the Rabbit', artist: 'Jangdan', url: 'https://music.mikephie.site/audio/Song%20of%20the%20Rabbit.FLAC', cover: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=60&h=60&auto=format&fit=crop' },
+    { title: '孤勇者', artist: '陈奕迅', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC', cover: 'https://images.unsplash.com/photo-1470225640330-5d63b2c28248?w=60&h=60&auto=format&fit=crop' },
+    { title: '稻香', artist: '周杰伦', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC', cover: 'https://images.unsplash.com/photo-1458560871784-56d23406a096?w=60&h=60&auto=format&fit=crop' }
 ];
 const scheduleData = {
     monday: [
@@ -62,6 +62,8 @@ let isPlaying = false, currentSongIndex = -1;
 const audioPlayer = document.getElementById('audioPlayer');
 const musicBtn = document.getElementById('musicBtn');
 const musicPanel = document.getElementById('musicPanel');
+const currentCover = document.getElementById('currentCover'); // 新增：获取封面元素
+
 function initMusicList() {
     const musicList = document.getElementById('musicList');
     musicLibrary.forEach((song, index) => {
@@ -77,6 +79,7 @@ function playSong(index) {
     const song = musicLibrary[index];
     document.getElementById('currentTitle').textContent = song.title;
     document.getElementById('currentArtist').textContent = song.artist;
+    currentCover.style.backgroundImage = `url('${song.cover}')`; // 新增：设置封面背景图
     document.getElementById('musicError').style.display = 'none';
     document.querySelectorAll('.music-item').forEach((item, i) => {
         item.classList.toggle('active', i === index);
