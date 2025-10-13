@@ -269,7 +269,7 @@ body {
     align-items: center;
     gap: 15px;
 }
-/* 💥 还原：封面作为可替换的背景图容器 */
+/* 💥 封面：支持背景图 + 默认图标 */
 .music-cover {
     width: 60px; 
     height: 60px; 
@@ -282,6 +282,22 @@ body {
     flex-shrink: 0; 
     transition: all 0.3s ease;
     border: 2px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* 💥 默认音乐图标 - 当没有背景图时显示 */
+.music-cover::after {
+    content: '🎵';
+    font-size: 26px;
+    position: absolute;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+/* 💥 当有背景图时隐藏图标 */
+.music-cover.has-cover::after {
+    opacity: 0;
 }
 .music-cover:hover {
     transform: scale(1.1) rotate(5deg);
