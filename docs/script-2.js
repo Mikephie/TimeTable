@@ -1,8 +1,6 @@
-const musicLibrary = [
-    { title: 'Song of the Rabbit', artist: 'Jangdan', url: 'https://music.mikephie.site/audio/Song%20of%20the%20Rabbit.FLAC' },
-    { title: '孤勇者', artist: '陈奕迅', url: 'https://music.mikephie.site/audio/%E5%AD%A4%E5%8B%87%E8%80%85.FLAC' },
-    { title: '稻香', artist: '周杰伦', url: 'https://music.mikephie.site/audio/%E7%A8%BB%E9%A6%99.FLAC' }
-];
+// 移除所有硬编码的 musicLibrary 数据。
+let musicLibrary = []; 
+
 const scheduleData = {
     monday: [
         { time: '放学后', title: '吃水果', desc: '放学后补充维生素与能量', tags: ['放学', '习惯'] },
@@ -10,21 +8,21 @@ const scheduleData = {
         { time: '07:00 - 07:25', title: '吃饭 (Eat)', desc: '营养均衡的晚餐', tags: ['用餐'] },
         { time: '07:25 - 07:30', title: '收拾书包', desc: '准备好第二天需要的学习用品', tags: ['整理'] },
         { time: '07:30 - 08:20', title: '写作与学习', desc: '专注完成当天写作与学习任务', tags: ['学习', '专注'] },
-        { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', desc: '睡前清洁,进入休息模式', tags: ['卫生', '就寝前'] },
+        { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', tags: ['卫生', '就寝前'] },
         { time: '08:30 - 08:50', title: '电子产品时间', desc: '有节制地使用电子产品放松', tags: ['放松', '电子'] },
         { time: '08:50 - 09:00', title: '自由时间', desc: '随心安排片刻自由', tags: ['放松'] },
-        { time: '09:00', title: '睡觉 (Bedtime)', desc: '按时入睡,保证充足睡眠', tags: ['就寝'] }
+        { time: '09:00', title: '睡觉 (Bedtime)', tags: ['就寝'] }
     ],
     tuesday: [
         { time: '放学后', title: '吃水果', desc: '放学后补充维生素与能量', tags: ['放学', '习惯'] },
         { time: '06:30 - 07:00', title: '洗澡 (Shower)', desc: '清洁放松,准备晚上学习', tags: ['卫生'] },
         { time: '07:00 - 07:25', title: '吃饭 (Eat)', desc: '营养均衡的晚餐', tags: ['用餐'] },
-        { time: '07:25 - 07:30', title: '收拾书包', desc: '准备好第二天需要的学习用品', tags: ['整理'] },
+        { time: '07:25 - 07-30', title: '收拾书包', tags: ['整理'] },
         { time: '07:30 - 08:20', title: '写作与学习', desc: '专注完成当天写作与学习任务', tags: ['学习', '专注'] },
-        { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', desc: '睡前清洁,进入休息模式', tags: ['卫生', '就寝前'] },
+        { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', tags: ['卫生', '就寝前'] },
         { time: '08:30 - 08:50', title: '电子产品时间', desc: '有节制地使用电子产品放松', tags: ['放松', '电子'] },
         { time: '08:50 - 09:00', title: '自由时间', desc: '随心安排片刻自由', tags: ['放松'] },
-        { time: '09:00', title: '睡觉 (Bedtime)', desc: '按时入睡,保证充足睡眠', tags: ['就寝'] }
+        { time: '09:00', title: '睡觉 (Bedtime)', tags: ['就寝'] }
     ],
     wednesday: [
         { time: '04:15 - 07:30', title: '补习 (Tuition)', desc: '重点补强与巩固知识', tags: ['补习', '重要'] },
@@ -32,63 +30,100 @@ const scheduleData = {
         { time: '07:30 - 08:10', title: '吃饭 / 收拾 / 准备', desc: '补充能量并整理状态', tags: ['用餐', '整理'] },
         { time: '08:10 - 08:20', title: '写作 (Write)', desc: '完成当日写作任务', tags: ['写作', '学习'] },
         { time: '08:20 - 08:30', title: '学习 (Study)', desc: '短时高效巩固', tags: ['学习', '专注'] },
-        { time: '08:30 - 08:35', title: '收拾书包', desc: '为第二天做好准备', tags: ['整理'] },
-        { time: '08:35 - 08:45', title: '刷牙 (Brush)', desc: '睡前清洁', tags: ['卫生'] },
+        { time: '08:30 - 08:35', title: '收拾书包', tags: ['整理'] },
+        { time: '08:35 - 08-45', title: '刷牙 (Brush)', tags: ['卫生'] },
         { time: '08:45 - 09:00', title: '自由时间', desc: '轻松片刻', tags: ['放松'] },
-        { time: '09:00', title: '睡觉 (Bedtime)', desc: '按时入睡', tags: ['就寝'] }
+        { time: '09:00', title: '睡觉 (Bedtime)', tags: ['就寝'] }
     ],
     thursday: [
         { time: '05:15 - 08:00', title: '跆拳道 (Taekwondo)', desc: '锻炼体魄与意志', tags: ['运动', '训练'] },
         { time: '回家后', title: '吃水果', desc: '运动后补充能量', tags: ['习惯'] },
         { time: '08:00 - 08:30', title: '吃饭 / 准备', desc: '补充能量并整理状态', tags: ['用餐', '整理'] },
         { time: '08:30 - 08:40', title: '写作 (Write)', desc: '短时写作练习', tags: ['写作'] },
-        { time: '08:40 - 08:45', title: '收拾书包', desc: '准备好第二天的用品', tags: ['整理'] },
-        { time: '08:45 - 08:55', title: '刷牙 (Brush)', desc: '睡前清洁', tags: ['卫生'] },
-        { time: '08:55 - 09:00', title: '睡觉 (Bedtime)', desc: '按时入睡', tags: ['就寝'] }
+        { time: '08:40 - 08-45', title: '收拾书包', tags: ['整理'] },
+        { time: '08:45 - 08-55', title: '刷牙 (Brush)', tags: ['卫生'] },
+        { time: '08:55 - 09:00', title: '睡觉 (Bedtime)', tags: ['就寝'] }
     ],
     friday: [
         { time: '放学后', title: '吃水果', desc: '放学后补充维生素与能量', tags: ['放学', '习惯'] },
         { time: '06:30 - 07:00', title: '洗澡 (Shower)', desc: '清洁放松,准备晚上学习', tags: ['卫生'] },
         { time: '07:00 - 07:25', title: '吃饭 (Eat)', desc: '营养均衡的晚餐', tags: ['用餐'] },
-        { time: '07:25 - 07:30', title: '收拾书包', desc: '准备好第二天需要的学习用品', tags: ['整理'] },
+        { time: '07:25 - 07-30', title: '收拾书包', tags: ['整理'] },
         { time: '07:30 - 08:20', title: '写作与学习', desc: '专注完成当天写作与学习任务', tags: ['学习', '专注'] },
-        { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', desc: '睡前清洁,进入休息模式', tags: ['卫生', '就寝前'] },
+        { time: '08:20 - 08:30', title: '刷牙 / 准备睡觉', tags: ['卫生', '就寝前'] },
         { time: '08:30 - 08:50', title: '电子产品时间', desc: '有节制地使用电子产品放松', tags: ['放松', '电子'] },
         { time: '08:50 - 09:00', title: '自由时间', desc: '随心安排片刻自由', tags: ['放松'] },
-        { time: '09:00', title: '睡觉 (Bedtime)', desc: '按时入睡,保证充足睡眠', tags: ['就寝'] }
+        { time: '09:00', title: '睡觉 (Bedtime)', tags: ['就寝'] }
     ]
 };
 let isPlaying = false, currentSongIndex = -1;
 const audioPlayer = document.getElementById('audioPlayer');
 const musicBtn = document.getElementById('musicBtn');
 const musicPanel = document.getElementById('musicPanel');
+const currentCover = document.getElementById('currentCover'); // 获取封面元素
+
+// 工具函数：只移除非法字符，不替换空格
+function sanitizeAndEncode(s) {
+    if (!s) return ''; 
+    // 仅清理非字母、数字、中文、空格的字符
+    return s.replace(/[^a-zA-Z0-9\s\u4e00-\u9fa5.\-]/g, '').trim(); 
+}
+
 function initMusicList() {
     const musicList = document.getElementById('musicList');
-    musicLibrary.forEach((song, index) => {
+    musicList.innerHTML = ''; // 清空旧列表
+    
+    musicLibrary.forEach((asset, index) => {
+        const song = asset.metadata;
+        
+        if (asset.type !== 'audio' || !song) return;
+        
         const item = document.createElement('div');
         item.className = 'music-item';
-        item.textContent = `${song.title} - ${song.artist}`;
+        
+        // 关键修改：在列表中显示 Album 名称
+        const albumDisplay = song.album ? ` (${song.album})` : '';
+        item.textContent = `${song.title} - ${song.artist}${albumDisplay}`;
+        
         item.addEventListener('click', () => playSong(index));
         musicList.appendChild(item);
     });
 }
+
 function playSong(index) {
+    const asset = musicLibrary[index];
+    if (!asset || asset.type !== 'audio') return; 
+
     currentSongIndex = index;
-    const song = musicLibrary[index];
+    const song = asset.metadata;
+    
     document.getElementById('currentTitle').textContent = song.title;
     document.getElementById('currentArtist').textContent = song.artist;
+    
+    // --- 核心逻辑：使用 Album Name 构造 URL ---
+    const rawKey = sanitizeAndEncode(song.album);
+    const encodedKey = encodeURIComponent(rawKey);
+
+    // 构造最终的 URL (Album Name.JPG)
+    const finalCoverUrl = `https://music.mikephie.site/covers/${encodedKey}.JPG`;
+    
+    currentCover.style.backgroundImage = `url('${finalCoverUrl}')`;
+    // --- 核心逻辑结束 ---
+
     document.getElementById('musicError').style.display = 'none';
     document.querySelectorAll('.music-item').forEach((item, i) => {
         item.classList.toggle('active', i === index);
     });
-    audioPlayer.src = song.url;
+    
+    // 使用 asset.url 作为音频源
+    audioPlayer.src = asset.url;
     audioPlayer.load();
     audioPlayer.play().then(() => {
         isPlaying = true;
         musicBtn.textContent = '⏸️';
     }).catch(error => {
         console.error('播放失败:', error);
-        document.getElementById('musicError').textContent = '播放失败,请检查音频链接';
+        document.getElementById('musicError').textContent = '播放失败,请检查音频链接或 CORS 设置';
         document.getElementById('musicError').style.display = 'block';
         isPlaying = false;
         musicBtn.textContent = '▶️';
@@ -199,7 +234,33 @@ function updateCalendar() {
     document.getElementById('calendarDay').textContent = day;
 }
 
+// 💥 异步函数定义
+async function loadMusicLibrary() {
+    try {
+        // 关键修改：引用正确的 JSON 文件名
+        const response = await fetch('https://music.mikephie.site/music_assets.json'); 
+        if (!response.ok) {
+            throw new Error('无法加载音乐数据文件，请检查 JSON 文件是否存在或 CORS 设置');
+        }
+        
+        // 过滤非音频资产，确保 musicLibrary 只包含歌曲
+        const fullAssets = await response.json();
+        // 确保 fullAssets.assets 存在且是数组
+        if (!fullAssets.assets || !Array.isArray(fullAssets.assets)) {
+             throw new Error('JSON 格式不正确，缺少 assets 数组');
+        }
+        
+        // 过滤出音频资产，并映射到 musicLibrary
+        musicLibrary = fullAssets.assets.filter(asset => asset.type === 'audio');
+        
+        initMusicList(); // 数据加载成功后，渲染列表
+    } catch (error) {
+        console.error('音乐库加载失败:', error);
+        document.getElementById('musicList').innerHTML = '<div style="color:red;padding:10px;font-size:14px;text-align:center;">错误: 音乐数据加载失败。请检查 music_assets.json 的 CORS 设置或 JSON 格式。</div>';
+    }
+}
+
 // 初始化
 createParticles();
 updateCalendar();
-initMusicList();
+loadMusicLibrary(); // 调用新的异步加载函数
