@@ -273,12 +273,18 @@ body {
     width: 60px; 
     height: 60px; 
     border-radius: 10px; 
-    /* 💥 蓝色渐变背景 + 音乐符号 */
-    background: linear-gradient(135deg, #0088ff 0%, #0066ff 100%) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="30" fill="white">🎵</text></svg>') center/cover no-repeat;
+    background: linear-gradient(135deg, #0088ff 0%, #0066ff 100%);
     box-shadow: 0 8px 20px rgba(0, 102, 255, 0.5), 0 0 40px rgba(0, 136, 255, 0.3); 
     flex-shrink: 0; 
     transition: all 0.3s ease;
     border: 2px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+}
+.music-cover::before {
+    content: '🎵';
 }
 .music-cover:hover {
     transform: scale(1.1) rotate(5deg);
