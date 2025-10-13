@@ -69,6 +69,28 @@ function sanitizeAndEncode(s) {
     return s.replace(/[^a-zA-Z0-9\s\u4e00-\u9fa5.\-]/g, '').trim(); 
 }
 
+// 💥 新增：处理封面显示和 has-cover 类的函数
+function updateMusicCover(coverUrl) {
+    // 检查 URL 是否有效。由于你的 URL 是构造出来的，我们主要检查其是否为空。
+    // 如果你希望在图片加载失败时也退回到 '🎵'，需要更复杂的逻辑（如 Image 对象的 onError 事件），
+    // 但现在我们只关注 URL 是否存在。
+    const hasValidCoverUrl = coverUrl && coverUrl.trim() !== '';
+
+    if (hasValidCoverUrl) {
+        // 尝试加载图片
+        currentCover.style.backgroundImage = `url('${coverUrl}')`;
+        // 假设图片会加载成功，添加 has-cover 类来隐藏 '🎵'
+        currentCover.classList.add('has-cover');
+        
+        // 💡 增强：可以在此处添加一个图片加载监听，以处理图片不存在的情况
+        // 比如：使用 Image 对象预加载，如果失败则执行 else 块的逻辑
+    } else {
+        // URL 无效，或你故意传入 'null' 来显示默认图标
+        currentCover.style.backgroundImage = 'none'; // 清除背景图
+        currentCover.classList.remove('has-cover'); // 移除类，显示 '🎵'
+    }
+}
+
 function initMusicList() {
     const musicList = document.getElementById('musicList');
     musicList.innerHTML = ''; // 清空旧列表
@@ -102,12 +124,16 @@ function playSong(index) {
     
     // --- 核心逻辑：使用 Album Name 构造 URL ---
     const rawKey = sanitizeAndEncode(song.album);
-    const encodedKey = encodeURIComponent(rawKey);
-
-    // 构造最终的 URL (Album Name.JPG)
-    const finalCoverUrl = `https://music.mikephie.site/covers/${encodedKey}.JPG`;
     
-    currentCover.style.backgroundImage = `url('${finalCoverUrl}')`;
+    // 💥 关键：只有当 rawKey 有效时，才构造 URL
+    let finalCoverUrl = '';
+    if (rawKey) {
+        const encodedKey = encodeURIComponent(rawKey);
+        finalCoverUrl = `https://music.mikephie.site/covers/${encodedKey}.JPG`;
+    }
+    
+    // 💥 调用新的处理函数来设置背景图和 has-cover 类
+    updateMusicCover(finalCoverUrl);
     // --- 核心逻辑结束 ---
 
     document.getElementById('musicError').style.display = 'none';
