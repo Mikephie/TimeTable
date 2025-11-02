@@ -283,12 +283,11 @@ async function loadMusicLibrary() {
 // 🚀 PWA 核心：Service Worker 注册
 // ==========================================================
 if ('serviceWorker' in navigator) {
-    // 确保在页面加载完成后才注册
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js') // 确保 sw.js 文件在网站根目录
+        // 使用相对路径 'sw.js'，它会被 <base href="/TimeTable/"> 解析为 /TimeTable/sw.js
+        navigator.serviceWorker.register('sw.js') 
             .then(registration => {
                 console.log('Service Worker 注册成功，作用域：', registration.scope);
-                // 确保 Service Worker 成功激活后，如果图标仍不显示，再排查其他问题
             })
             .catch(error => {
                 console.error('Service Worker 注册失败:', error);
