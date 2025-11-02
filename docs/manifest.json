@@ -2,7 +2,7 @@
   "name": "Timetable",
   "short_name": "Timetable",
   "description": "PWA for Timetable",
-  "start_url": "/TimeTable/",
+  "start_url": "https://mikephie.github.io/TimeTable/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0b1620",
