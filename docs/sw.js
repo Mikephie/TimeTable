@@ -3,15 +3,14 @@ const CACHE_NAME = 'time-table-cache-v1';
 
 // 需要缓存的文件列表，请根据您的实际路径进行调整
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/manifest.json',
-    '/style.css',
-    '/script.js',
-    // 确保图标文件也在缓存列表中，路径与 HTML/Manifest 中的一致
-    '/docs/icons/ios/180.png',
-    '/docs/icons/android/android-launchericon-192-192.png'
-    // ... 添加其他重要的资产
+    // ❗ 针对 GitHub Pages 子目录部署的修正：所有路径都需要包含 '/TimeTable/'
+    '/TimeTable/', 
+    '/TimeTable/index.html',
+    '/TimeTable/manifest.json',
+    '/TimeTable/style.css',
+    '/TimeTable/script.js',
+    '/TimeTable/docs/icons/ios/180.png',
+    '/TimeTable/docs/icons/android/android-launchericon-192-192.png'
 ];
 
 // 监听安装事件
