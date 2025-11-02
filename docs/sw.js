@@ -1,14 +1,9 @@
 // sw.js
 const CACHE_NAME = 'time-table-cache-v1';
 
-// ❗ 最终最小化缓存列表：只包含明确的静态文件
+// ❗ 临时修复：清空缓存列表，确保安装成功
 const urlsToCache = [
-    '/TimeTable/manifest.json',
-    '/TimeTable/style.css',
-    '/TimeTable/script.js',
-    '/TimeTable/docs/icons/ios/180.png',
-    '/TimeTable/docs/icons/android/android-launchericon-192-192.png'
-    // 移除 '/', '/index.html', '/TimeTable/'
+    // 列表为空，Service Worker 不会因为 404 而失败
 ];
 
 // 监听安装事件
@@ -16,8 +11,8 @@ self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(cache => {
-                console.log('Opened cache');
-                return cache.addAll(urlsToCache);
+                console.log('Opened cache - (Temporarily empty cache list)');
+                return cache.addAll(urlsToCache); // 此时这个操作会成功
             })
     );
 });
