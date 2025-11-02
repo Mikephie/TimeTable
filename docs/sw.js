@@ -4,14 +4,14 @@ const CACHE_NAME = 'time-table-cache-v1';
 // 需要缓存的文件列表，请根据您的实际路径进行调整
 const CACHE_NAME = 'time-table-cache-v1';
 
-// ❗ 最终修正：移除对根路径的引用，只缓存明确的文件
+// ❗ 最终最小化缓存列表：只包含明确的静态文件
 const urlsToCache = [
     '/TimeTable/manifest.json',
     '/TimeTable/style.css',
     '/TimeTable/script.js',
-    // 确保图标文件也在缓存列表中，路径与 HTML/Manifest 中的一致
     '/TimeTable/docs/icons/ios/180.png',
     '/TimeTable/docs/icons/android/android-launchericon-192-192.png'
+    // 移除 '/', '/index.html', '/TimeTable/'
 ];
 
 // 监听安装事件
