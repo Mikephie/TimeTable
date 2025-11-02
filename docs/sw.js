@@ -1,17 +1,14 @@
 // sw.js
 const CACHE_NAME = 'time-table-cache-v1';
 
-// 需要缓存的文件列表，请根据您的实际路径进行调整
-const CACHE_NAME = 'time-table-cache-v1';
-
-// ❗ 最终最小化缓存列表：只包含明确的静态文件
+// ❗ 最终修正：使用相对于 Service Worker 文件本身的路径
 const urlsToCache = [
-    '/TimeTable/manifest.json',
-    '/TimeTable/style.css',
-    '/TimeTable/script.js',
-    '/TimeTable/docs/icons/ios/180.png',
-    '/TimeTable/docs/icons/android/android-launchericon-192-192.png'
-    // 移除 '/', '/index.html', '/TimeTable/'
+    // 移除所有 /TimeTable/ 前缀
+    'manifest.json',
+    'style.css',
+    'script.js',
+    'docs/icons/ios/180.png',
+    'docs/icons/android/android-launchericon-192-192.png'
 ];
 
 // 监听安装事件
