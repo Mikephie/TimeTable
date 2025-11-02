@@ -285,7 +285,7 @@ async function loadMusicLibrary() {
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         // 使用相对路径 'sw.js'，它会被 <base href="/TimeTable/"> 解析为 /TimeTable/sw.js
-        navigator.serviceWorker.register('sw.js') 
+        navigator.serviceWorker.register('sw.js?v=2') 
             .then(registration => {
                 console.log('Service Worker 注册成功，作用域：', registration.scope);
             })
