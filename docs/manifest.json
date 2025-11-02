@@ -2,7 +2,7 @@
   "name": "Timetable",
   "short_name": "Timetable",
   "description": "PWA for Timetable",
-  "start_url": "/",
+  "start_url": "/TimeTable/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0b1620",
